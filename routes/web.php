@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\forumcontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,18 @@ Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('po
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
 Route::get('/finish',[GameController::class,'finish'])->name('finish');
+
+
+
+
+Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
+
+Route::get('/forumindex',[App\Http\Controllers\forumcontroller::class,'forumindex'])->name('forumindex')->middleware('auth');
+
+Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
+
+Route::post('forumindex/forumdelete/{id}',[forumcontroller::class,'forumdelete'])->name('forumdelete');
+
+Route::post('forumindex/forumchange/{id}',[forumcontroller::class,'forumchange'])->name("forumchange");
+
+Route::post('forumindex/forumlastpage',[forumcontroller::class,"forumlastpage"])->name('forumlastpage');
