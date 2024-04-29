@@ -30,4 +30,6 @@ Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('po
 
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
+Route::get('/event',[GameController::class,'event'])->middleware('auth')->name('event');
+
 Route::get('/finish',[GameController::class,'finish'])->name('finish');

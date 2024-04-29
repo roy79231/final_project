@@ -19,6 +19,9 @@ class GameController extends Controller
     public function start(){
         return view('start');
     }
+    public function event(){
+        return view('monthlyevent');
+    }
     public function finish(){
         return view('finish');
     }
