@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,8 @@ Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('po
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
 Route::get('/finish',[GameController::class,'finish'])->name('finish');
+
+Route::get('/roleControl', [RoleController::class,'index'])->name('index');
+
+// 更新成 ROLE_ADMIN
+Route::put('/setAdmin/{user}', [RoleController::class,'setAdmin'])->name('setAdmin');
