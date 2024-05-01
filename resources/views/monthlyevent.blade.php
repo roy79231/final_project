@@ -304,7 +304,7 @@
         endEvent();
     }
     function endEvent(){
-        //回傳數據，轉到下一頁
+        //回傳數據，轉到下一頁   
     }
 </script>
 @endsection
