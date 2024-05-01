@@ -1,3 +1,5 @@
+<?php use App\Models\User;
+?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -20,6 +22,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 <body>
+    
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -32,6 +35,12 @@
                 <a class="navbar-brand" href="{{ route('post') }}">
                     post
                 </a>
+                <?php $user = Auth::user()?>
+                @if(($user && $user->role == User::ROLE_ADMIN))
+                <a class="navbar-brand" href="{{ route('index') }}">
+                    adminControll
+                </a>
+                @endif
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
