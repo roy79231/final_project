@@ -11,6 +11,7 @@ use App\Models\special_event;
 use App\Models\talent;
 use App\Models\achievement_event;
 use App\Models\achievement_fins;
+use App\Models\dead_event;
 
 
 class GameController extends Controller
@@ -63,47 +64,145 @@ class GameController extends Controller
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = 'wealth';
+                    $death_way = dead_event::DIE_WEALTH;
+                    $dieEvent = dead_event::where('way',$death_way)->get();
+                    $randomDie = $dieEvent->random();
+                    game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intellengence'=>$intellengence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$randomDie->content,
+                    ]);
+                    break;
                 }
             }
             if($appearance<10){ //外貌  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = 'appearance';
+                    $death_way = dead_event::DIE_APPEARANCE;
+                    $dieEvent = dead_event::where('way',$death_way)->get();
+                    $randomDie = $dieEvent->random();
+                    game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intellengence'=>$intellengence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$randomDie->content,
+                    ]);
+                    break;
                 }
             }
             if($intellengence<10){ //智力  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = 'intellengence';
+                    $death_way = dead_event::DIE_INTELLENGENCE;
+                    $dieEvent = dead_event::where('way',$death_way)->get();
+                    $randomDie = $dieEvent->random();
+                    game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intellengence'=>$intellengence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$randomDie->content,
+                    ]);
+                    break;
                 }
             }
             if($morality<10){ //道德   低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = 'morality';
+                    $death_way = dead_event::DIE_MORALITY;
+                    $dieEvent = dead_event::where('way',$death_way)->get();
+                    $randomDie = $dieEvent->random();
+                    game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intellengence'=>$intellengence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$randomDie->content,
+                    ]);
+                    break;
                 }
             }
             if($happiness<10){ //快樂  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = 'happiness';
+                    $death_way = dead_event::DIE_HAPPINESS;
+                    $dieEvent = dead_event::where('way',$death_way)->get();
+                    $randomDie = $dieEvent->random();
+                    game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intellengence'=>$intellengence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$randomDie->content,
+                    ]);
+                    break;
                 }
             }
             if($luck<10){ //運氣  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = 'luck';
+                    $death_way = dead_event::DIE_LUCK;
+                    $dieEvent = dead_event::where('way',$death_way)->get();
+                    $randomDie = $dieEvent->random();
+                    game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intellengence'=>$intellengence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$randomDie->content,
+                    ]);
+                    break;
                 }
             }
             if(rand(1,100) <= 2 ){
                 $alive = false;
-                $death_way = 'accident';
+                $death_way = dead_event::DIE_ACCIDENT;
+                $dieEvent = dead_event::where('way',$death_way)->get();
+                $randomDie = $dieEvent->random();
+                game_process::create([
+                    'user_id'=>$user_id,
+                    'month'=>$month,
+                    'intellengence'=>$intellengence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
+                    'content'=>$randomDie->content,
+                ]);
+                break;
             }
             //事件
             $event_kind = rand(1,100);
