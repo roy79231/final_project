@@ -39,7 +39,7 @@ Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('po
 
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
-Route::get('/run',[GameController::class,'run'])->middleware('auth')->name('run');
+Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');
 //timlin:我在這裡把run 牽到monthlyevent的balde
 Route::get('/finish',[GameController::class,'finish'])->name('finish');
 

@@ -61,7 +61,7 @@
 </style>
 <?php 
     $count_number=0;
-    foreach ($game_process as $attribute) {
+    foreach ($game_processes as $attribute) {
         
         $month_number[$count_number]= $attribute->month;
         $intelligence [$count_number]= $attribute->intelligence;
@@ -77,14 +77,15 @@
 ?>
 <script type="text/javascript">
     var count=0;
-    var monthintelligence="<? php echo $intelligence; ?>";
-    var totalmonth="<?php echo $count_number; ?>"
-    var monthweathly="<?php echo $weathly; ?>";
-    var monthhandsome="<?php echo $handsome;  ?>";
-    var monthluck="<?php echo $luck; ?>";
-    var monthethical="<?php echo $ethical; ?>";
-    var monthhappy="<?php echo $happiness; ?>";
-    var monthcontent="<?php echo $event; ?>";
+    var monthnumber=1;
+    var monthintelligence=@json($intelligence);
+    var totalmonth=@json($count_number);
+    var monthweathly=@json($weathly);
+    var monthhandsome=@json($handsome);
+    var monthluck=@json($luck);
+    var monthethical=@json($ethical);
+    var monthhappy=@json($happiness);
+    var monthcontent=@json($event);
 </script>
 
 <div class="container">
