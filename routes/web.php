@@ -40,11 +40,9 @@ Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('
 
 Route::get('/event',[GameController::class,'event'])->middleware('auth')->name('event');
 
-Route::get('/finish',[GameController::class,'finish'])->name('finish');
-
 Route::get('/roleControl', [RoleController::class,'index'])->name('index');
 
-// 更新成 ROLE_ADMIN
+// 更新成 ROLE_ADMIN---------------------------------------------------------------------------------------------------------------------------------------
 Route::put('/setAdmin/{user}', [RoleController::class,'setAdmin'])->name('setAdmin');
 
 
@@ -73,3 +71,6 @@ Route::get('/talentUpLoader',[talentUpLoadController::class, "talentUpLoader"])-
 Route::post('/talentUpLoader/store', [talentUpLoadController::class, 'talentUpLoadStore'])->name('talentUpLoader.store');
 Route::delete('/talentUpLoader/destroy/{id}', [talentUpLoadController::class, 'talentUpLoadDestroy'])->name('talentUpLoader.destroy');
 Route::patch('/talentUpLoader/edit/{id}', [talentUpLoadController::class, 'talentUpLoadEdit'])->name('talentUpLoader.edit');
+
+//結算頁面的部份-------------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/finish',[GameController::class,'finish'])->name('finish');
