@@ -8,6 +8,7 @@ use App\Http\Controllers\upLoadControllers\achievementEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\normalEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\specialEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\talentUpLoadController;
+use App\Http\Controllers\upLoadControllers\deadUpLoadController;
 
 
 
@@ -38,7 +39,9 @@ Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('po
 
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
-Route::get('/event',[GameController::class,'event'])->middleware('auth')->name('event');
+Route::get('/run',[GameController::class,'run'])->middleware('auth')->name('run');
+//timlin:我在這裡把run 牽到monthlyevent的balde
+Route::get('/finish',[GameController::class,'finish'])->name('finish');
 
 Route::get('/roleControl', [RoleController::class,'index'])->name('index');
 
@@ -71,6 +74,11 @@ Route::get('/talentUpLoader',[talentUpLoadController::class, "talentUpLoader"])-
 Route::post('/talentUpLoader/store', [talentUpLoadController::class, 'talentUpLoadStore'])->name('talentUpLoader.store');
 Route::delete('/talentUpLoader/destroy/{id}', [talentUpLoadController::class, 'talentUpLoadDestroy'])->name('talentUpLoader.destroy');
 Route::patch('/talentUpLoader/edit/{id}', [talentUpLoadController::class, 'talentUpLoadEdit'])->name('talentUpLoader.edit');
+
+Route::get('/deadUpLoader',[deadUpLoadController::class, "deadUpLoader"])->name('deadUpLoader');
+Route::post('/deadUpLoader/store', [deadUpLoadController::class, 'deadUpLoadStore'])->name('deadUpLoader.store');
+Route::delete('/deadUpLoader/destroy/{id}', [deadUpLoadController::class, 'deadUpLoadDestroy'])->name('deadUpLoader.destroy');
+Route::patch('/deadUpLoader/edit/{id}', [deadUpLoadController::class, 'deadUpLoadEdit'])->name('deadUpLoader.edit');
 
 //結算頁面的部份-------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/finish',[GameController::class,'finish'])->name('finish');

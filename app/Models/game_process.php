@@ -17,6 +17,7 @@ class game_process extends Model
         'luck',
         'morality',
         'happiness',
+        'content'
     ];
     
 }

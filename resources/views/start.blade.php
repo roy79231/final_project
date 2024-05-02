@@ -10,7 +10,7 @@
                 <div class="card-body">
                     點數加點畫面
                 </div>
-                <form action="{{route('event')}}" method="GET">
+                <form action="{{route('run')}}" method="GET">
                     @csrf
                     <button id="start">開始</button>
                 </form>

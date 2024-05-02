@@ -261,7 +261,7 @@ class GameController extends Controller
             ]);
         };
         $game_processes = game_process::where('user_id',$user_id)->get();
-        return view('tim的',[
+        return view('monthlyevent',[
             'game_processes' => $game_processes,
             'accomplish_achievements' => $accomplish_achievements,
         ]);
