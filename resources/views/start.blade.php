@@ -13,6 +13,12 @@
                 <form action="{{route('run')}}" method="GET">
                     @csrf
                     <button id="start">開始</button>
+                    <p id="intellengence">1</p>
+                    <p id="wealth">10</p>
+                    <p id="appearance">10</p>
+                    <p id="luck">10</p>
+                    <p id="morality">10</p>
+                    <p id="happiness">10</p>
                 </form>
 
             </div>

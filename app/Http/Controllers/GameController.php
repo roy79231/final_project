@@ -46,12 +46,14 @@ class GameController extends Controller
         $alive = true;
         $accomplish_achievements = [];
         //加上talent數值
+
         $intellengence += $talent->intellengence;
         $wealth += $talent->wealth;
         $appearance += $talent->appearance;
         $luck += $talent->luck;
         $morality += $talent->morality;
         $happiness += $talent->happiness;
+        
         //先確定清空資料
         $game_delete = game_process::where('user_id',$user_id)->get();
         $game_delete->delete();
@@ -261,7 +263,7 @@ class GameController extends Controller
             ]);
         };
         $game_processes = game_process::where('user_id',$user_id)->get();
-        return view('monthlyevent',[
+        return view('monthlyevent',[//timlin:我在這裡牽到monthlyevent
             'game_processes' => $game_processes,
             'accomplish_achievements' => $accomplish_achievements,
         ]);

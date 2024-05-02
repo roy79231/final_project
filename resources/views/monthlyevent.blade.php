@@ -59,18 +59,32 @@
         width: 100px;
     }
 </style>
-<script>
+<?php 
+    $count_number=0;
+    foreach ($game_process as $attribute) {
+        
+        $month_number[$count_number]= $attribute->month;
+        $intelligence [$count_number]= $attribute->intelligence;
+        $weathly[$count_number] = $attribute->wealth;
+        $handsome[$count_number] = $attribute->appearance;
+        $luck[$count_number] = $attribute->luck;
+        $ethical[$count_number] = $attribute->morality;
+        $happiness[$count_number] = $attribute->happiness;
+        $event[$count_number] = $attribute->content;
+        $count_number+=1;
+    }
+    
+?>
+<script type="text/javascript">
     var count=0;
-    var monthintelligence=[9,0,15,7,6,9];
-    var totalmonth=monthintelligence.length
-    var monthnumber=1;
-    var monthweathly=[9,8,7,6,5,4];
-    var monthhandsome=[5,5,5,5,5,5];
-    var monthluck=[6,4,1,9,7,0];
-    var monthethical=[9,7,6,4,3,1];
-    var monthhappy=[1,2,3,4,4,4,5];
-    var monthcontent=['你通過學測進入中央大學了，你非常興奮，你決定一定要充實大學生活。','可供食用的動物乳汁。《紅樓夢》第一四回：「及收拾完備，更衣盥手，吃了兩口奶子，糖粳米粥。」',"好吃雞雞","晚餐吃雞雞","吃你雞雞","亂吃雞雞"];
-    const colors = ['green','red'];
+    var monthintelligence="<? php echo $intelligence; ?>";
+    var totalmonth="<?php echo $count_number; ?>"
+    var monthweathly="<?php echo $weathly; ?>";
+    var monthhandsome="<?php echo $handsome;  ?>";
+    var monthluck="<?php echo $luck; ?>";
+    var monthethical="<?php echo $ethical; ?>";
+    var monthhappy="<?php echo $happiness; ?>";
+    var monthcontent="<?php echo $event; ?>";
 </script>
 
 <div class="container">
@@ -124,7 +138,6 @@
                     <button style="font-size:24px" id="month_next">下一月</button>
                 </div>
             </div>
-            
             <div class="month_move_skip">
                 <button id="month_skip">大學結局</button>
             </div>
