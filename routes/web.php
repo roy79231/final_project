@@ -24,6 +24,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/',[GameController::class,'main'])->name('main');
 
+Route::get('/addPoints',[GameController::class,'addPoints'])->middleware('auth')->name('addPoints');
+
 Route::get('/achievement',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
 
 Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('post');

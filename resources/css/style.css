@@ -1,0 +1,102 @@
+p {
+    font-family: Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.navbar {
+    border-bottom: 1px solid #ddd;
+}
+
+ul {
+    list-style-type: none; /* Remove the default bullet */
+    padding-left: 0; /* Remove any default padding */
+}
+
+.nav-pills .nav-link {
+    border-radius: 2px;
+}
+
+.nav-item {
+    border: 2px solid black;
+    border-radius: 2px;
+}
+
+.justify-content-end .nav-link {
+    color: black !important;
+}
+
+.nav-link {
+    background-color: rgba(168, 81, 6, 0.675) !important;
+}
+
+.centered-container, .mt-5 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mt-5 h2, .text-center{
+    text-align: center;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+.separator {
+    border-left: 1px solid #ccc;
+    height: 100%;
+    /* margin: auto 0; */
+}
+
+.container li {
+    font-size: 24px;
+}
+
+/* .talent-choice li, .remaining-points li {
+    font-size: 24px;
+}  */
+
+.talent-choice {
+    position: relative;
+    min-height: 100px; /* Adjust the height as needed */
+}
+
+.action-buttons {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.action-buttons .btn , .reset-btn{
+    border: 1px dashed;
+    background-color: transparent;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.bet-btn {
+    color: rgba(208, 22, 9, 0.774)
+}
+
+.start-btn {
+    color: rgba(5, 110, 50, 0.863)
+}
+
+.reset-btn {
+    color: rgba(19, 22, 162, 0.774);
+}
+
+.btn-lighter {
+    background-color: rgba(255, 0, 0, 0.5);
+    color: #fff;
+}
+
+.quantity {
+    display: inline-block;
+    width: 2em; /* Fixed width for alignment */
+    text-align: center; /* Center the text horizontally */
+}

@@ -31,6 +31,9 @@ class GameController extends Controller
     public function finish(){
         return view('finish');
     }
+    public function addPoints(){
+        return view('addPoints');
+    }
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
