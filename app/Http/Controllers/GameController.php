@@ -254,16 +254,19 @@ class GameController extends Controller
                     'morality'=>$morality + $event->morality,
                     'content'=>$event->content,
                 ]);
-                $accomplish_achievements = $event->achievement_id;
+                $accomplish_achievements[] = $event->achievement_id;
             }
+            $month+=1;
         };
         //這個foreach有問題要修
-        foreach($accomplish_achievements as $accomplish){
-            achievement_fins::create([
-                'user_id'=> $user_id,
-                'achievement_id'=> $accomplish,
-            ]);
-        };
+        if(!empty($accomplish_achievements)){
+            foreach($accomplish_achievements as $accomplish){
+                achievement_fins::create([
+                    'user_id'=> $user_id,
+                    'achievement_id'=> $accomplish,
+                ]);
+            };
+        }
         $game_processes = game_process::where('user_id',$user_id)->get();
         return view('monthlyevent',[//timlin:我在這裡牽到monthlyevent
             'game_processes' => $game_processes,
@@ -273,10 +276,8 @@ class GameController extends Controller
     public function make_end(Request $request){
         //清process和ending資料
         $user_id = auth()->user()->id;
-        $game_delete = game_process::where('user_id',$user_id)->get();
-        $game_delete->delete();
-        $end_delete = game_ending::where('user_id',$user_id)->get();
-        $end_delete->delete();
+        $game_delete = game_process::where('user_id',$user_id)->delete();
+        $end_delete = game_ending::where('user_id',$user_id)->delete();
         //準備ending
         $intelligence = $request->intelligence;
         $wealth = $request->wealth;
