@@ -32,6 +32,7 @@ class GameController extends Controller
     public function finish(){
         return view('finish');
     }
+
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
@@ -268,7 +269,7 @@ class GameController extends Controller
             'accomplish_achievements' => $accomplish_achievements,
         ]);
     }
-    public function make_end(Request $request){
+    public function end_game(Request $request){
         //清process和ending資料
         $user_id = auth()->user()->id;
         $game_delete = game_process::where('user_id',$user_id)->get();
@@ -294,7 +295,7 @@ class GameController extends Controller
             'achievements_id'=>$accomplish_achievements,
         ]);
         $end = game_ending::where('user_id',$user_id)->get();
-        return view('liang的',[
+        return view('finish',[
             'end'=> $end,
         ]);
     }
