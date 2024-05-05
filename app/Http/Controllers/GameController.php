@@ -210,9 +210,8 @@ class GameController extends Controller
             //事件
             $event_kind = rand(1,100);
             if($event_kind<=60){
-                $rand_range = normal_event::all()->count();
-                $event_id = rand(1,$rand_range);
-                $event = normal_event::find($event_id);
+                $normal_event = normal_event::all();
+                $event = $normal_event->random();
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
@@ -225,33 +224,43 @@ class GameController extends Controller
                     'content'=>$event->content,
                 ]);
             }else if($event_kind>60 && $event_kind<=90){
-                $rand_range = special_event::all()->count();
-                $event_id = rand(1,$rand_range);
-                $event = special_event::find($event_id);
+                $special_event = special_event::all();
+                $event = $special_event->random();
+                $intelligence = $intelligence + $event->intelligence;
+                $appearance = $appearance + $event->appearance;
+                $wealth = $wealth + $event->wealth;
+                $luck = $luck + $event->luck;
+                $happiness = $happiness + $event->happiness;
+                $morality = $morality + $event->morality;
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intelligence'=>$intelligence + $event->intelligence,
-                    'appearance'=> $appearance + $event->appearance,
-                    'wealth'=> $wealth + $event->wealth,
-                    'luck'=>$luck + $event->luck,
-                    'happiness'=>$happiness + $event->happiness,
-                    'morality'=>$morality + $event->morality,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
                     'content'=>$event->content,
                 ]);
             }else{
-                $rand_range = achievement_event::all()->count();
-                $event_id = rand(1,$rand_range);
-                $event = achievement_event::find($event_id);
+                $achievement_event = achievement_event::all();
+                $event = $achievement_event->random();
+                $intelligence = $intelligence + $event->intelligence;
+                $appearance = $appearance + $event->appearance;
+                $wealth = $wealth + $event->wealth;
+                $luck = $luck + $event->luck;
+                $happiness = $happiness + $event->happiness;
+                $morality = $morality + $event->morality;
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intelligence'=>$intelligence + $event->intelligence,
-                    'appearance'=> $appearance + $event->appearance,
-                    'wealth'=> $wealth + $event->wealth,
-                    'luck'=>$luck + $event->luck,
-                    'happiness'=>$happiness + $event->happiness,
-                    'morality'=>$morality + $event->morality,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness ,
+                    'morality'=>$morality,
                     'content'=>$event->content,
                 ]);
                 $accomplish_achievements[] = $event->achievement_id;
