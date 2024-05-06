@@ -12,13 +12,13 @@
                 </div>
                 <form action="{{route('run')}}" method="POST">
                     @csrf
-                    <textarea name="intelligence">10</textarea>
+                    <textarea name="intelligence">15</textarea>
                     <textarea name="wealth">15</textarea>
                     <textarea name="appearance">15</textarea>
                     <textarea name="luck">15</textarea>
-                    <textarea name="morality">15</textarea>
+                    <textarea name="morality">5</textarea>
                     
-                    <textarea name="talent_id">1</textarea>
+                    <textarea name="talent_id">7</textarea>
                     <button type="submit">開始</button>
 
                 </form>

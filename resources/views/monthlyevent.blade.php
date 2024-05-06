@@ -1,25 +1,35 @@
 @extends('layouts.app')
 @section('content')
 <style>
+    @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
     body {
         font-family: Arial, sans-serif;
         background-color: #f8f9fa;
         color: #333;
         margin: 0;
         padding: 0;
+       
     }
     .container {
+        font-family: ‘cwTeXYen’, sans-serif;
         max-width: 1400px;
         margin: 20px auto;
         padding: 20px;
-        background-color:beige;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color:rgb(237, 218, 191);
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0,0.7);
+    }
+    .link-buttom{
+        /*底線*/
+        width: 100%;
+        height:2px;
+        border-top: solid #0b0b0b 2px;
     }
     .month_number{
-        background-color:beige;
+        background-color:rgb(237, 218, 191);
         font-size: 30px; 
-    
+        padding-left: 100px;
+        
     }
     .main_area {
         display: flex;
@@ -44,19 +54,33 @@
         text-align: center;
         width: 150px;
     }
-    .month_move_last{
-       
-        display: flex;
-        align-items: center;
-        text-align: center;
-        width: 100px;
+    .triangle-button-left {
+        border-color: transparent #0b0b0b transparent transparent;
+        border-style: solid solid solid solid;
+        border-width: 40px;
+        background-color: transparent;
+        /* 設定 width、height 可更好理解原理 */
+        height: 0px;
+        width: 0px;
     }
-    
-    .month_move_next{
+    .triangle-button-right {
+        border-color: transparent transparent transparent #0b0b0b;
+        border-style: solid solid solid solid;
+        border-width: 40px;
+        background-color: transparent;
+        /* 設定 width、height 可更好理解原理 */
+        height: 0px;
+        width: 0px;
+
+    }
+    .footer{
         display: flex;
-        align-items: center;
-        text-align: center;
-        width: 100px;
+    }
+    .month_move_skip{
+        text-align: end;
+    }
+    .new{
+        width: 200px;
     }
 </style>
 <?php 
@@ -72,6 +96,7 @@
         $happiness[$count_number] = $attribute->happiness;
         $event[$count_number] = $attribute->content;
         $count_number+=1;
+        
     }
     
 ?>
@@ -92,9 +117,11 @@
             <div class="month_number" id="months">
                 <p>第 1 個月</p>
             </div>
+            <div class="link-buttom"></div>
+
             <div class="main_area">
-                <div class="month_move_last">
-                    <button style="font-size:24px" id="month_last">上一月</button>
+                <div class="month_move_last" >
+                    <button style="font-size:24px" class="triangle-button-left" id="month_last"></button>
                 </div>
                 <div class="month_attribute">
                     <p class="month_intelligence" id="intelligence">
@@ -136,47 +163,32 @@
                     </p>
                 </div>
                 <div class="month_move_next">
-                    <button style="font-size:24px" id="month_next">下一月</button>
+                    <button style="font-size:24px" class="triangle-button-right" id="month_next"></button>
                 </div>
+                
             </div>
+            
             <div class="month_move_skip">
-                <button id="month_skip">大學結局</button>
+                <form action="{{route("finish")}}">
+                    @csrf
+                    <button id="month_skip">跳過?</button>
+                </form>
             </div>
-        
+            
 </div>
 <script>
     document.getElementById("month_next").addEventListener("click", nextmonth);
     function nextmonth(){
         monthnumber+=1;
         count+=1;
-        if(monthnumber>totalmonth){
-            monthnumber=1;
-            count=0;
+        if(monthnumber<=totalmonth){
             document.getElementById("months").innerHTML = "第 "+monthnumber+" 個月";
-            document.getElementById("intelligence").innerHTML = "智力: "+monthintelligence[count];
-            document.getElementById("wealthy").innerHTML = "財富: "+monthweathly[count];
-            document.getElementById("handsome").innerHTML = "顏值: "+monthhandsome[count];
-            document.getElementById("luck").innerHTML = "幸運: "+monthluck[count];
-            document.getElementById("ethical").innerHTML = "道德: "+monthethical[count];
-            document.getElementById("happy").innerHTML = "快樂: "+monthhappy[count];
-            document.getElementById('content').innerHTML = monthcontent[count];
-
-            document.getElementById("intelligencechange").innerHTML="";
-            document.getElementById("wealthychange").innerHTML="";
-            document.getElementById("handsomechange").innerHTML="";
-            document.getElementById("luckchange").innerHTML="";
-            document.getElementById("ethicalchange").innerHTML="";
-            document.getElementById("happychange").innerHTML="";
-            endEvent();
-        }
-        else{
-            document.getElementById("months").innerHTML = "第 "+monthnumber+" 個月";
-            document.getElementById("intelligence").innerHTML = "智力: "+monthintelligence[count];
-            document.getElementById("wealthy").innerHTML = "財富: "+monthweathly[count];
-            document.getElementById("handsome").innerHTML = "顏值: "+monthhandsome[count];
-            document.getElementById("luck").innerHTML = "幸運: "+monthluck[count];
-            document.getElementById("ethical").innerHTML = "道德: "+monthethical[count];
-            document.getElementById("happy").innerHTML = "快樂: "+monthhappy[count];
+            document.getElementById("intelligence").innerHTML = "智力:     "+monthintelligence[count];
+            document.getElementById("wealthy").innerHTML = "財富:     "+monthweathly[count];
+            document.getElementById("handsome").innerHTML = "顏值:     "+monthhandsome[count];
+            document.getElementById("luck").innerHTML = "幸運:     "+monthluck[count];
+            document.getElementById("ethical").innerHTML = "道德:     "+monthethical[count];
+            document.getElementById("happy").innerHTML = "快樂:     "+monthhappy[count];
             document.getElementById('content').innerHTML = monthcontent[count];
             if(monthintelligence[count]-monthintelligence[count-1]>=0){
                 document.getElementById("intelligencechange").innerHTML="   +"+(monthintelligence[count]-monthintelligence[count-1]);
@@ -226,6 +238,16 @@
                 document.getElementById('happychange').innerHTML = "   "+(monthhappy[count]-monthhappy[count-1]);
                 document.getElementById('happychange').style.color = 'red';
             }
+            if(monthnumber==totalmonth){
+                document.getElementById('month_next').innerHTML = "";
+                document.getElementById('month_next').id = "to_finish";
+
+                document.getElementById("to_finish").addEventListener("click", to_finish);
+                    function to_finish(){
+                        //導向結算頁面
+                       window.location.href='/final_project/public/index.php/finish';
+                    }
+            }
         }
     }
 
@@ -240,12 +262,12 @@
         }
         else{
             document.getElementById("months").innerHTML = "第 "+monthnumber+" 個月";
-            document.getElementById("intelligence").innerHTML = "智力: "+monthintelligence[count];
-            document.getElementById("wealthy").innerHTML = "財富: "+monthweathly[count];
-            document.getElementById("handsome").innerHTML = "顏值: "+monthhandsome[count];
-            document.getElementById("luck").innerHTML = "幸運: "+monthluck[count];
-            document.getElementById("ethical").innerHTML = "道德: "+monthethical[count];
-            document.getElementById("happy").innerHTML = "快樂: "+monthhappy[count];
+            document.getElementById("intelligence").innerHTML = "智力:     "+monthintelligence[count];
+            document.getElementById("wealthy").innerHTML = "財富:     "+monthweathly[count];
+            document.getElementById("handsome").innerHTML = "顏值:     "+monthhandsome[count];
+            document.getElementById("luck").innerHTML = "幸運:     "+monthluck[count];
+            document.getElementById("ethical").innerHTML = "道德:     "+monthethical[count];
+            document.getElementById("happy").innerHTML = "快樂:     "+monthhappy[count];
             document.getElementById('content').innerHTML = monthcontent[count];
             if(monthnumber!=1){
                 if(monthintelligence[count]-monthintelligence[count-1]>=0){
@@ -311,14 +333,6 @@
                 document.getElementById("happychange").innerHTML="";
             }
         }
-    }
-
-    document.getElementById("month_skip").addEventListener('click',monthskip);
-    function monthskip(){
-        endEvent();
-    }
-    function endEvent(){
-        //回傳數據，轉到下一頁   
     }
 </script>
 @endsection
