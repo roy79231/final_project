@@ -71,23 +71,27 @@ a {
     right: 0;
 }
 
-.action-buttons .btn , .reset-btn{
-    border: 1px dashed;
+.action-buttons .bet-btn, .action-buttons .start-btn{
+    border: 5px dashed;
     background-color: transparent;
     margin-left: 5px;
     margin-bottom: 5px;
 }
 
 .bet-btn {
-    color: rgba(208, 22, 9, 0.774)
+    color: rgba(208, 22, 9, 0.774); /* Set text color */
 }
 
 .start-btn {
-    color: rgba(5, 110, 50, 0.863)
+    color: rgba(5, 110, 50, 0.863); /* Set text color */
 }
 
+
 .reset-btn {
-    color: rgba(19, 22, 162, 0.774);
+    border: 5px dashed;
+    background-color: transparent;
+    margin-left: 5px;
+    margin-bottom: 5px;
 }
 
 .btn-lighter {
