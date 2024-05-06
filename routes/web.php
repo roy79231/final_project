@@ -47,7 +47,7 @@ Route::get('/roleControl', [RoleController::class,'index'])->name('index');
 
 // 更新成 ROLE_ADMIN---------------------------------------------------------------------------------------------------------------------------------------
 Route::put('/setAdmin/{user}', [RoleController::class,'setAdmin'])->name('setAdmin');
-
+Route::put('/setUser/{user}',[RoleController::class,'setUser'])->name('setUser');
 
 //上傳資料的部分-------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/achievementUpLoader',[achievementUpLoadController::class, "achievementUpLoader"])->name('achievementUpLoader');
