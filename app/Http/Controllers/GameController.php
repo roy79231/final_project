@@ -15,7 +15,7 @@ use App\Models\dead_event;
 
 class GameController extends Controller
 {
-    //
+    
     public function main(){
         return view('main');
     }
@@ -32,31 +32,32 @@ class GameController extends Controller
     public function finish(){
         return view('finish');
     }
+    //注意dead event中的way指的是 哪像屬性(intelligence 之類的)
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
-        $intellengence = $request->intellengence;
+        $intelligence = $request->intelligence;
         $wealth = $request->wealth;
         $appearance = $request->appearance;
         $luck = $request->luck;
         $morality = $request->morality;
-        $happiness = $request->happiness;
+        $happiness =15;
         $talent = talent::find($request->talent_id);
         $month = 1;
         $alive = true;
         $accomplish_achievements = [];
         //加上talent數值
-
-        $intellengence += $talent->intellengence;
+        
+        $intelligence += $talent->intelligence;
         $wealth += $talent->wealth;
         $appearance += $talent->appearance;
         $luck += $talent->luck;
         $morality += $talent->morality;
         $happiness += $talent->happiness;
         
-        //先確定清空資料
-        $game_delete = game_process::where('user_id',$user_id)->get();
-        $game_delete->delete();
+        //先確定清空資料 有問題不能正確清空資料
+        $game_delete = game_process::where('user_id',$user_id)->delete();
+        
         //跑每個月
         while($month<=48 && $alive==true){
             //死亡的部分
@@ -72,7 +73,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -93,7 +94,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -104,17 +105,17 @@ class GameController extends Controller
                     break;
                 }
             }
-            if($intellengence<10){ //智力  低於10觸發 有3%因這個死亡
+            if($intelligence<10){ //智力  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = dead_event::DIE_INTELLENGENCE;
+                    $death_way = dead_event::DIE_INTELLIGENCE;
                     $dieEvent = dead_event::where('way',$death_way)->get();
                     $randomDie = $dieEvent->random();
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -135,7 +136,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -156,7 +157,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -177,7 +178,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -196,7 +197,7 @@ class GameController extends Controller
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intellengence'=>$intellengence,
+                    'intelligence'=>$intelligence,
                     'appearance'=> $appearance,
                     'wealth'=> $wealth,
                     'luck'=>$luck,
@@ -209,13 +210,12 @@ class GameController extends Controller
             //事件
             $event_kind = rand(1,100);
             if($event_kind<=60){
-                $rand_range = normal_event::all()->count();
-                $event_id = rand(1,$rand_range);
-                $event = normal_event::find($event_id);
+                $normal_event = normal_event::all();
+                $event = $normal_event->random();
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intellengence'=>$intellengence,
+                    'intelligence'=>$intelligence,
                     'appearance'=> $appearance,
                     'wealth'=> $wealth,
                     'luck'=>$luck,
@@ -224,44 +224,58 @@ class GameController extends Controller
                     'content'=>$event->content,
                 ]);
             }else if($event_kind>60 && $event_kind<=90){
-                $rand_range = special_event::all()->count();
-                $event_id = rand(1,$rand_range);
-                $event = special_event::find($event_id);
+                $special_event = special_event::all();
+                $event = $special_event->random();
+                $intelligence = $intelligence + $event->intelligence;
+                $appearance = $appearance + $event->appearance;
+                $wealth = $wealth + $event->wealth;
+                $luck = $luck + $event->luck;
+                $happiness = $happiness + $event->happiness;
+                $morality = $morality + $event->morality;
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intellengence'=>$intellengence + $event->intellengence,
-                    'appearance'=> $appearance + $event->appearance,
-                    'wealth'=> $wealth + $event->wealth,
-                    'luck'=>$luck + $event->luck,
-                    'happiness'=>$happiness + $event->happiness,
-                    'morality'=>$morality + $event->morality,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
                     'content'=>$event->content,
                 ]);
             }else{
-                $rand_range = achievement_event::all()->count();
-                $event_id = rand(1,$rand_range);
-                $event = achievement_event::find($event_id);
+                $achievement_event = achievement_event::all();
+                $event = $achievement_event->random();
+                $intelligence = $intelligence + $event->intelligence;
+                $appearance = $appearance + $event->appearance;
+                $wealth = $wealth + $event->wealth;
+                $luck = $luck + $event->luck;
+                $happiness = $happiness + $event->happiness;
+                $morality = $morality + $event->morality;
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intellengence'=>$intellengence + $event->intellengence,
-                    'appearance'=> $appearance + $event->appearance,
-                    'wealth'=> $wealth + $event->wealth,
-                    'luck'=>$luck + $event->luck,
-                    'happiness'=>$happiness + $event->happiness,
-                    'morality'=>$morality + $event->morality,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness ,
+                    'morality'=>$morality,
                     'content'=>$event->content,
                 ]);
-                $accomplish_achievements = $event->achievement_id;
+                $accomplish_achievements[] = $event->achievement_id;
             }
+            $month+=1;
         };
-        foreach($accomplish_achievements as $accomplish){
-            achievement_fins::create([
-                'user_id'=> $user_id,
-                'achievement_id'=> $accomplish,
-            ]);
-        };
+        //這個foreach有問題要修
+        if(!empty($accomplish_achievements)){
+            foreach($accomplish_achievements as $accomplish){
+                achievement_fins::create([
+                    'user_id'=> $user_id,
+                    'achievement_id'=> $accomplish,
+                ]);
+            };
+        }
         $game_processes = game_process::where('user_id',$user_id)->get();
         return view('monthlyevent',[//timlin:我在這裡牽到monthlyevent
             'game_processes' => $game_processes,
@@ -271,12 +285,10 @@ class GameController extends Controller
     public function make_end(Request $request){
         //清process和ending資料
         $user_id = auth()->user()->id;
-        $game_delete = game_process::where('user_id',$user_id)->get();
-        $game_delete->delete();
-        $end_delete = game_ending::where('user_id',$user_id)->get();
-        $end_delete->delete();
+        $game_delete = game_process::where('user_id',$user_id)->delete();
+        $end_delete = game_ending::where('user_id',$user_id)->delete();
         //準備ending
-        $intellengence = $request->intellengence;
+        $intelligence = $request->intelligence;
         $wealth = $request->wealth;
         $appearance = $request->appearance;
         $luck = $request->luck;
@@ -285,7 +297,7 @@ class GameController extends Controller
         $accomplish_achievements = $request->accomplish_achievements;
         game_ending::create([
             'user_id'=>$user_id,
-            'intellengence'=>$intellengence,
+            'intelligence'=>$intelligence,
             'appearance'=> $appearance,
             'wealth'=> $wealth,
             'luck'=>$luck,

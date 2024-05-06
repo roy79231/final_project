@@ -10,15 +10,17 @@
                 <div class="card-body">
                     點數加點畫面
                 </div>
-                <form action="{{route('run')}}" method="GET">
+                <form action="{{route('run')}}" method="POST">
                     @csrf
-                    <button id="start">開始</button>
-                    <p id="intellengence">1</p>
-                    <p id="wealth">10</p>
-                    <p id="appearance">10</p>
-                    <p id="luck">10</p>
-                    <p id="morality">10</p>
-                    <p id="happiness">10</p>
+                    <textarea name="intelligence">15</textarea>
+                    <textarea name="wealth">15</textarea>
+                    <textarea name="appearance">15</textarea>
+                    <textarea name="luck">15</textarea>
+                    <textarea name="morality">5</textarea>
+                    
+                    <textarea name="talent_id">7</textarea>
+                    <button type="submit">開始</button>
+
                 </form>
 
             </div>
