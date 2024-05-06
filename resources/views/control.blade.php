@@ -38,6 +38,15 @@
                 </form>
             </div>
             @endif
+            @if($user->role !==User::ROLE_USER)
+            <div>
+                <form action="{{ route('setUser',  ['user' => $user->id]) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit">設為user</button>
+                </form>
+            </div>
+            @endif            
         </div>
     </div>
     @endforeach
