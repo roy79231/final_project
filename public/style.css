@@ -26,6 +26,10 @@ ul {
     color: black !important;
 }
 
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(0, 0, 0);
+}
+
 .nav-link {
     background-color: rgba(168, 81, 6, 0.675) !important;
 }

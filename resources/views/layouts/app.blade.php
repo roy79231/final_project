@@ -39,14 +39,14 @@
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link active" aria-current="page" href="#">主頁</a>
+                        <a class="nav-link active" aria-current="page" href="{{url('/')}}">主頁</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link active" href="#">討論區</a>
+                        <a class="nav-link active" href="{{route('post')}}">討論區</a>
                     </li>
 
                     <li class="nav-item me-2">
-                        <a class="nav-link active" href="#">成就</a>
+                        <a class="nav-link active" href="{{route('achievement')}}">成就</a>
                     </li>
                 </ul>
 
@@ -61,26 +61,26 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <li class="nav-item me-2">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('登入') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <li class="nav-item me-2">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('註冊') }}</a>
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown nav-item">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item me-2" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
