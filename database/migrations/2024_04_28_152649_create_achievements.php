@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('content');
             $table->timestamps();
         });
+        
     }
+    
 
     /**
      * Reverse the migrations.

@@ -11,6 +11,7 @@ use App\Models\special_event;
 use App\Models\talent;
 use App\Models\achievement_event;
 use App\Models\achievement_fins;
+use App\Models\User;
 
 
 class GameController extends Controller
@@ -19,8 +20,12 @@ class GameController extends Controller
     public function main(){
         return view('main');
     }
-    public function achievement(){
-        return view('achievement');
+    public function achievement(Request $request){
+        // Retrieve achievements for the given user_id
+        
+        $achievements = achievement_fins::where('user_id', $request->user()->id)->with('achievement')->get();
+        // Pass achievements data to the view
+        return view('achievement', ['achievements' => $achievements]);    
     }
     public function post(){
         return view('post');

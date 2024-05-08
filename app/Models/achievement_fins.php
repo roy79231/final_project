@@ -12,4 +12,10 @@ class achievement_fins extends Model
         'user_id',
         'achievement_id',
     ];
+    protected $table = 'achievement_fins';
+
+    public function achievement()
+    {
+        return $this->belongsTo(Achievement::class, 'achievement_id');
+    }
 }

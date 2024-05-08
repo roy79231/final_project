@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\forumcontroller;
-
+use App\Http\Controllers\achievementcontroller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/',[GameController::class,'main'])->name('main');
 
-Route::get('/achievement',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
+Route::get('/achievement/{id}',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
 
 Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('post');
 
@@ -38,7 +38,7 @@ Route::get('/finish',[GameController::class,'finish'])->name('finish');
 
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
 
-Route::get('/forumindex',[App\Http\Controllers\forumcontroller::class,'forumindex'])->name('forumindex')->middleware('auth');
+Route::get('/forumindex',[forumcontroller::class,'forumindex'])->name('forumindex')->middleware('auth');
 
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
 
@@ -46,4 +46,4 @@ Route::post('forumindex/forumdelete/{id}',[forumcontroller::class,'forumdelete']
 
 Route::post('forumindex/forumchange/{id}',[forumcontroller::class,'forumchange'])->name("forumchange");
 
-Route::post('forumindex/forumlastpage',[forumcontroller::class,"forumlastpage"])->name('forumlastpage');
+Route::get('/achievementindex/{user_id}', [achievementcontroller::class, 'showAchievements'])->name('showAchievements')->middleware('auth');
