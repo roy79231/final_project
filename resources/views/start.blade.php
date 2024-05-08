@@ -12,13 +12,13 @@
                 </div>
                 <form action="{{route('run')}}" method="GET">
                     @csrf
-                    <button id="start">開始</button>
-                    <p id="intellengence">1</p>
-                    <p id="wealth">10</p>
-                    <p id="appearance">10</p>
-                    <p id="luck">10</p>
-                    <p id="morality">10</p>
-                    <p id="happiness">10</p>
+                    <button id="start" type="submit">開始</button>
+                    <p id="intellengence">intellengence</p>
+                    <p id="wealth">wealth</p>
+                    <p id="appearance">appearance</p>
+                    <p id="luck">luck</p>
+                    <p id="morality">morality</p>
+                    <p id="happiness">happiness</p>
                 </form>
 
             </div>

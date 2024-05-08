@@ -7,22 +7,22 @@
             結算頁面
         </p>
         <p>
-            智力 : intelligence
+            智力 : {{ $end->intelligence }}
         </p>
         <p>
-            財富 : wealth
+            財富 : {{ $end->wealth }}
         </p>
         <p>
-            顏值 : appearance
+            顏值 : {{ $end->appearance}}
         </p>
         <p>
-            運氣 : luck
+            運氣 : {{ $end->luck }}
         </p>
         <p>
-            道德 : morality
+            道德 : {{ $end->morality }}
         </p>
         <p>
-            快樂 : happiness
+            快樂 : {{ $end->happiness }}
         </p>
     </div>
     <div class="boxLeft">

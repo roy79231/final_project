@@ -25,7 +25,7 @@ class GameController extends Controller
     public function post(){
         return view('post');
     }
-    public function start(){
+    public function start(Request $request){
         return view('start');
     }
     
