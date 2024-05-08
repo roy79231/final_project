@@ -3,6 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\upLoadControllers\achievementUpLoadController;
+use App\Http\Controllers\upLoadControllers\achievementEventUpLoadController;
+use App\Http\Controllers\upLoadControllers\normalEventUpLoadController;
+use App\Http\Controllers\upLoadControllers\specialEventUpLoadController;
+use App\Http\Controllers\upLoadControllers\talentUpLoadController;
+use App\Http\Controllers\upLoadControllers\deadUpLoadController;
+
+
 
 use App\Http\Controllers\forumcontroller;
 use App\Http\Controllers\achievementcontroller;
@@ -33,11 +41,13 @@ Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('po
 
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
+Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');
+//timlin:我在這裡把run 牽到monthlyevent的balde
 Route::get('/finish',[GameController::class,'finish'])->name('finish');
 
 Route::get('/roleControl', [RoleController::class,'index'])->name('index');
 
-// 更新成 ROLE_ADMIN
+// 更新成 ROLE_ADMIN---------------------------------------------------------------------------------------------------------------------------------------
 Route::put('/setAdmin/{user}', [RoleController::class,'setAdmin'])->name('setAdmin');
 Route::put('/setUser/{user}',[RoleController::class,'setUser'])->name('setUser');
 

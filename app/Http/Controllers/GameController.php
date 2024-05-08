@@ -42,7 +42,7 @@ class GameController extends Controller
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
-        $intellengence = $request->intellengence;
+        $intelligence = $request->intelligence;
         $wealth = $request->wealth;
         $appearance = $request->appearance;
         $luck = $request->luck;
@@ -53,7 +53,7 @@ class GameController extends Controller
         $alive = true;
         $accomplish_achievements = [];
         //加上talent數值
-        $intellengence += $talent->intellengence;
+        $intelligence += $talent->intelligence;
         $wealth += $talent->wealth;
         $appearance += $talent->appearance;
         $luck += $talent->luck;
@@ -78,7 +78,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -135,7 +135,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -169,7 +169,7 @@ class GameController extends Controller
                     continue;
                 }
             }
-            if($intellengence<10){ //智力  低於10觸發 有3%因這個死亡
+            if($intelligence<10){ //智力  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
@@ -179,7 +179,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -223,7 +223,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -267,7 +267,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -311,7 +311,7 @@ class GameController extends Controller
                     game_process::create([
                         'user_id'=>$user_id,
                         'month'=>$month,
-                        'intellengence'=>$intellengence,
+                        'intelligence'=>$intelligence,
                         'appearance'=> $appearance,
                         'wealth'=> $wealth,
                         'luck'=>$luck,
@@ -353,7 +353,7 @@ class GameController extends Controller
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intellengence'=>$intellengence,
+                    'intelligence'=>$intelligence,
                     'appearance'=> $appearance,
                     'wealth'=> $wealth,
                     'luck'=>$luck,
@@ -394,7 +394,7 @@ class GameController extends Controller
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intellengence'=>$intellengence,
+                    'intelligence'=>$intelligence,
                     'appearance'=> $appearance,
                     'wealth'=> $wealth,
                     'luck'=>$luck,
@@ -438,7 +438,7 @@ class GameController extends Controller
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intellengence'=>$intellengence + $event->intellengence,
+                    'intelligence'=>$intelligence + $event->intelligence,
                     'appearance'=> $appearance + $event->appearance,
                     'wealth'=> $wealth + $event->wealth,
                     'luck'=>$luck + $event->luck,
@@ -453,7 +453,7 @@ class GameController extends Controller
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intellengence'=>$intellengence + $event->intellengence,
+                    'intelligence'=>$intelligence + $event->intelligence,
                     'appearance'=> $appearance + $event->appearance,
                     'wealth'=> $wealth + $event->wealth,
                     'luck'=>$luck + $event->luck,
@@ -487,7 +487,7 @@ class GameController extends Controller
         $end_delete = game_ending::where('user_id',$user_id)->get();
         $end_delete->delete();
         //準備ending
-        $intellengence = $request->intellengence;
+        $intelligence = $request->intelligence;
         $wealth = $request->wealth;
         $appearance = $request->appearance;
         $luck = $request->luck;
@@ -496,7 +496,7 @@ class GameController extends Controller
         $accomplish_achievements = $request->accomplish_achievements;
         game_ending::create([
             'user_id'=>$user_id,
-            'intellengence'=>$intellengence,
+            'intelligence'=>$intelligence,
             'appearance'=> $appearance,
             'wealth'=> $wealth,
             'luck'=>$luck,

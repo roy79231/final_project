@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<br>
+<p style="text-align: center;">討論區</p>
 <div class="row justify-content-center">
     @foreach($posts->reverse() as $post)
     <div class="col-md-8 mb-3">
