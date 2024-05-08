@@ -242,13 +242,13 @@
                 
                 document.getElementById('month_next').id = "to_finish";
                 document.getElementById("to_finish").addEventListener("click", to_finish);
-                function to_finish(){//導向結算頁面
-                    window.location.href='/final_project/public/index.php/finish';
-                }
+                
             }
         }
     }
-    
+    function to_finish(){//導向結算頁面
+                    window.location.href='/final_project/public/index.php/finish';
+    }
     document.getElementById("month_last").addEventListener("click", lastmonth);
     function lastmonth(){
         if(monthnumber==totalmonth)
