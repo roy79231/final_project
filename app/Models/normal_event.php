@@ -11,5 +11,6 @@ class normal_event extends Model
     protected $fillable=[
         'name',
         'content',
+        'time_type',
     ];
 }

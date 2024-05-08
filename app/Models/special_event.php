@@ -17,5 +17,6 @@ class special_event extends Model
         'luck',
         'morality',
         'happiness',
+        'time_type',
     ];
 }
