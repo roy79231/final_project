@@ -12,4 +12,10 @@ class achievement extends Model
         'name',
         'content'
     ];
+    
+        protected $table = 'achievements';
+    
+        // Define any other relationships or attributes as needed
+    
 }
+

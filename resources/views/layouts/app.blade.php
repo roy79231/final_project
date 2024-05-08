@@ -1,4 +1,5 @@
-<?php use App\Models\User;
+<?php 
+use App\Models\User;
 ?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -32,13 +33,16 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    home!
+                    主頁
                 </a>
-                <a class="navbar-brand" href="{{ route('achievement') }}">
-                    achievement
+                <?php $user = Auth::user()?>
+                @if($user)
+                <a class="navbar-brand" href="{{ route('achievement',Auth::user()->id) }}">
+                    成就
                 </a>
-                <a class="navbar-brand" href="{{ route('post') }}">
-                    post
+                @endif
+                <a class="navbar-brand" href="{{ route('forumindex') }}">
+                    討論區
                 </a>
                 <?php $user = Auth::user()?>
                 @if(($user && $user->role == User::ROLE_ADMIN))
