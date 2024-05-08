@@ -35,9 +35,9 @@ class GameController extends Controller
     public function start(Request $request){
         return view('start');
     }
-    public function finish(){
+    /*public function finish(){
         return view('finish');
-    }
+    }*/
 
     public function run(Request $request){
         //基本資料
@@ -479,7 +479,7 @@ class GameController extends Controller
             'accomplish_achievements' => $accomplish_achievements,
         ]);
     }
-    public function end_game(Request $request){
+    public function finish(Request $request){
         //清process和ending資料
         $user_id = auth()->user()->id;
         $game_delete = game_process::where('user_id',$user_id)->get();
