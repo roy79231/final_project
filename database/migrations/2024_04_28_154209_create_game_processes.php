@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('luck');
             $table->integer('morality');
             $table->integer('happiness');
+            $table->string('content');
             $table->timestamps();
         });
     }

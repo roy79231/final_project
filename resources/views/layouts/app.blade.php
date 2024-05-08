@@ -1,5 +1,4 @@
-<?php 
-use App\Models\User;
+<?php use App\Models\User;
 ?>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -18,6 +17,14 @@ use App\Models\User;
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <!--箭頭-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style>
+        .py-4{
+            background-color:rgb(248, 202, 149);
+        }
+    </style>
 </head>
 <body>
     
@@ -25,16 +32,13 @@ use App\Models\User;
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    主頁
+                    home!
                 </a>
-                <?php $user = Auth::user()?>
-                @if($user)
-                <a class="navbar-brand" href="{{ route('achievement',Auth::user()->id) }}">
-                    成就
+                <a class="navbar-brand" href="{{ route('achievement') }}">
+                    achievement
                 </a>
-                @endif
-                <a class="navbar-brand" href="{{ route('forumindex') }}">
-                    討論區
+                <a class="navbar-brand" href="{{ route('post') }}">
+                    post
                 </a>
                 <?php $user = Auth::user()?>
                 @if(($user && $user->role == User::ROLE_ADMIN))
