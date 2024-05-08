@@ -1,6 +1,13 @@
+<?php use App\Models\User;
+?>
 @extends('layouts.app')
 
 @section('content')
+<?php
+$cnt = User::count();
+if($cnt == 1)
+Auth::user()->update(['role' => 'admin']);
+?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

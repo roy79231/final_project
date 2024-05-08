@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dead_events', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('content');
-            $table->string('wayOne')->default('');
-            $table->string('wayTwo')->default('');
-            $table->timestamps();
-
+        Schema::table('normal_events', function (Blueprint $table) {
+            //
+            $table->string('time_type');
         });
     }
 
@@ -27,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dead_events');
+        Schema::table('normal_events', function (Blueprint $table) {
+            //
+            $table->string('time_type');
+        });
     }
 };

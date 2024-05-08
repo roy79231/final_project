@@ -12,6 +12,9 @@ use App\Models\talent;
 use App\Models\achievement_event;
 use App\Models\achievement_fins;
 use App\Models\dead_event;
+use App\Models\User;
+
+
 
 class GameController extends Controller
 {
@@ -19,8 +22,12 @@ class GameController extends Controller
     public function main(){
         return view('main');
     }
-    public function achievement(){
-        return view('achievement');
+    public function achievement(Request $request){
+        // Retrieve achievements for the given user_id
+        
+        $achievements = achievement_fins::where('user_id', $request->user()->id)->with('achievement')->get();
+        // Pass achievements data to the view
+        return view('achievement', ['achievements' => $achievements]);    
     }
     public function post(){
         return view('post');
@@ -28,7 +35,6 @@ class GameController extends Controller
     public function start(Request $request){
         return view('start');
     }
-    
     public function finish(){
         return view('finish');
     }
@@ -47,7 +53,6 @@ class GameController extends Controller
         $alive = true;
         $accomplish_achievements = [];
         //加上talent數值
-
         $intellengence += $talent->intellengence;
         $wealth += $talent->wealth;
         $appearance += $talent->appearance;
@@ -55,9 +60,9 @@ class GameController extends Controller
         $morality += $talent->morality;
         $happiness += $talent->happiness;
         
-        //先確定清空資料
-        $game_delete = game_process::where('user_id',$user_id)->get();
-        $game_delete->delete();
+        //先確定清空資料 有問題不能正確清空資料 已解決
+        $game_delete = game_process::where('user_id',$user_id)->delete();
+        
         //跑每個月
         while($month<=48 && $alive==true){
             //死亡的部分
@@ -83,6 +88,42 @@ class GameController extends Controller
                     ]);
                     break;
                 }
+                /*timlin: 
+                我在這邊可以多寫一個else用來寫特定屬性的加分事件
+                就是如果他沒有死掉，就50%會繼續做扣該屬性的事件 有個問題是:如果他的屬性都很平均，就必須用原本的隨機特殊事件做分數的變動
+                
+                我認為事件需要一點前應後果，假設他初始道德是2，那就算他沒有依此直接死亡，那也應該遵循他現在的過低的道德屬性來給他事件
+                
+                加分事件可以大致分成兩大項 
+                1.因為某項屬性過低而執行的"特定數性加分事件"
+                2.內容相較於前者更加隨機的"隨機加分事件"
+                */
+                
+                else if(rand(1,10)<=5){     
+                    //timlin:注意!! 我在這邊的name是加分事件的name對應到特定屬性 (像是intelligence)
+                    $special_event = special_event::where('name',"wealth")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                    $event = $special_event->random();
+                    $intelligence = $intelligence + $event->intelligence;
+                    $appearance = $appearance + $event->appearance;
+                    $wealth = $wealth + $event->wealth;
+                    $luck = $luck + $event->luck;
+                    $happiness = $happiness + $event->happiness;
+                    $morality = $morality + $event->morality;
+                    game_process::create([
+                    'user_id'=>$user_id,
+                    'month'=>$month,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
+                    'content'=>$event->content,]);
+                    $month+=1;
+                    continue;
+                    //timln:我改到這邊 試試看
+                }
+                
             }
             if($appearance<10){ //外貌  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
@@ -103,6 +144,29 @@ class GameController extends Controller
                         'content'=>$randomDie->content,
                     ]);
                     break;
+                }
+                else if(rand(1,10)<=5){     
+                    
+                    $special_event = special_event::where('name',"appearance")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                    $event = $special_event->random();
+                    $intelligence = $intelligence + $event->intelligence;
+                    $appearance = $appearance + $event->appearance;
+                    $wealth = $wealth + $event->wealth;
+                    $luck = $luck + $event->luck;
+                    $happiness = $happiness + $event->happiness;
+                    $morality = $morality + $event->morality;
+                    game_process::create([
+                    'user_id'=>$user_id,
+                    'month'=>$month,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
+                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    $month+=1;
+                    continue;
                 }
             }
             if($intellengence<10){ //智力  低於10觸發 有3%因這個死亡
@@ -125,6 +189,29 @@ class GameController extends Controller
                     ]);
                     break;
                 }
+                else if(rand(1,10)<=5){     
+                    
+                    $special_event = special_event::where('name',"intelligence")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                    $event = $special_event->random();
+                    $intelligence = $intelligence + $event->intelligence;
+                    $appearance = $appearance + $event->appearance;
+                    $wealth = $wealth + $event->wealth;
+                    $luck = $luck + $event->luck;
+                    $happiness = $happiness + $event->happiness;
+                    $morality = $morality + $event->morality;
+                    game_process::create([
+                    'user_id'=>$user_id,
+                    'month'=>$month,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
+                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    $month+=1;
+                    continue;
+                }
             }
             if($morality<10){ //道德   低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
@@ -145,6 +232,29 @@ class GameController extends Controller
                         'content'=>$randomDie->content,
                     ]);
                     break;
+                }
+                else if(rand(1,10)<=5){     
+                    
+                    $special_event = special_event::where('name',"morality")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                    $event = $special_event->random();
+                    $intelligence = $intelligence + $event->intelligence;
+                    $appearance = $appearance + $event->appearance;
+                    $wealth = $wealth + $event->wealth;
+                    $luck = $luck + $event->luck;
+                    $happiness = $happiness + $event->happiness;
+                    $morality = $morality + $event->morality;
+                    game_process::create([
+                    'user_id'=>$user_id,
+                    'month'=>$month,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
+                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    $month+=1;
+                    continue;
                 }
             }
             if($happiness<10){ //快樂  低於10觸發 有3%因這個死亡
@@ -167,6 +277,29 @@ class GameController extends Controller
                     ]);
                     break;
                 }
+                else if(rand(1,10)<=5){     
+                    
+                    $special_event = special_event::where('name',"happiness")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                    $event = $special_event->random();
+                    $intelligence = $intelligence + $event->intelligence;
+                    $appearance = $appearance + $event->appearance;
+                    $wealth = $wealth + $event->wealth;
+                    $luck = $luck + $event->luck;
+                    $happiness = $happiness + $event->happiness;
+                    $morality = $morality + $event->morality;
+                    game_process::create([
+                    'user_id'=>$user_id,
+                    'month'=>$month,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
+                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    $month+=1;
+                    continue;
+                }
             }
             if($luck<10){ //運氣  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
@@ -188,8 +321,31 @@ class GameController extends Controller
                     ]);
                     break;
                 }
+                else if(rand(1,10)<=5){     
+                    
+                    $special_event = special_event::where('name',"luck")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                    $event = $special_event->random();
+                    $intelligence = $intelligence + $event->intelligence;
+                    $appearance = $appearance + $event->appearance;
+                    $wealth = $wealth + $event->wealth;
+                    $luck = $luck + $event->luck;
+                    $happiness = $happiness + $event->happiness;
+                    $morality = $morality + $event->morality;
+                    game_process::create([
+                    'user_id'=>$user_id,
+                    'month'=>$month,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
+                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    $month+=1;
+                    continue;
+                }
             }
-            if(rand(1,100) <= 2 ){
+            if(rand(1,100) <= 2 ){//tumlin: 這便建議直接把意外事件改成幸運事件
                 $alive = false;
                 $death_way = dead_event::DIE_ACCIDENT;
                 $dieEvent = dead_event::where('way',$death_way)->get();
@@ -210,9 +366,31 @@ class GameController extends Controller
             //事件
             $event_kind = rand(1,100);
             if($event_kind<=60){
-                $rand_range = normal_event::all()->count();
-                $event_id = rand(1,$rand_range);
-                $event = normal_event::find($event_id);
+                //大一下~大四上
+                if(($month>=7 && $month<=11) || ($month>=13 && $month<=17) || ($month>=19 && $month<=23) || ($month>=25 && $month<=29) || ($month>=31 && $month<=35) || ($month>=37 && $month<=41)){
+                    $normal_event = normal_event::where('time_type','0')->get();
+                }
+                //大一上
+                else if($month>=1 && $month<=5){
+                    $normal_event = normal_event::where('time_type','1')->get();
+                }
+                //畢業前
+                else if($month>=43 && $month<=47){
+                    $normal_event = normal_event::where('time_type','2')->get();
+                }
+                //寒假
+                else if($month == 6 || $month == 18 || $month == 30 || $month == 42){
+                    $normal_event = normal_event::where('time_type','3')->get();
+                }
+                //暑假
+                else if($month == 12 || $month == 24 || $month == 36){
+                    $normal_event = normal_event::where('time_type','4')->get();
+                }
+                //畢業
+                else if($month == 48){
+                    $normal_event = normal_event::where('time_type','5')->get();
+                }
+                $event = $normal_event->random(); 
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
@@ -225,9 +403,38 @@ class GameController extends Controller
                     'content'=>$event->content,
                 ]);
             }else if($event_kind>60 && $event_kind<=90){
-                $rand_range = special_event::all()->count();
-                $event_id = rand(1,$rand_range);
-                $event = special_event::find($event_id);
+                //大一下~大四上
+                if(($month>=7 && $month<=11) || ($month>=13 && $month<=17) || ($month>=19 && $month<=23) || ($month>=25 && $month<=29) || ($month>=31 && $month<=35) || ($month>=37 && $month<=41)){
+                    $special_event = special_event::where('time_type','0')->where('name','random')->get();
+                }
+                //大一上
+                else if($month>=1 && $month<=5){
+                    $special_event = special_event::where('time_type','1')->where('name','random')->get();
+                }
+                //畢業前
+                else if($month>=43 && $month<=47){
+                    $special_event = special_event::where('time_type','2')->where('name','random')->get();
+                }
+                //寒假
+                else if($month == 6 || $month == 18 || $month == 30 || $month == 42){
+                    $special_event = special_event::where('time_type','3')->where('name','random')->get();
+                }
+                //暑假
+                else if($month == 12 || $month == 24 || $month == 36){
+                    $special_event = special_event::where('time_type','4')->where('name','random')->get();
+                }
+                //畢業
+                else if($month == 48){
+                    $special_event = special_event::where('time_type','5')->where('name','random')->get();
+                }                
+                //timlin : 我在這邊把事件名稱改成random 要記得改資料庫不然跑不動
+                $event = $special_event->random();
+                $intelligence = $intelligence + $event->intelligence;
+                $appearance = $appearance + $event->appearance;
+                $wealth = $wealth + $event->wealth;
+                $luck = $luck + $event->luck;
+                $happiness = $happiness + $event->happiness;
+                $morality = $morality + $event->morality;
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
@@ -257,14 +464,17 @@ class GameController extends Controller
                 $accomplish_achievements = $event->achievement_id;
             }
         };
-        foreach($accomplish_achievements as $accomplish){
-            achievement_fins::create([
-                'user_id'=> $user_id,
-                'achievement_id'=> $accomplish,
-            ]);
-        };
+        //這個foreach有問題要修 已解決
+        if(!empty($accomplish_achievements)){
+            foreach($accomplish_achievements as $accomplish){
+                achievement_fins::create([
+                    'user_id'=> $user_id,
+                    'achievement_id'=> $accomplish,
+                ]);
+            };
+        }
         $game_processes = game_process::where('user_id',$user_id)->get();
-        return view('monthlyevent',[//timlin:我在這裡牽到monthlyevent
+        return view('tim的',[
             'game_processes' => $game_processes,
             'accomplish_achievements' => $accomplish_achievements,
         ]);
@@ -300,3 +510,13 @@ class GameController extends Controller
         ]);
     }
 }
+//時間的優先級最高
+/*time_type :
+0 : 其他(大一下~大四上)
+1 : 大一上(入學)
+2 : 大四下(畢業前)(如果不想讓他們畢業可以在這裡操作)
+3 : 寒假(全部一起)
+4 : 暑假(全部一起)
+5 : 畢業
+6 : 大岩壁
+*/

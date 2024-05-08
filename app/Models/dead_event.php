@@ -19,6 +19,7 @@ class dead_event extends Model
     protected $fillable=[
         'name',
         'content',
-        'way',
+        'wayOne',
+        'wayTwo',
     ];
 }

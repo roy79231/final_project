@@ -3,15 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\upLoadControllers\achievementUpLoadController;
-use App\Http\Controllers\upLoadControllers\achievementEventUpLoadController;
-use App\Http\Controllers\upLoadControllers\normalEventUpLoadController;
-use App\Http\Controllers\upLoadControllers\specialEventUpLoadController;
-use App\Http\Controllers\upLoadControllers\talentUpLoadController;
-use App\Http\Controllers\upLoadControllers\deadUpLoadController;
 
-
-
+use App\Http\Controllers\forumcontroller;
+use App\Http\Controllers\achievementcontroller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,21 +27,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/',[GameController::class,'main'])->name('main');
 
-Route::get('/achievement',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
+Route::get('/achievement/{id}',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
 
 Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('post');
 
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
-Route::get('/run',[GameController::class,'run'])->middleware('auth')->name('run');
-//timlin:我在這裡把run 牽到monthlyevent的balde
 Route::get('/finish',[GameController::class,'finish'])->name('finish');
 
 Route::get('/roleControl', [RoleController::class,'index'])->name('index');
 
-// 更新成 ROLE_ADMIN---------------------------------------------------------------------------------------------------------------------------------------
+// 更新成 ROLE_ADMIN
 Route::put('/setAdmin/{user}', [RoleController::class,'setAdmin'])->name('setAdmin');
-
+Route::put('/setUser/{user}',[RoleController::class,'setUser'])->name('setUser');
 
 //上傳資料的部分-------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/achievementUpLoader',[achievementUpLoadController::class, "achievementUpLoader"])->name('achievementUpLoader');
@@ -82,3 +74,17 @@ Route::patch('/deadUpLoader/edit/{id}', [deadUpLoadController::class, 'deadUpLoa
 
 //結算頁面的部份-------------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/finish',[GameController::class,'finish'])->name('finish');
+
+
+
+Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
+
+Route::get('/forumindex',[forumcontroller::class,'forumindex'])->name('forumindex')->middleware('auth');
+
+Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
+
+Route::post('forumindex/forumdelete/{id}',[forumcontroller::class,'forumdelete'])->name('forumdelete');
+
+Route::post('forumindex/forumchange/{id}',[forumcontroller::class,'forumchange'])->name("forumchange");
+
+Route::get('/achievementindex/{user_id}', [achievementcontroller::class, 'showAchievements'])->name('showAchievements')->middleware('auth');
