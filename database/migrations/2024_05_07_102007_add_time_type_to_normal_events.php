@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('normal_events', function (Blueprint $table) {
             //
-            $table->string('time_type');
+            $table->dropColumn('time_type');
         });
     }
 };
