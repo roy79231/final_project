@@ -65,6 +65,8 @@
         <a href="{{ route('achievementEventUpLoader') }}">成就事件</a>
         <br>
         <a href="{{ route('achievementUpLoader') }}">成就條件</a>
+        <br>
+        <a href="{{ route('deadUpLoader')}}">死亡事件</a>
     </div>
 
     <div class="boxContainer">
