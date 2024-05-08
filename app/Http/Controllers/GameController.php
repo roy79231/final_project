@@ -359,7 +359,30 @@ class GameController extends Controller
             //事件
             $event_kind = rand(1,100);
             if($event_kind<=60){
-                $normal_event = normal_event::all();
+                //大一下~大四上
+                if(($month>=7 && $month<=11) || ($month>=13 && $month<=17) || ($month>=19 && $month<=23) || ($month>=25 && $month<=29) || ($month>=31 && $month<=35) || ($month>=37 && $month<=41)){
+                    $normal_event = normal_event::where('time_type','0')->get();
+                }
+                //大一上
+                else if($month>=1 && $month<=5){
+                    $normal_event = normal_event::where('time_type','1')->get();
+                }
+                //畢業前
+                else if($month>=43 && $month<=47){
+                    $normal_event = normal_event::where('time_type','2')->get();
+                }
+                //寒假
+                else if($month == 6 || $month == 18 || $month == 30 || $month == 42){
+                    $normal_event = normal_event::where('time_type','3')->get();
+                }
+                //暑假
+                else if($month == 12 || $month == 24 || $month == 36){
+                    $normal_event = normal_event::where('time_type','4')->get();
+                }
+                //畢業
+                else if($month == 48){
+                    $normal_event = normal_event::where('time_type','5')->get();
+                }
                 $event = $normal_event->random(); 
                 game_process::create([
                     'user_id'=>$user_id,
@@ -373,8 +396,31 @@ class GameController extends Controller
                     'content'=>$event->content,
                 ]);
             }else if($event_kind>60 && $event_kind<=90){
+                //大一下~大四上
+                if(($month>=7 && $month<=11) || ($month>=13 && $month<=17) || ($month>=19 && $month<=23) || ($month>=25 && $month<=29) || ($month>=31 && $month<=35) || ($month>=37 && $month<=41)){
+                    $special_event = special_event::where('time_type','0')->where('name','random')->get();
+                }
+                //大一上
+                else if($month>=1 && $month<=5){
+                    $special_event = special_event::where('time_type','1')->where('name','random')->get();
+                }
+                //畢業前
+                else if($month>=43 && $month<=47){
+                    $special_event = special_event::where('time_type','2')->where('name','random')->get();
+                }
+                //寒假
+                else if($month == 6 || $month == 18 || $month == 30 || $month == 42){
+                    $special_event = special_event::where('time_type','3')->where('name','random')->get();
+                }
+                //暑假
+                else if($month == 12 || $month == 24 || $month == 36){
+                    $special_event = special_event::where('time_type','4')->where('name','random')->get();
+                }
+                //畢業
+                else if($month == 48){
+                    $special_event = special_event::where('time_type','5')->where('name','random')->get();
+                }                
                 //timlin : 我在這邊把事件名稱改成random 要記得改資料庫不然跑不動
-                $special_event = special_event::where('name','random')->get();
                 $event = $special_event->random();
                 $intelligence = $intelligence + $event->intelligence;
                 $appearance = $appearance + $event->appearance;
@@ -459,21 +505,11 @@ class GameController extends Controller
 }
 //時間的優先級最高
 /*time_type :
-0 : 隨時都會發生
-1 : 大一上會發生
-2 : 大一寒假
-3 : 大一下
-4 : 大一升大二暑假
-5 : 大二上
-6 : 大二寒假
-7 : 大二下
-8 : 大二升大三暑假
-9 : 大三上
-10 : 大三寒假
-11 : 大三下
-12 : 大三升大四暑假
-13 : 大四上
-14 : 大四寒假
-15 : 大四下
-16 : 畢業
+0 : 其他(大一下~大四上)
+1 : 大一上(入學)
+2 : 大四下(畢業前)(如果不想讓他們畢業可以在這裡操作)
+3 : 寒假(全部一起)
+4 : 暑假(全部一起)
+5 : 畢業
+6 : 大岩壁
 */
