@@ -49,23 +49,14 @@
                 <div class="p-3">
                     <h2>選擇天賦: </h2>
                     <form id="talent-form">
+                        @foreach ($talents as $talent)
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">二一體質</label>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheck{{ $loop->index }}" value="{{ $talent }}">
+                            <label class="form-check-label" for="flexSwitchCheck{{ $loop->index }}">{{ $talent }}</label>
                         </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                            <label class="form-check-label" for="flexSwitchCheckChecked">偷竊慣犯</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled">
-                            <label class="form-check-label" for="flexSwitchCheckDisabled">天生學霸</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">香米門神</label>
-                        </div>
+                        @endforeach
                     </form>
+
                 </div>
             </div>
             <div class="action-buttons">
