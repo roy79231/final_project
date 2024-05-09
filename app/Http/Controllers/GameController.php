@@ -170,7 +170,7 @@ class GameController extends Controller
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = dead_event::DIE_INTELLENGENCE;
+                    $death_way = 'intelligence';
                     $dieEvent = dead_event::where('way',$death_way)->get();
                     $randomDie = $dieEvent->random();
                     game_process::create([
