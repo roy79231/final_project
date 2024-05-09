@@ -17,7 +17,7 @@ use App\Models\User;
 
 class GameController extends Controller
 {
-    
+    //
     public function main(){
         return view('main');
     }
@@ -34,11 +34,9 @@ class GameController extends Controller
     public function start(){
         return view('start');
     }
-    
     public function finish(){
         return view('finish');
     }
-    //注意dead event中的way指的是 哪像屬性(intelligence 之類的)
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
@@ -47,13 +45,12 @@ class GameController extends Controller
         $appearance = $request->appearance;
         $luck = $request->luck;
         $morality = $request->morality;
-        $happiness =15;
+        $happiness = $request->happiness;
         $talent = talent::find($request->talent_id);
         $month = 1;
         $alive = true;
         $accomplish_achievements = [];
         //加上talent數值
-        
         $intelligence += $talent->intelligence;
         $wealth += $talent->wealth;
         $appearance += $talent->appearance;
@@ -174,7 +171,7 @@ class GameController extends Controller
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = dead_event::DIE_INTELLIGENCE;
+                    $death_way = dead_event::DIE_INTELLENGENCE;
                     $dieEvent = dead_event::where('way',$death_way)->get();
                     $randomDie = $dieEvent->random();
                     game_process::create([
@@ -367,7 +364,30 @@ class GameController extends Controller
             //事件
             $event_kind = rand(1,100);
             if($event_kind<=60){
-                $normal_event = normal_event::all();
+                //大一下~大四上
+                if(($month>=7 && $month<=11) || ($month>=13 && $month<=17) || ($month>=19 && $month<=23) || ($month>=25 && $month<=29) || ($month>=31 && $month<=35) || ($month>=37 && $month<=41)){
+                    $normal_event = normal_event::where('time_type','0')->get();
+                }
+                //大一上
+                else if($month>=1 && $month<=5){
+                    $normal_event = normal_event::where('time_type','1')->get();
+                }
+                //畢業前
+                else if($month>=43 && $month<=47){
+                    $normal_event = normal_event::where('time_type','2')->get();
+                }
+                //寒假
+                else if($month == 6 || $month == 18 || $month == 30 || $month == 42){
+                    $normal_event = normal_event::where('time_type','3')->get();
+                }
+                //暑假
+                else if($month == 12 || $month == 24 || $month == 36){
+                    $normal_event = normal_event::where('time_type','4')->get();
+                }
+                //畢業
+                else if($month == 48){
+                    $normal_event = normal_event::where('time_type','5')->get();
+                }
                 $event = $normal_event->random(); 
                 game_process::create([
                     'user_id'=>$user_id,
@@ -381,8 +401,31 @@ class GameController extends Controller
                     'content'=>$event->content,
                 ]);
             }else if($event_kind>60 && $event_kind<=90){
+                //大一下~大四上
+                if(($month>=7 && $month<=11) || ($month>=13 && $month<=17) || ($month>=19 && $month<=23) || ($month>=25 && $month<=29) || ($month>=31 && $month<=35) || ($month>=37 && $month<=41)){
+                    $special_event = special_event::where('time_type','0')->where('name','random')->get();
+                }
+                //大一上
+                else if($month>=1 && $month<=5){
+                    $special_event = special_event::where('time_type','1')->where('name','random')->get();
+                }
+                //畢業前
+                else if($month>=43 && $month<=47){
+                    $special_event = special_event::where('time_type','2')->where('name','random')->get();
+                }
+                //寒假
+                else if($month == 6 || $month == 18 || $month == 30 || $month == 42){
+                    $special_event = special_event::where('time_type','3')->where('name','random')->get();
+                }
+                //暑假
+                else if($month == 12 || $month == 24 || $month == 36){
+                    $special_event = special_event::where('time_type','4')->where('name','random')->get();
+                }
+                //畢業
+                else if($month == 48){
+                    $special_event = special_event::where('time_type','5')->where('name','random')->get();
+                }                
                 //timlin : 我在這邊把事件名稱改成random 要記得改資料庫不然跑不動
-                $special_event = special_event::where('name','random')->get();
                 $event = $special_event->random();
                 $intelligence = $intelligence + $event->intelligence;
                 $appearance = $appearance + $event->appearance;
@@ -393,37 +436,31 @@ class GameController extends Controller
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intelligence'=>$intelligence,
-                    'appearance'=> $appearance,
-                    'wealth'=> $wealth,
-                    'luck'=>$luck,
-                    'happiness'=>$happiness,
-                    'morality'=>$morality,
+                    'intelligence'=>$intelligence + $event->intelligence,
+                    'appearance'=> $appearance + $event->appearance,
+                    'wealth'=> $wealth + $event->wealth,
+                    'luck'=>$luck + $event->luck,
+                    'happiness'=>$happiness + $event->happiness,
+                    'morality'=>$morality + $event->morality,
                     'content'=>$event->content,
                 ]);
             }else{
-                $achievement_event = achievement_event::all();
-                $event = $achievement_event->random();
-                $intelligence = $intelligence + $event->intelligence;
-                $appearance = $appearance + $event->appearance;
-                $wealth = $wealth + $event->wealth;
-                $luck = $luck + $event->luck;
-                $happiness = $happiness + $event->happiness;
-                $morality = $morality + $event->morality;
+                $rand_range = achievement_event::all()->count();
+                $event_id = rand(1,$rand_range);
+                $event = achievement_event::find($event_id);
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intelligence'=>$intelligence,
-                    'appearance'=> $appearance,
-                    'wealth'=> $wealth,
-                    'luck'=>$luck,
-                    'happiness'=>$happiness ,
-                    'morality'=>$morality,
+                    'intelligence'=>$intelligence + $event->intelligence,
+                    'appearance'=> $appearance + $event->appearance,
+                    'wealth'=> $wealth + $event->wealth,
+                    'luck'=>$luck + $event->luck,
+                    'happiness'=>$happiness + $event->happiness,
+                    'morality'=>$morality + $event->morality,
                     'content'=>$event->content,
                 ]);
-                $accomplish_achievements[] = $event->achievement_id;
+                $accomplish_achievements = $event->achievement_id;
             }
-            $month+=1;
         };
         //這個foreach有問題要修 已解決
         if(!empty($accomplish_achievements)){
@@ -435,7 +472,7 @@ class GameController extends Controller
             };
         }
         $game_processes = game_process::where('user_id',$user_id)->get();
-        return view('monthlyevent',[//timlin:我在這裡牽到monthlyevent
+        return view('tim的',[
             'game_processes' => $game_processes,
             'accomplish_achievements' => $accomplish_achievements,
         ]);
@@ -443,8 +480,10 @@ class GameController extends Controller
     public function make_end(Request $request){
         //清process和ending資料
         $user_id = auth()->user()->id;
-        $game_delete = game_process::where('user_id',$user_id)->delete();
-        $end_delete = game_ending::where('user_id',$user_id)->delete();
+        $game_delete = game_process::where('user_id',$user_id)->get();
+        $game_delete->delete();
+        $end_delete = game_ending::where('user_id',$user_id)->get();
+        $end_delete->delete();
         //準備ending
         $intelligence = $request->intelligence;
         $wealth = $request->wealth;
@@ -471,21 +510,11 @@ class GameController extends Controller
 }
 //時間的優先級最高
 /*time_type :
-0 : 隨時都會發生
-1 : 大一上會發生
-2 : 大一寒假
-3 : 大一下
-4 : 大一升大二暑假
-5 : 大二上
-6 : 大二寒假
-7 : 大二下
-8 : 大二升大三暑假
-9 : 大三上
-10 : 大三寒假
-11 : 大三下
-12 : 大三升大四暑假
-13 : 大四上
-14 : 大四寒假
-15 : 大四下
-16 : 畢業
+0 : 其他(大一下~大四上)
+1 : 大一上(入學)
+2 : 大四下(畢業前)(如果不想讓他們畢業可以在這裡操作)
+3 : 寒假(全部一起)
+4 : 暑假(全部一起)
+5 : 畢業
+6 : 大岩壁
 */
