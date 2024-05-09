@@ -169,7 +169,7 @@
             </div>
             
             <div class="month_move_skip">
-                <form action="{{route("finish")}}">
+                <form action="{{route("finish")}}" method="POST">
                     @csrf
                     <button id="month_skip">跳過?</button>
                 </form>
@@ -238,22 +238,17 @@
                 document.getElementById('happychange').innerHTML = "   "+(monthhappy[count]-monthhappy[count-1]);
                 document.getElementById('happychange').style.color = 'red';
             }
-            if(monthnumber==totalmonth){
-                
-                document.getElementById('month_next').id = "to_finish";
-                document.getElementById("to_finish").addEventListener("click", to_finish);
-                function to_finish(){//導向結算頁面
-                    window.location.href='/final_project/public/index.php/finish';
-                }
-            }
         }
+        else if(monthnumber>totalmonth){
+                //導向結算頁面
+                window.location.href='/final_project/public/index.php/finish';
+                
+            }
     }
     
     document.getElementById("month_last").addEventListener("click", lastmonth);
     function lastmonth(){
-        if(monthnumber==totalmonth)
-            document.getElementById('to_finish').id = "month_next";
-            
+        
         monthnumber-=1;
         count-=1;
         if(monthnumber<=0){
