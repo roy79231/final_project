@@ -14,8 +14,6 @@ use App\Models\achievement_fins;
 use App\Models\dead_event;
 use App\Models\User;
 
-
-
 class GameController extends Controller
 {
     //
