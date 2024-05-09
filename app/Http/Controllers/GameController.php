@@ -24,16 +24,19 @@ class GameController extends Controller
     }
     public function achievement(Request $request){
         // Retrieve achievements for the given user_id
-        
+
         $achievements = achievement_fins::where('user_id', $request->user()->id)->with('achievement')->get();
         // Pass achievements data to the view
-        return view('achievement', ['achievements' => $achievements]);    
+        return view('achievement', ['achievements' => $achievements]);
     }
     public function post(){
         return view('post');
     }
     public function start(Request $request){
         return view('start');
+    }
+    public function addPoints(){
+        return view('addPoints');
     }
 
     public function run(Request $request){
@@ -56,10 +59,10 @@ class GameController extends Controller
         $luck += $talent->luck;
         $morality += $talent->morality;
         $happiness += $talent->happiness;
-        
+
         //先確定清空資料 有問題不能正確清空資料 已解決
         $game_delete = game_process::where('user_id',$user_id)->delete();
-        
+
         //跑每個月
         while($month<=48 && $alive==true){
             //死亡的部分
@@ -85,18 +88,18 @@ class GameController extends Controller
                     ]);
                     break;
                 }
-                /*timlin: 
+                /*timlin:
                 我在這邊可以多寫一個else用來寫特定屬性的加分事件
                 就是如果他沒有死掉，就50%會繼續做扣該屬性的事件 有個問題是:如果他的屬性都很平均，就必須用原本的隨機特殊事件做分數的變動
-                
+
                 我認為事件需要一點前應後果，假設他初始道德是2，那就算他沒有依此直接死亡，那也應該遵循他現在的過低的道德屬性來給他事件
-                
-                加分事件可以大致分成兩大項 
+
+                加分事件可以大致分成兩大項
                 1.因為某項屬性過低而執行的"特定數性加分事件"
                 2.內容相較於前者更加隨機的"隨機加分事件"
                 */
-                
-                else if(rand(1,10)<=5){     
+
+                else if(rand(1,10)<=5){
                     //timlin:注意!! 我在這邊的name是加分事件的name對應到特定屬性 (像是intelligence)
                     $special_event = special_event::where('name',"wealth")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
                     $event = $special_event->random();
@@ -120,7 +123,7 @@ class GameController extends Controller
                     continue;
                     //timln:我改到這邊 試試看
                 }
-                
+
             }
             if($appearance<10){ //外貌  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
@@ -142,8 +145,8 @@ class GameController extends Controller
                     ]);
                     break;
                 }
-                else if(rand(1,10)<=5){     
-                    
+                else if(rand(1,10)<=5){
+
                     $special_event = special_event::where('name',"appearance")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
@@ -170,7 +173,7 @@ class GameController extends Controller
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
                     $alive =false;
-                    $death_way = dead_event::DIE_INTELLENGENCE;
+                    $death_way = 'intelligence';
                     $dieEvent = dead_event::where('way',$death_way)->get();
                     $randomDie = $dieEvent->random();
                     game_process::create([
@@ -186,8 +189,8 @@ class GameController extends Controller
                     ]);
                     break;
                 }
-                else if(rand(1,10)<=5){     
-                    
+                else if(rand(1,10)<=5){
+
                     $special_event = special_event::where('name',"intelligence")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
@@ -230,8 +233,8 @@ class GameController extends Controller
                     ]);
                     break;
                 }
-                else if(rand(1,10)<=5){     
-                    
+                else if(rand(1,10)<=5){
+
                     $special_event = special_event::where('name',"morality")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
@@ -274,8 +277,8 @@ class GameController extends Controller
                     ]);
                     break;
                 }
-                else if(rand(1,10)<=5){     
-                    
+                else if(rand(1,10)<=5){
+
                     $special_event = special_event::where('name',"happiness")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
@@ -318,8 +321,8 @@ class GameController extends Controller
                     ]);
                     break;
                 }
-                else if(rand(1,10)<=5){     
-                    
+                else if(rand(1,10)<=5){
+
                     $special_event = special_event::where('name',"luck")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
@@ -387,7 +390,7 @@ class GameController extends Controller
                 else if($month == 48){
                     $normal_event = normal_event::where('time_type','5')->get();
                 }
-                $event = $normal_event->random(); 
+                $event = $normal_event->random();
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
@@ -423,7 +426,7 @@ class GameController extends Controller
                 //畢業
                 else if($month == 48){
                     $special_event = special_event::where('time_type','5')->where('name','random')->get();
-                }                
+                }
                 //timlin : 我在這邊把事件名稱改成random 要記得改資料庫不然跑不動
                 $event = $special_event->random();
                 $intelligence = $intelligence + $event->intelligence;

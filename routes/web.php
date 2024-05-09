@@ -10,7 +10,7 @@ use App\Http\Controllers\upLoadControllers\specialEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\talentUpLoadController;
 use App\Http\Controllers\upLoadControllers\deadUpLoadController;
 
-
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\forumcontroller;
 use App\Http\Controllers\achievementcontroller;
@@ -34,6 +34,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/',[GameController::class,'main'])->name('main');
+
+Route::get('/addPoints',[GameController::class,'addPoints'])->middleware('auth')->name('addPoints');
 
 Route::get('/achievement/{id}',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
 
