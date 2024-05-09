@@ -48,7 +48,7 @@ Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('
 
 Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');
 //timlin:我在這裡把run 牽到monthlyevent的balde
-Route::get('/finish',[GameController::class,'finish'])->name('finish');
+Route::post('/finish',[GameController::class,'finish'])->name('finish');
 
 Route::get('/roleControl', [RoleController::class,'index'])->name('index');
 
@@ -88,7 +88,6 @@ Route::delete('/deadUpLoader/destroy/{id}', [deadUpLoadController::class, 'deadU
 Route::patch('/deadUpLoader/edit/{id}', [deadUpLoadController::class, 'deadUpLoadEdit'])->name('deadUpLoader.edit');
 
 //結算頁面的部份-------------------------------------------------------------------------------------------------------------------------------------------
-Route::get('/finish',[GameController::class,'finish'])->name('finish');
 
 
 

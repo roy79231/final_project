@@ -169,7 +169,7 @@
             </div>
             
             <div class="month_move_skip">
-                <form action="{{route("finish")}}">
+                <form action="{{route("finish")}}" method="POST">
                     @csrf
                     <button id="month_skip">跳過?</button>
                 </form>
