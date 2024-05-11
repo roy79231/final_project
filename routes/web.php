@@ -88,15 +88,10 @@ Route::delete('/deadUpLoader/destroy/{id}', [deadUpLoadController::class, 'deadU
 Route::patch('/deadUpLoader/edit/{id}', [deadUpLoadController::class, 'deadUpLoadEdit'])->name('deadUpLoader.edit');
 
 
-
+//這是討論區---------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
-
 Route::get('/forumindex',[forumcontroller::class,'forumindex'])->name('forumindex')->middleware('auth');
-
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
-
 Route::post('forumindex/forumdelete/{id}',[forumcontroller::class,'forumdelete'])->name('forumdelete');
-
 Route::post('forumindex/forumchange/{id}',[forumcontroller::class,'forumchange'])->name("forumchange");
-
 Route::get('/achievementindex/{user_id}', [achievementcontroller::class, 'showAchievements'])->name('showAchievements')->middleware('auth');
