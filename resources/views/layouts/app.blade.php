@@ -35,29 +35,28 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item me-2">
-                        <a class="nav-link active" aria-current="page" href="{{url('/')}}">主頁</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link active" href="{{route('post')}}">討論區</a>
-                    </li>
-
-                    <li class="nav-item me-2">
-                        <a class="nav-link active" href="{{route('achievement')}}">成就</a>
-                    </li>
-                </ul>
-
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    主頁
+                </a>
+                <?php $user = Auth::user()?>
+                @if($user)
+                <a class="navbar-brand" href="{{ route('achievement',Auth::user()->id) }}">
+                    成就
+                </a>
+                @endif
+                <a class="navbar-brand" href="{{ route('forumindex') }}">
+                    討論區
+                </a>
                 <?php $user = Auth::user()?>
                 @if(($user && $user->role == User::ROLE_ADMIN))
                 <a class="navbar-brand" href="{{ route('index') }}">
                     adminControll
                 </a>
                 @endif
-                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
