@@ -18,7 +18,7 @@ class game_process extends Model
         'morality',
         'happiness',
         'content',
-        'achievement_id'
+        'achievement_id',//timlin新增
     ];
     
 }

@@ -268,7 +268,7 @@ class GameController extends Controller
                     'happiness'=>$happiness,
                     'morality'=>$morality,
                     'content'=>$event->content,
-                    'achievement_id'=>-1
+                    'achievement_id'=>-1,
                 ]);
                     $month+=1;
                     
@@ -317,7 +317,7 @@ class GameController extends Controller
                     'happiness'=>$happiness,
                     'morality'=>$morality,
                     'content'=>$event->content,
-                    'achievement_id'=>-1
+                    'achievement_id'=>-1,
                 ]);
                     $month+=1;
                     
@@ -341,7 +341,7 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
-                        'achievement_id'=>-1
+                        'achievement_id'=>-1,
                     ]);
                     
                     break;
@@ -366,7 +366,7 @@ class GameController extends Controller
                     'happiness'=>$happiness,
                     'morality'=>$morality,
                     'content'=>$event->content,
-                    'achievement_id'=>-1
+                    'achievement_id'=>-1,
                 ]);
                     $month+=1;
                     
@@ -388,7 +388,7 @@ class GameController extends Controller
                     'happiness'=>$happiness,
                     'morality'=>$morality,
                     'content'=>$randomDie->content,
-                    'achievement_id'=>-1
+                    'achievement_id'=>-1,
                 ]);
                 
                 break;
@@ -431,7 +431,7 @@ class GameController extends Controller
                     'happiness'=>$happiness,
                     'morality'=>$morality,
                     'content'=>$event->content,
-                    'achievement_id'=>-1//timlin新增
+                    'achievement_id'=>-1,//timlin新增
                 ]);
                 
             }else if($event_kind>60 && $event_kind<=90){
@@ -477,7 +477,7 @@ class GameController extends Controller
                     'happiness'=>$happiness + $event->happiness,
                     'morality'=>$morality + $event->morality,
                     'content'=>$event->content,
-                    'achievement_id'=>-1
+                    'achievement_id'=>-1,
                 ]);
                 
             }else{
@@ -494,7 +494,7 @@ class GameController extends Controller
                     'happiness'=>$happiness + $event->happiness,
                     'morality'=>$morality + $event->morality,
                     'content'=>$event->content,
-                    'achievement_id'=>$event->achievement_id//timlin新增
+                    'achievement_id'=>$event->achievement_id,//timlin新增
                 ]);
                 $accomplish_achievements = $event->achievement_id;
             }
