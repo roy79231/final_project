@@ -28,7 +28,7 @@ class normalEventUpLoadController extends Controller
         $request->validate([
             'name' => 'required|string',
             'content' => 'required|string',
-            'time_type'=>'required|time_type'
+            'time_type'=>'required|integer'//timlin修改 從time_type改成integer 不確定對不對
         ]);//要求不為空
 
         $creat = new normal_event();
@@ -52,7 +52,7 @@ class normalEventUpLoadController extends Controller
         $request->validate([
             'name' => 'required|string',
             'content' => 'required|string',
-            'time_type'=>'required|time_type'
+            'time_type'=>'required|integer'//timlin修改 從time_type改成integer
         ]);
 
         $edit = normal_event::find($id);
