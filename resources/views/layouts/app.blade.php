@@ -57,18 +57,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button> 
 
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item me-2">
-                        <a class="nav-link active" aria-current="page" href="{{url('/')}}">主頁</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link active" href="{{route('post')}}">討論區</a>
-                    </li>
 
-                    <li class="nav-item me-2">
-                        <a class="nav-link active" href="{{route('achievement')}}">成就</a>
-                    </li>
-                </ul>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->

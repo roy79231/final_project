@@ -86,6 +86,7 @@ class GameController extends Controller
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
                     ]);
+                    
                     break;
                 }
                 /*timlin:
@@ -118,10 +119,12 @@ class GameController extends Controller
                     'luck'=>$luck,
                     'happiness'=>$happiness,
                     'morality'=>$morality,
-                    'content'=>$event->content,]);
+                    'content'=>$event->content,
+                    'achievement_id'=>-1//timlin新增
+                ]);
                     $month+=1;
                     continue;
-                    //timln:我改到這邊 試試看
+                    
                 }
 
             }
@@ -142,7 +145,9 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
+                        'achievement_id'=>-1
                     ]);
+                    
                     break;
                 }
                 else if(rand(1,10)<=5){
@@ -164,8 +169,11 @@ class GameController extends Controller
                     'luck'=>$luck,
                     'happiness'=>$happiness,
                     'morality'=>$morality,
-                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    'content'=>$event->content,
+                    'achievement_id'=>-1
+                ]);
                     $month+=1;
+                    
                     continue;
                 }
             }
@@ -186,12 +194,14 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
+                        'achievement_id'=>-1
                     ]);
+                    
                     break;
                 }
                 else if(rand(1,10)<=5){
 
-                    $special_event = special_event::where('name',"intelligence")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                    $special_event = special_event::where('name',"intelligence")->get(); //把加分事件的名字用屬性做區分 
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
                     $appearance = $appearance + $event->appearance;
@@ -208,8 +218,11 @@ class GameController extends Controller
                     'luck'=>$luck,
                     'happiness'=>$happiness,
                     'morality'=>$morality,
-                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    'content'=>$event->content,
+                    'achievement_id'=>-1
+                ]);
                     $month+=1;
+                    
                     continue;
                 }
             }
@@ -230,7 +243,9 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
+                        'achievement_id'=>-1
                     ]);
+                    
                     break;
                 }
                 else if(rand(1,10)<=5){
@@ -252,8 +267,11 @@ class GameController extends Controller
                     'luck'=>$luck,
                     'happiness'=>$happiness,
                     'morality'=>$morality,
-                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    'content'=>$event->content,
+                    'achievement_id'=>-1
+                ]);
                     $month+=1;
+                    
                     continue;
                 }
             }
@@ -274,7 +292,9 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
+                        'achievement_id'=>-1
                     ]);
+                    
                     break;
                 }
                 else if(rand(1,10)<=5){
@@ -296,8 +316,11 @@ class GameController extends Controller
                     'luck'=>$luck,
                     'happiness'=>$happiness,
                     'morality'=>$morality,
-                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    'content'=>$event->content,
+                    'achievement_id'=>-1
+                ]);
                     $month+=1;
+                    
                     continue;
                 }
             }
@@ -318,12 +341,14 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
+                        'achievement_id'=>-1
                     ]);
+                    
                     break;
                 }
                 else if(rand(1,10)<=5){
 
-                    $special_event = special_event::where('name',"luck")->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                    $special_event = special_event::where('name',"luck")->get(); //把加分事件的名字用屬性做區分 
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
                     $appearance = $appearance + $event->appearance;
@@ -340,8 +365,11 @@ class GameController extends Controller
                     'luck'=>$luck,
                     'happiness'=>$happiness,
                     'morality'=>$morality,
-                    'content'=>$event->content,]);//timln:我改到這邊 試試看
+                    'content'=>$event->content,
+                    'achievement_id'=>-1
+                ]);
                     $month+=1;
+                    
                     continue;
                 }
             }
@@ -360,7 +388,9 @@ class GameController extends Controller
                     'happiness'=>$happiness,
                     'morality'=>$morality,
                     'content'=>$randomDie->content,
+                    'achievement_id'=>-1
                 ]);
+                
                 break;
             }
             //事件
@@ -401,7 +431,9 @@ class GameController extends Controller
                     'happiness'=>$happiness,
                     'morality'=>$morality,
                     'content'=>$event->content,
+                    'achievement_id'=>-1//timlin新增
                 ]);
+                
             }else if($event_kind>60 && $event_kind<=90){
                 //大一下~大四上
                 if(($month>=7 && $month<=11) || ($month>=13 && $month<=17) || ($month>=19 && $month<=23) || ($month>=25 && $month<=29) || ($month>=31 && $month<=35) || ($month>=37 && $month<=41)){
@@ -445,7 +477,9 @@ class GameController extends Controller
                     'happiness'=>$happiness + $event->happiness,
                     'morality'=>$morality + $event->morality,
                     'content'=>$event->content,
+                    'achievement_id'=>-1
                 ]);
+                
             }else{
                 $rand_range = achievement_event::all()->count();
                 $event_id = rand(1,$rand_range);
@@ -460,6 +494,7 @@ class GameController extends Controller
                     'happiness'=>$happiness + $event->happiness,
                     'morality'=>$morality + $event->morality,
                     'content'=>$event->content,
+                    'achievement_id'=>$event->achievement_id//timlin新增
                 ]);
                 $accomplish_achievements = $event->achievement_id;
             }
@@ -467,10 +502,12 @@ class GameController extends Controller
         //這個foreach有問題要修 已解決
         if(!empty($accomplish_achievements)){
             foreach($accomplish_achievements as $accomplish){
-                achievement_fins::create([
-                    'user_id'=> $user_id,
-                    'achievement_id'=> $accomplish,
-                ]);
+                
+                    achievement_fins::create([
+                        'user_id'=> $user_id,
+                        'achievement_id'=> $accomplish,
+                    ]);
+                
             };
         }
         $game_processes = game_process::where('user_id',$user_id)->get();
