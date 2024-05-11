@@ -87,18 +87,11 @@ Route::post('/deadUpLoader/store', [deadUpLoadController::class, 'deadUpLoadStor
 Route::delete('/deadUpLoader/destroy/{id}', [deadUpLoadController::class, 'deadUpLoadDestroy'])->name('deadUpLoader.destroy');
 Route::patch('/deadUpLoader/edit/{id}', [deadUpLoadController::class, 'deadUpLoadEdit'])->name('deadUpLoader.edit');
 
-//結算頁面的部份-------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
+//這是討論區---------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
-
 Route::get('/forumindex',[forumcontroller::class,'forumindex'])->name('forumindex')->middleware('auth');
-
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
-
 Route::post('forumindex/forumdelete/{id}',[forumcontroller::class,'forumdelete'])->name('forumdelete');
-
 Route::post('forumindex/forumchange/{id}',[forumcontroller::class,'forumchange'])->name("forumchange");
-
 Route::get('/achievementindex/{user_id}', [achievementcontroller::class, 'showAchievements'])->name('showAchievements')->middleware('auth');

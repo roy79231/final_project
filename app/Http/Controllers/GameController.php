@@ -14,8 +14,6 @@ use App\Models\achievement_fins;
 use App\Models\dead_event;
 use App\Models\User;
 
-
-
 class GameController extends Controller
 {
     //
@@ -35,6 +33,9 @@ class GameController extends Controller
     public function start(Request $request){
         return view('start');
     }
+    /*public function finish(){
+        return view('finish');
+    }*/
     public function addPoints(){
         return view('addPoints');
     }

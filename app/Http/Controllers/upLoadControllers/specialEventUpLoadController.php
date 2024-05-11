@@ -5,10 +5,21 @@ namespace App\Http\Controllers\upLoadControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\special_event;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class specialEventUpLoadController extends Controller
 {
     public function specialEventUpLoader(){
+        $users = User::all();
+        if(Auth::user()->role !== User::ROLE_ADMIN){
+            abort(403, '你是user 請你離開');
+            return view('/');
+        }
+        return view('control',['users'=>$users]);
+        $postAchievement = achievement_event::all();
+
+
         $postAchievement = special_event::all();
         return view('upLoader/specialEventUpLoad', compact('postAchievement'));
     }
