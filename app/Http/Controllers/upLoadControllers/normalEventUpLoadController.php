@@ -17,8 +17,7 @@ class normalEventUpLoadController extends Controller
             return view('/');
         }
         return view('control',['users'=>$users]);
-        $postAchievement = achievement_event::all();*/
-
+        */
         $postAchievement = normal_event::all();
         return view('upLoader/normalEventUpLoad', compact('postAchievement'));
     }
@@ -28,7 +27,7 @@ class normalEventUpLoadController extends Controller
         $request->validate([
             'name' => 'required|string',
             'content' => 'required|string',
-            'time_type'=>'required|time_type'
+            'time_type'=>'required|integer',
         ]);//要求不為空
 
         $creat = new normal_event();
@@ -52,7 +51,7 @@ class normalEventUpLoadController extends Controller
         $request->validate([
             'name' => 'required|string',
             'content' => 'required|string',
-            'time_type'=>'required|time_type'
+            'time_type'=>'required|integer'
         ]);
 
         $edit = normal_event::find($id);

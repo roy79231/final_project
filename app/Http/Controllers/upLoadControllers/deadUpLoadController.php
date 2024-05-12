@@ -17,7 +17,6 @@ class deadUpLoadController extends Controller
             return view('/');
         }
         return view('control',['users'=>$users]);
-        $postAchievement = achievement_event::all();
         */
 
         $postAchievement = dead_event::all();

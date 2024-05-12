@@ -8,7 +8,13 @@
         @csrf
         <input type="String" name="name" placeholder="name" required> <br>
         <input type="String" name="content" placeholder="content" required> <br>
-        <input type="String" name="time_type" placeholder="time_type" required> <!-- 新增time_type輸入框 -->
+        <select name="time_type" id="time_type" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
         <button type="submit">新增</button>
     </form>
 
@@ -28,8 +34,14 @@
                     <input id="contentInput{{ $post->id }}" type="text" name="content" placeholder="content" value="{{ $post->content }}" style="display: none;" required>
                 </div>
                 <div>
-                    <p id="time_type{{ $post->id }}" style="display: inline;">Time Type: {{ $post->time_type }}</p> <!-- 顯示time_type -->
-                    <input id="time_typeInput{{ $post->id }}" type="text" name="time_type" placeholder="time_type" value="{{ $post->time_type }}" style="display: none;" required> <!-- 編輯時的time_type輸入框 -->
+                    <p id="time_type{{ $post->id }}" style="display: inline;">Time Type: {{ $post->time_type }}</p>
+                    <select id="time_typeInput{{ $post->id }}" name="time_type" style="display: none;" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
                 </div>
                 <div>
                     <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>

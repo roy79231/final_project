@@ -11,15 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class specialEventUpLoadController extends Controller
 {
     public function specialEventUpLoader(){
-        $users = User::all();
+        /*$users = User::all();
         if(Auth::user()->role !== User::ROLE_ADMIN){
             abort(403, '你是user 請你離開');
             return view('/');
         }
         return view('control',['users'=>$users]);
-        $postAchievement = achievement_event::all();
-
-
+        */
         $postAchievement = special_event::all();
         return view('upLoader/specialEventUpLoad', compact('postAchievement'));
     }
@@ -35,6 +33,7 @@ class specialEventUpLoadController extends Controller
             'luck' => 'required|integer',
             'morality' => 'required|integer',
             'happiness' => 'required|integer',
+            'time_type'=>'required|integer',
         ]);//要求不為空
 
         $creat = new special_event();
@@ -46,6 +45,7 @@ class specialEventUpLoadController extends Controller
         $creat->luck = $request->luck;
         $creat->morality = $request->morality;
         $creat->happiness = $request->happiness;
+        $creat->time_type = $request->time_type;
         $creat->save();
 
         return redirect()->route('specialEventUpLoader');
@@ -69,6 +69,7 @@ class specialEventUpLoadController extends Controller
             'luck' => 'required|integer',
             'morality' => 'required|integer',
             'happiness' => 'required|integer',
+            'time_type'=>'required|integer',
         ]);
 
         $edit = special_event::find($id);
@@ -80,6 +81,7 @@ class specialEventUpLoadController extends Controller
         $edit->luck = $request->luck;
         $edit->morality = $request->morality;
         $edit->happiness = $request->happiness;
+        $edit->time_type = $request->time_type;
         $edit->save();
 
         return redirect()->route('specialEventUpLoader');
