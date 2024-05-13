@@ -26,12 +26,16 @@
         </p>
     </div>
     <div class="boxLeft">
+        <?php
+            $total = $end->intelligence + $end->wealth + $end->appearance + $end->luck + $end->morality + $end->happiness;
+        ?>
+
         <p>
-            總評:
+            總評 : {{ $total }}
         </p>
         <br>
         <p>
-            gg2
+            gg
         </p>
     </div>
 </div>

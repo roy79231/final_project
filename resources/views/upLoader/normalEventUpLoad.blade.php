@@ -9,6 +9,7 @@
         <input type="String" name="name" placeholder="name" required> <br>
         <input type="String" name="content" placeholder="content" required> <br>
         <select name="time_type" id="time_type" required>
+            <option value="0">Time type: 0</option>
             <option value="1">Time type: 1</option>
             <option value="2">Time type: 2</option>
             <option value="3">Time type: 3</option>
@@ -36,6 +37,7 @@
                 <div>
                     <p id="time_type{{ $post->id }}" style="display: inline;">Time Type: {{ $post->time_type }}</p>
                     <select id="time_typeInput{{ $post->id }}" name="time_type" style="display: none;" required>
+                        <option value="0">Time type: 0</option>
                         <option value="1">Time type: 1</option>
                         <option value="2">Time type: 2</option>
                         <option value="3">Time type: 3</option>

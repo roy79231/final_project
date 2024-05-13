@@ -517,19 +517,21 @@ class GameController extends Controller
             'accomplish_achievements' => $accomplish_achievements,
         ]);
     }
-    public function finish(Request $request){
+    public function finish(){
         //清process和ending資料
         $user_id = auth()->user()->id;
+        $last_month = game_process::where('user_id',$user_id)->latest('created_at')->value('month');
+        $make_end = game_process::where('user_id',$user_id)->where('month',$last_month)->get();
         $game_delete = game_process::where('user_id',$user_id)->delete();
         $end_delete = game_ending::where('user_id',$user_id)->delete();
         //準備ending
-        $intelligence = $request->intelligence;
-        $wealth = $request->wealth;
-        $appearance = $request->appearance;
-        $luck = $request->luck;
-        $morality = $request->morality;
-        $happiness = $request->happiness;
-        $accomplish_achievements = $request->accomplish_achievements;
+        $intelligence = $make_end->intelligence;
+        $wealth = $make_end->wealth;
+        $appearance = $make_end->appearance;
+        $luck = $make_end->luck;
+        $morality = $make_end->morality;
+        $happiness = $make_end->happiness;
+        $accomplish_achievements = $make_end->accomplish_achievements;
         game_ending::create([
             'user_id'=>$user_id,
             'intelligence'=>$intelligence,
