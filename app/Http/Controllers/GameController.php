@@ -20,13 +20,23 @@ class GameController extends Controller
     public function main(){
         return view('main');
     }
-    public function achievement(Request $request){
-        // Retrieve achievements for the given user_id
-
-        $achievements = achievement_fins::where('user_id', $request->user()->id)->with('achievement')->get();
-        // Pass achievements data to the view
-        return view('achievement', ['achievements' => $achievements]);
-    }
+    public function achievement(Request $request)
+{
+    // 檢索已解鎖的成就
+    $unlockedAchievements = achievement_fins::where('user_id', $request->user()->id)
+        ->with('achievement')
+        ->get();
+    
+    // 檢索尚未解鎖的成就
+    $lockedAchievements = achievement::whereNotIn('id', $unlockedAchievements->pluck('achievement_id'))
+        ->get();
+    
+    // 將已解鎖的成就和尚未解鎖的成就合併，使已解鎖的成就顯示在最上面
+    $achievements = $unlockedAchievements->merge($lockedAchievements);
+    
+    // 傳遞成就數據給視圖
+    return view('achievement', ['achievements' => $achievements]);
+}
     public function post(){
         return view('post');
     }
