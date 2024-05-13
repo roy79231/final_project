@@ -26,6 +26,8 @@ class GameController extends Controller
         
         $achievements = achievement_fins::where('user_id', $request->user()->id)->with('achievement')->get();
         // Pass achievements data to the view
+
+        
         return view('achievement', ['achievements' => $achievements]);    
     }
     public function post(){
