@@ -9,6 +9,7 @@ use App\Http\Controllers\upLoadControllers\normalEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\specialEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\talentUpLoadController;
 use App\Http\Controllers\upLoadControllers\deadUpLoadController;
+use App\Http\Controllers\talentController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -35,7 +36,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/',[GameController::class,'main'])->name('main');
 
-Route::get('/addPoints',[GameController::class,'addPoints'])->middleware('auth')->name('addPoints');
+Route::get('/addPoints',[TalentController::class,'showForm'])->middleware('auth')->name('addPoints');
 Route::get('/add-points', 'TalentController@showForm');
 
 
