@@ -163,9 +163,9 @@
                     <h2>選擇天賦: </h2>
                     <form id="talent-form">
                         @foreach ($talents as $talent)
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheck{{ $loop->index }}" value="{{ $talent }}">
-                            <label class="form-check-label" for="flexSwitchCheck{{ $loop->index }}">{{ $talent }}</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="talent" id="talent{{ $loop->index }}" value="{{ $talent }}">
+                            <label class="form-check-label" for="talent{{ $loop->index }}">{{ $talent }}</label>
                         </div>
                         @endforeach
                     </form>
@@ -180,8 +180,6 @@
 
     </div>
 </div>
-@endsection
-
 <script>
     // Maximum sum allowed
     let MAX_SUM = 20;
@@ -285,4 +283,6 @@
     });
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+@endsection
+
+
