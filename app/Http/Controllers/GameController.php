@@ -497,16 +497,16 @@ class GameController extends Controller
                     'content'=>$event->content,
                     'achievement_id'=>$event->achievement_id,//timlin新增
                 ]);
-                $accomplish_achievements = $event->achievement_id;
+                array_push($accomplish_achievements ,$event->achievement_id);
             }
         };
         //這個foreach有問題要修 已解決
         if(!empty($accomplish_achievements)){
-            foreach($accomplish_achievements as $accomplish){
+            for($i=0;$i<count($accomplish_achievements);$i++){
                 
                     achievement_fins::create([
                         'user_id'=> $user_id,
-                        'achievement_id'=> $accomplish,
+                        'achievement_id'=> $accomplish_achievements[$i],
                     ]);
                 
             };
