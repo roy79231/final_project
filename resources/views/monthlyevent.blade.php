@@ -47,6 +47,7 @@
         text-align: center;
         font-size: 20px;
         width:600px;
+        font:bold;
     }
     .attribute_change{
         font-size: 30px;
