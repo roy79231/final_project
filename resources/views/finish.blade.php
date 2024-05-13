@@ -65,6 +65,6 @@
         width: 49%;
         background-color: #ccc;
         padding: 20px;
-        font-size: 20px;  /* 文字大小 */
+        font-size: 20px;  /* 文字大小 操*/ 
     }
   </style>

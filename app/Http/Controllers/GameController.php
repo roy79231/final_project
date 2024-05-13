@@ -63,7 +63,7 @@ class GameController extends Controller
 
         //先確定清空資料 有問題不能正確清空資料 已解決
         $game_delete = game_process::where('user_id',$user_id)->delete();
-
+        $end_delete = game_ending::where('user_id',$user_id)->delete();
         //跑每個月
         while($month<=48 && $alive==true){
             //死亡的部分
@@ -520,11 +520,15 @@ class GameController extends Controller
     public function finish(){
         //清process和ending資料
         $user_id = auth()->user()->id;
-        $last_month = game_process::where('user_id',$user_id)->latest('created_at')->value('month');
-        $make_end = game_process::where('user_id',$user_id)->where('month',$last_month)->get();
-        $game_delete = game_process::where('user_id',$user_id)->delete();
-        $end_delete = game_ending::where('user_id',$user_id)->delete();
+        $end = game_ending::where('user_id',$user_id)->delete();
+
+        //$last_month = game_process::where('user_id',$user_id)->max('month');
+        $make_end = game_process::where('user_id', $user_id)
+        ->orderBy('month', 'desc')
+        ->first();
+
         //準備ending
+        // dd($make_end);
         $intelligence = $make_end->intelligence;
         $wealth = $make_end->wealth;
         $appearance = $make_end->appearance;
@@ -543,6 +547,7 @@ class GameController extends Controller
             'achievements_id'=>$accomplish_achievements,
         ]);
         $end = game_ending::where('user_id',$user_id)->get();
+        // dd($end);
         return view('finish',[
             'end'=> $end,
         ]);
