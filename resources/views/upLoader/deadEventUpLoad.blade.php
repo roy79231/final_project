@@ -8,7 +8,16 @@
         @csrf
         <input type="String" name="name" placeholder="name" required></textarea> <br>
         <input type="String" name="content" placeholder="content" required></textarea> <br>
-        <input type="String" name="way" placeholder="way" required></textarea>
+        <select name="way" id="way" required>
+            <option value="morality">Way: morality</option>
+            <option value="intelligence">Way: intelligence</option>
+            <option value="appearance">Way: appearance</option>
+            <option value="wealth">Way: wealth</option>
+            <option value="luck">Way: luck</option>
+            <option value="happiness">Way: happiness</option>
+            <option value="random">Way: random</option>
+            <option value="accident">Way: accident</option>
+        </select>
         <button type="submit">新增</button>
     </form>
 
@@ -29,7 +38,16 @@
                 </div>
                 <div>
                     <p id="way{{ $post->id }}" style="display: inline;">Way: {{ $post->way }}</p>
-                    <input id="wayInput{{ $post->id }}" type="text" name="way" placeholder="way" value="{{ $post->way }}" style="display: none;" required>
+                    <select id="wayInput{{ $post->id }}" name="way" style="display: none;" required>
+                        <option value="morality">Way: morality</option>
+                        <option value="intelligence">Way: intelligence</option>
+                        <option value="appearance">Way: appearance</option>
+                        <option value="wealth">Way: wealth</option>
+                        <option value="luck">Way: luck</option>
+                        <option value="happiness">Way: happiness</option>
+                        <option value="random">Way: random</option>
+                        <option value="accident">Way: accident</option>
+                    </select>
                 </div>
                 <div>
                     <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>

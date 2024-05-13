@@ -14,7 +14,14 @@
             <input type="number" name="appearance" placeholder="appearance" required></textarea> <br>
             <input type="number" name="luck" placeholder="luck" required></textarea> <br>
             <input type="number" name="morality" placeholder="morality" required></textarea> <br>
-            <input type="number" name="happiness" placeholder="happiness" required></textarea>
+            <input type="number" name="happiness" placeholder="happiness" required></textarea>  <br>
+            <select name="time_type" id="time_type" required>
+                <option value="1">Time type: 1</option>
+                <option value="2">Time type: 2</option>
+                <option value="3">Time type: 3</option>
+                <option value="4">Time type: 4</option>
+                <option value="5">Time type: 5</option>
+            </select>
             <button type="submit">新增</button>
         </form>
 
@@ -58,6 +65,16 @@
                         <input id="happinessInput{{ $post->id }}" type="text" name="happiness" placeholder="happiness" value="{{ $post->happiness }}" style="display: none;" required>
                     </div>
                     <div>
+                        <p id="time_type{{ $post->id }}" style="display: inline;">Time Type: {{ $post->time_type }}</p> <!-- 顯示time_type -->
+                        <select id="time_typeInput{{ $post->id }}" name="time_type" style="display: none;" required>
+                            <option value="1">Time type: 1</option>
+                            <option value="2">Time type: 2</option>
+                            <option value="3">Time type: 3</option>
+                            <option value="4">Time type: 4</option>
+                            <option value="5">Time type: 5</option>
+                        </select>
+                    </div>
+                    <div>
                         <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>
                         <button id="confirmButton{{ $post->id }}" type="submit" style="display: none;">確認</button>
                     </div>
@@ -90,6 +107,8 @@
                 const moralityInput = document.getElementById(`moralityInput${id}`);
                 const happiness = document.getElementById(`happiness${id}`);
                 const happinessInput = document.getElementById(`happinessInput${id}`);
+                const timeType = document.getElementById(`time_type${id}`); // 新增time_type變數
+                const timeTypeInput = document.getElementById(`time_typeInput${id}`); // 新增time_type輸入框變數
 
                 const editButton = document.getElementById(`editButton${id}`);
                 const confirmButton = document.getElementById(`confirmButton${id}`);
@@ -112,6 +131,8 @@
                 moralityInput.style.display = (moralityInput.style.display === 'none') ? 'inline-block' : 'none';
                 happiness.style.display = (happiness.style.display === 'none') ? 'inline' : 'none';
                 happinessInput.style.display = (happinessInput.style.display === 'none') ? 'inline-block' : 'none';
+                timeType.style.display = (timeType.style.display === 'none') ? 'inline' : 'none';
+                timeTypeInput.style.display = (timeTypeInput.style.display === 'none') ? 'inline-block' : 'none';
                 // 切換按鈕顯示
                 editButton.style.display = (editButton.style.display === 'none') ? 'inline-block' : 'none';
                 confirmButton.style.display = (confirmButton.style.display === 'none') ? 'inline-block' : 'none';
