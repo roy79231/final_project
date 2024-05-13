@@ -11,21 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('achievements', function (Blueprint $table) {
+        Schema::create('forums', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('content');
+            $table->string('inputer');
             $table->timestamps();
         });
-        
     }
-    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('achievements');
+        Schema::dropIfExists('forums');
     }
 };

@@ -47,6 +47,7 @@
         text-align: center;
         font-size: 20px;
         width:600px;
+        font:bold;
     }
     .attribute_change{
         font-size: 30px;
@@ -95,6 +96,7 @@
         $ethical[$count_number] = $attribute->morality;
         $happiness[$count_number] = $attribute->happiness;
         $event[$count_number] = $attribute->content;
+        $achievement[$count_number] = $attribute->achievement_id;
         $count_number+=1;
         
     }
@@ -111,6 +113,7 @@
     var monthethical=@json($ethical);
     var monthhappy=@json($happiness);
     var monthcontent=@json($event);
+    var achievement = @json($achievement);
 </script>
 
 <div class="container">
@@ -182,6 +185,9 @@
         monthnumber+=1;
         count+=1;
         if(monthnumber<=totalmonth){
+            if(achievement[count]!=-1){
+                alert("觸發成就:"+achievement[count]);
+            }
             document.getElementById("months").innerHTML = "第 "+monthnumber+" 個月";
             document.getElementById("intelligence").innerHTML = "智力:     "+monthintelligence[count];
             document.getElementById("wealthy").innerHTML = "財富:     "+monthweathly[count];
@@ -241,6 +247,7 @@
         }
         else if(monthnumber>totalmonth){
                 //導向結算頁面
+            
                 window.location.href='/final_project/public/index.php/finish';
                 
             }
@@ -252,9 +259,9 @@
         monthnumber-=1;
         count-=1;
         if(monthnumber<=0){
-        alert("時光不能繼續回朔了");
-        monthnumber=1;
-        count=0;
+            alert("時光不能繼續回朔了");
+            monthnumber=1;
+            count=0;
         }
         else{
             document.getElementById("months").innerHTML = "第 "+monthnumber+" 個月";

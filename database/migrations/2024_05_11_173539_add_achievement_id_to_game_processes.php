@@ -11,21 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('achievements', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('content');
-            $table->timestamps();
+        Schema::table('game_processes', function (Blueprint $table) {
+            //
+            $table->integer('achievement_id');
         });
-        
     }
-    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('achievements');
+        Schema::table('game_processes', function (Blueprint $table) {
+            //
+            $table->dropColumn('achievement_id');
+        });
     }
 };
