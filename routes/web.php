@@ -9,6 +9,7 @@ use App\Http\Controllers\upLoadControllers\normalEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\specialEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\talentUpLoadController;
 use App\Http\Controllers\upLoadControllers\deadUpLoadController;
+use App\Http\Controllers\talentController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -35,7 +36,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/',[GameController::class,'main'])->name('main');
 
-Route::get('/addPoints',[GameController::class,'addPoints'])->middleware('auth')->name('addPoints');
+Route::get('/addPoints',[TalentController::class,'showForm'])->middleware('auth')->name('addPoints');
 Route::get('/add-points', 'TalentController@showForm');
 
 
@@ -46,8 +47,8 @@ Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('po
 
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
-Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');
-//timlin:我在這裡把run 牽到monthlyevent的balde
+Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');   //timlin:我在這裡把run 牽到monthlyevent的balde
+
 Route::post('/finish',[GameController::class,'finish'])->name('finish');
 
 // 更新成 ROLE_ADMIN---------------------------------------------------------------------------------------------------------------------------------------

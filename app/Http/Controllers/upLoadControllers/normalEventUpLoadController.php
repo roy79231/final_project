@@ -11,13 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class normalEventUpLoadController extends Controller
 {
     public function normalEventUpLoader(){
-        /*$users = User::all();
+        $users = User::all();
         if(Auth::user()->role !== User::ROLE_ADMIN){
             abort(403, '你是user 請你離開');
             return view('/');
         }
-        return view('control',['users'=>$users]);
-        */
+        
         $postAchievement = normal_event::all();
         return view('upLoader/normalEventUpLoad', compact('postAchievement'));
     }
@@ -27,7 +26,7 @@ class normalEventUpLoadController extends Controller
         $request->validate([
             'name' => 'required|string',
             'content' => 'required|string',
-            'time_type'=>'required|integer',
+            'time_type'=>'required|string',
         ]);//要求不為空
 
         $creat = new normal_event();
@@ -51,7 +50,7 @@ class normalEventUpLoadController extends Controller
         $request->validate([
             'name' => 'required|string',
             'content' => 'required|string',
-            'time_type'=>'required|integer'
+            'time_type'=>'required|string'
         ]);
 
         $edit = normal_event::find($id);

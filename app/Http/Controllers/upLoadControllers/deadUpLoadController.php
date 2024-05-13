@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class deadUpLoadController extends Controller
 {
     public function deadUpLoader(){
-        /*$users = User::all();
+        $users = User::all();
         if(Auth::user()->role !== User::ROLE_ADMIN){
             abort(403, '你是user 請你離開');
             return view('/');
         }
-        return view('control',['users'=>$users]);
-        */
-
+        
         $postAchievement = dead_event::all();
         return view('upLoader/deadEventUpLoad', compact('postAchievement'));
     }

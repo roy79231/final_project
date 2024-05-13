@@ -47,6 +47,7 @@
         text-align: center;
         font-size: 20px;
         width:600px;
+        font:bold;
     }
     .attribute_change{
         font-size: 30px;
@@ -171,7 +172,7 @@
             </div>
             
             <div class="month_move_skip">
-                <form action="{{route("finish")}}" method="POST">
+                <form action="{{ route("finish") }}" method="POST">
                     @csrf
                     <button id="month_skip">跳過?</button>
                 </form>

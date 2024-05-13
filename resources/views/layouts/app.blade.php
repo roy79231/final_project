@@ -1,4 +1,4 @@
-<?php 
+<?php
 use App\Models\User;
 ?>
 <!doctype html>
@@ -54,7 +54,7 @@ use App\Models\User;
                         資料庫
                     </a>
                 @endif
-                
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -117,8 +117,5 @@ use App\Models\User;
         </main>
     </div>
 
-    <!-- Javascript-->
-    <script src="{{asset('script.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 </body>
 </html>
