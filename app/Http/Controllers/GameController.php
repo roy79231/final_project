@@ -33,9 +33,7 @@ class GameController extends Controller
     public function start(Request $request){
         return view('start');
     }
-    /*public function finish(){
-        return view('finish');
-    }*/
+    
     public function addPoints(){
         return view('addPoints');
     }
