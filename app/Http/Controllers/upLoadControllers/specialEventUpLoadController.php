@@ -11,13 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class specialEventUpLoadController extends Controller
 {
     public function specialEventUpLoader(){
-        /*$users = User::all();
+        $users = User::all();
         if(Auth::user()->role !== User::ROLE_ADMIN){
             abort(403, '你是user 請你離開');
             return view('/');
         }
-        return view('control',['users'=>$users]);
-        */
+        
         $postAchievement = special_event::all();
         return view('upLoader/specialEventUpLoad', compact('postAchievement'));
     }
@@ -33,7 +32,7 @@ class specialEventUpLoadController extends Controller
             'luck' => 'required|integer',
             'morality' => 'required|integer',
             'happiness' => 'required|integer',
-            'time_type'=>'required|integer',
+            'time_type'=>'required|string',
         ]);//要求不為空
 
         $creat = new special_event();
@@ -69,7 +68,7 @@ class specialEventUpLoadController extends Controller
             'luck' => 'required|integer',
             'morality' => 'required|integer',
             'happiness' => 'required|integer',
-            'time_type'=>'required|integer',
+            'time_type'=>'required|string',
         ]);
 
         $edit = special_event::find($id);
