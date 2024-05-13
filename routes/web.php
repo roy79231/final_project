@@ -47,8 +47,8 @@ Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('po
 
 Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('start');
 
-Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');
-//timlin:我在這裡把run 牽到monthlyevent的balde
+Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');   //timlin:我在這裡把run 牽到monthlyevent的balde
+
 Route::post('/finish',[GameController::class,'finish'])->name('finish');
 
 // 更新成 ROLE_ADMIN---------------------------------------------------------------------------------------------------------------------------------------
