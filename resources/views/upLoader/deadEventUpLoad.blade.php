@@ -9,14 +9,14 @@
         <input type="String" name="name" placeholder="name" required></textarea> <br>
         <input type="String" name="content" placeholder="content" required></textarea> <br>
         <select name="way" id="way" required>
-            <option value="morality">morality</option>
-            <option value="intelligence">intelligence</option>
-            <option value="appearance">appearance</option>
-            <option value="wealth">wealth</option>
-            <option value="luck">luck</option>
-            <option value="happiness">happiness</option>
-            <option value="random">random</option>
-            <option value="accident">accident</option>
+            <option value="morality">Way: morality</option>
+            <option value="intelligence">Way: intelligence</option>
+            <option value="appearance">Way: appearance</option>
+            <option value="wealth">Way: wealth</option>
+            <option value="luck">Way: luck</option>
+            <option value="happiness">Way: happiness</option>
+            <option value="random">Way: random</option>
+            <option value="accident">Way: accident</option>
         </select>
         <button type="submit">新增</button>
     </form>
@@ -39,14 +39,14 @@
                 <div>
                     <p id="way{{ $post->id }}" style="display: inline;">Way: {{ $post->way }}</p>
                     <select id="wayInput{{ $post->id }}" name="way" style="display: none;" required>
-                        <option value="morality">morality</option>
-                        <option value="intelligence">intelligence</option>
-                        <option value="appearance">appearance</option>
-                        <option value="wealth">wealth</option>
-                        <option value="luck">luck</option>
-                        <option value="happiness">happiness</option>
-                        <option value="random">random</option>
-                        <option value="accident">accident</option>
+                        <option value="morality">Way: morality</option>
+                        <option value="intelligence">Way: intelligence</option>
+                        <option value="appearance">Way: appearance</option>
+                        <option value="wealth">Way: wealth</option>
+                        <option value="luck">Way: luck</option>
+                        <option value="happiness">Way: happiness</option>
+                        <option value="random">Way: random</option>
+                        <option value="accident">Way: accident</option>
                     </select>
                 </div>
                 <div>

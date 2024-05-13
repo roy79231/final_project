@@ -87,14 +87,14 @@ use App\Models\User;
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <?php $user = Auth::user()?>
-                                @if(($user && $user->role == User::ROLE_ADMIN))
-                                <a class="navbar-brand" href="{{ route('index') }}">
-                                    adminControll
-                                </a>
-                                @endif
-
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <?php $user = Auth::user()?>
+                                    @if(($user && $user->role == User::ROLE_ADMIN))
+                                        <a class="dropdown-item me-2" href="{{ route('index') }}">
+                                            AdminControll
+                                        </a>
+                                    @endif
+
                                     <a class="dropdown-item me-2" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">

@@ -50,9 +50,8 @@ Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run
 //timlin:我在這裡把run 牽到monthlyevent的balde
 Route::post('/finish',[GameController::class,'finish'])->name('finish');
 
-Route::get('/roleControl', [RoleController::class,'index'])->name('index');
-
 // 更新成 ROLE_ADMIN---------------------------------------------------------------------------------------------------------------------------------------
+Route::get('/roleControl', [RoleController::class,'index'])->name('index');
 Route::put('/setAdmin/{user}', [RoleController::class,'setAdmin'])->name('setAdmin');
 Route::put('/setUser/{user}',[RoleController::class,'setUser'])->name('setUser');
 
@@ -86,7 +85,6 @@ Route::get('/deadUpLoader',[deadUpLoadController::class, "deadUpLoader"])->name(
 Route::post('/deadUpLoader/store', [deadUpLoadController::class, 'deadUpLoadStore'])->name('deadUpLoader.store');
 Route::delete('/deadUpLoader/destroy/{id}', [deadUpLoadController::class, 'deadUpLoadDestroy'])->name('deadUpLoader.destroy');
 Route::patch('/deadUpLoader/edit/{id}', [deadUpLoadController::class, 'deadUpLoadEdit'])->name('deadUpLoader.edit');
-
 
 //這是討論區---------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');

@@ -16,11 +16,11 @@
             <input type="number" name="morality" placeholder="morality" required></textarea> <br>
             <input type="number" name="happiness" placeholder="happiness" required></textarea>  <br>
             <select name="time_type" id="time_type" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <option value="1">Time type: 1</option>
+                <option value="2">Time type: 2</option>
+                <option value="3">Time type: 3</option>
+                <option value="4">Time type: 4</option>
+                <option value="5">Time type: 5</option>
             </select>
             <button type="submit">新增</button>
         </form>
@@ -67,11 +67,11 @@
                     <div>
                         <p id="time_type{{ $post->id }}" style="display: inline;">Time Type: {{ $post->time_type }}</p> <!-- 顯示time_type -->
                         <select id="time_typeInput{{ $post->id }}" name="time_type" style="display: none;" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <option value="1">Time type: 1</option>
+                            <option value="2">Time type: 2</option>
+                            <option value="3">Time type: 3</option>
+                            <option value="4">Time type: 4</option>
+                            <option value="5">Time type: 5</option>
                         </select>
                     </div>
                     <div>

@@ -33,7 +33,7 @@
         /* 內容 */
         .content {
             margin-left: 275px; /* 側邊欄寬 */
-            padding: 20px;
+            padding: 23%;
         }
 
         /*box樣式*/
