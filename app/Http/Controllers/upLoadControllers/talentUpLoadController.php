@@ -5,10 +5,19 @@ namespace App\Http\Controllers\upLoadControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\talent;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class talentUpLoadController extends Controller
 {
     public function talentUpLoader(){
+        /*$users = User::all();
+        if(Auth::user()->role !== User::ROLE_ADMIN){
+            abort(403, '你是user 請你離開');
+            return view('/');
+        }
+        return view('control',['users'=>$users]);
+        */
         $postAchievement = talent::all();
         return view('upLoader/talentUpLoad', compact('postAchievement'));
     }

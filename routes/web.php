@@ -10,7 +10,7 @@ use App\Http\Controllers\upLoadControllers\specialEventUpLoadController;
 use App\Http\Controllers\upLoadControllers\talentUpLoadController;
 use App\Http\Controllers\upLoadControllers\deadUpLoadController;
 
-
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\forumcontroller;
 use App\Http\Controllers\achievementcontroller;
@@ -35,7 +35,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/',[GameController::class,'main'])->name('main');
 
-Route::get('/achievement/{id}',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
+Route::get('/addPoints',[GameController::class,'addPoints'])->middleware('auth')->name('addPoints');
+Route::get('/add-points', 'TalentController@showForm');
+
+
+
+Route::get('/achievement',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
 
 Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('post');
 
@@ -43,7 +48,7 @@ Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('
 
 Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');
 //timlin:我在這裡把run 牽到monthlyevent的balde
-Route::get('/finish',[GameController::class,'finish'])->name('finish');
+Route::post('/finish',[GameController::class,'finish'])->name('finish');
 
 Route::get('/roleControl', [RoleController::class,'index'])->name('index');
 
@@ -82,19 +87,11 @@ Route::post('/deadUpLoader/store', [deadUpLoadController::class, 'deadUpLoadStor
 Route::delete('/deadUpLoader/destroy/{id}', [deadUpLoadController::class, 'deadUpLoadDestroy'])->name('deadUpLoader.destroy');
 Route::patch('/deadUpLoader/edit/{id}', [deadUpLoadController::class, 'deadUpLoadEdit'])->name('deadUpLoader.edit');
 
-//結算頁面的部份-------------------------------------------------------------------------------------------------------------------------------------------
-Route::get('/finish',[GameController::class,'finish'])->name('finish');
 
-
-
+//這是討論區---------------------------------------------------------------------------------------------------------------------------------------------------------
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
-
 Route::get('/forumindex',[forumcontroller::class,'forumindex'])->name('forumindex')->middleware('auth');
-
 Route::post('forumindex/forumcreate',[forumcontroller::class,'forumcreate'])->name('forumcreate');
-
 Route::post('forumindex/forumdelete/{id}',[forumcontroller::class,'forumdelete'])->name('forumdelete');
-
 Route::post('forumindex/forumchange/{id}',[forumcontroller::class,'forumchange'])->name("forumchange");
-
 Route::get('/achievementindex/{user_id}', [achievementcontroller::class, 'showAchievements'])->name('showAchievements')->middleware('auth');

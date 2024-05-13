@@ -5,10 +5,19 @@ namespace App\Http\Controllers\upLoadControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\achievement;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class achievementUpLoadController extends Controller
 {
     public function achievementUpLoader(){
+        /*$users = User::all();
+        if(Auth::user()->role !== User::ROLE_ADMIN){
+            abort(403, '你是user 請你離開');
+            return view('/');
+        }
+        return view('control',['users'=>$users]);
+        */
         $postAchievement = achievement::all();
         return view('upLoader/achievementUpLoad', compact('postAchievement'));
     }
