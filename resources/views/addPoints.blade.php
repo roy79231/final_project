@@ -282,6 +282,54 @@
         });
     });
 
+    // Function to get the CSRF token
+    function getCsrfToken() {
+        return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    }
+
+    document.querySelector('.start-btn').addEventListener('click', function () {
+        // Get the current values of the remaining points
+        const intelligence = document.querySelector('#intelligence .quantity').innerText;
+        const wealth = document.querySelector('#wealth .quantity').innerText;
+        const luck = document.querySelector('#luck .quantity').innerText;
+        const morality = document.querySelector('#morality .quantity').innerText;
+        const appearance = document.querySelector('#appearance .quantity').innerText;
+
+        // Get the selected talent
+        const selectedTalent = document.querySelector('input[name="talent"]:checked').value;
+
+        // Create the data object to be sent
+        const data = {
+            intelligence: intelligence,
+            wealth: wealth,
+            luck: luck,
+            morality: morality,
+            appearance: appearance,
+            talent: selectedTalent,
+            _token: '{{ csrf_token() }}' // Add CSRF token
+        };
+
+        // Send the data using fetch API
+        fetch('{{ route('game.run') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': data._token // CSRF token header
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+
+
+
 </script>
 @endsection
 

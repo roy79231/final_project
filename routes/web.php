@@ -41,6 +41,7 @@ Route::get('/add-points', 'TalentController@showForm');
 
 
 
+
 Route::get('/achievement',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
 
 Route::get('/post',[GameController::class,'post'])->middleware('auth')->name('post');
