@@ -123,27 +123,27 @@
                 <ul>
                     <li id="intelligence">智力:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">0</span>
+                        <span class="quantity">{{$user->intelligence}}</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                     <li id="wealth">財富:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">0</span>
+                        <span class="quantity">{{$user->wealth}}</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                     <li id="luck">運氣:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">0</span>
+                        <span class="quantity">{{$user->luck}}</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                     <li id="morality">道德:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">0</span>
+                        <span class="quantity">{{$user->morality}}</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                     <li id="appearance">顏值:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">0</span>
+                        <span class="quantity">{{$user->appearance}}</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                 </ul>
@@ -160,7 +160,7 @@
                 <!-- Right Content -->
                 <div class="p-3">
                     <h2>選擇天賦: </h2>
-                    <form id="talent-form">
+                    <form action="{{ route('run', ['user' => $user->talent])}}" id="talent-form" method="POST">
                         @foreach ($talents as $talent)
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="talent" id="talent{{ $loop->index }}" value="{{ $talent }}">
