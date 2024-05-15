@@ -53,23 +53,14 @@ class GameController extends Controller
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
-        // $intelligence = $request->intelligence;
-        // $wealth = $request->wealth;
-        // $appearance = $request->appearance;
-        // $luck = $request->luck;
-        // $morality = $request->morality;
+        $intelligence = $request->intelligence;
+        $wealth = $request->wealth;
+        $appearance = $request->appearance;
+        $luck = $request->luck;
+        $morality = $request->morality;
         $happiness = $request->happiness;
-        // $talent = talent::find($request->talent_id);
+        $talent = talent::find($request->talent_id);
 
-        $data = $request->all();
-        // Process the data
-        $intelligence = $data['intelligence'];
-        $wealth = $data['wealth'];
-        $luck = $data['luck'];
-        $morality = $data['morality'];
-        $appearance = $data['appearance'];
-        $talent = $data['talent'];
-        
         $month = 1;
         $alive = true;
         $accomplish_achievements = [];
