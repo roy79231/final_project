@@ -50,23 +50,23 @@ class GameController extends Controller
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
-        // $intelligence = $request->intelligence;
-        // $wealth = $request->wealth;
-        // $appearance = $request->appearance;
-        // $luck = $request->luck;
-        // $morality = $request->morality;
-        $happiness = $request->happiness;
-        // $talent = talent::find($request->talent_id);
-
-        $data = $request->all();
+        $intelligence = intval($request->intelligence);
+        $wealth = intval($request->wealth);
+        $appearance = intval($request->appearance);
+        $luck = intval($request->luck);
+        $morality = intval($request->morality);
+        $talent_name = intval($request->talent);
+        $happiness = 0;
         // Process the data
+        /*
         $intelligence = $data['intelligence'];
         $wealth = $data['wealth'];
         $luck = $data['luck'];
         $morality = $data['morality'];
         $appearance = $data['appearance'];
-        $talent = $data['talent'];
-        dd($talent);
+        $talent_name = $data['talent'];
+        */
+        $talent = talent::where('name',$talent_name)->first();     
         $month = 1;
         $alive = true;
         $accomplish_achievements = [];
@@ -103,6 +103,7 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
+                        'achievement_id'=>-1,
                     ]);
 
                     break;
