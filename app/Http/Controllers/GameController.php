@@ -43,9 +43,6 @@ class GameController extends Controller
     public function start(Request $request){
         return view('start');
     }
-    /*public function finish(){
-        return view('finish');
-    }*/
     public function addPoints(){
         return view('addPoints');
     }
@@ -69,7 +66,7 @@ class GameController extends Controller
         $morality = $data['morality'];
         $appearance = $data['appearance'];
         $talent = $data['talent'];
-        
+        dd($talent);
         $month = 1;
         $alive = true;
         $accomplish_achievements = [];
@@ -523,12 +520,16 @@ class GameController extends Controller
         //這個foreach有問題要修 已解決
         if(!empty($accomplish_achievements)){
             for($i=0;$i<count($accomplish_achievements);$i++){
-
+                // 检查是否存在相同的记录
+                $existing_record = achievement_fins::where('user_id', $user_id)
+                ->where('achievement_id', $accomplish_achievements[$i])
+                ->first();
+                if(!$existing_record){
                     achievement_fins::create([
                         'user_id'=> $user_id,
                         'achievement_id'=> $accomplish_achievements[$i],
                     ]);
-
+                }
             };
         }
         $game_processes = game_process::where('user_id',$user_id)->get();

@@ -112,8 +112,7 @@
         text-align: center; /* Center the text horizontally */
     }
 </style>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
 @section('content')
 <div class="container">
     <div class="row">
@@ -308,23 +307,24 @@
             talent: selectedTalent,
             _token: '{{ csrf_token() }}' // Add CSRF token
         };
-
+        
         // Send the data using fetch API
-        fetch('{{ route('game.run') }}', {
+        fetch('{{ route('run') }}',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': data._token // CSRF token header
+                'X-CSRF-TOKEN': data._token, // CSRF token header
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
+        .then(response => response.json() )
         .then(data => {
             // Handle the response
             console.log('Success:', data);
+            //return data.JSON;
         })
         .catch((error) => {
-            console.error('Error:', error);
+        console.log('Error: ${error}');
         });
     });
 
