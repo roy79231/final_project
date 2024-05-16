@@ -516,7 +516,9 @@ class GameController extends Controller
                     'achievement_id'=>$event->achievement_id,//timlin新增
                 ]);
                 array_push($accomplish_achievements ,$event->achievement_id);
+                
             }
+            $month  +=1;
         };
         //這個foreach有問題要修 已解決
         if(!empty($accomplish_achievements)){
@@ -525,22 +527,20 @@ class GameController extends Controller
                 $existing_record = achievement_fins::where('user_id', $user_id)
                 ->where('achievement_id', $accomplish_achievements[$i])
                 ->first();
-                if(!$existing_record){                // 检查是否存在相同的记录
-                $existing_record = achievement_fins::where('user_id', $user_id)
-                ->where('achievement_id', $accomplish_achievements[$i])
-                ->first();
                 if(!$existing_record){
                     achievement_fins::create([
                         'user_id'=> $user_id,
                         'achievement_id'=> $accomplish_achievements[$i],
                     ]);
-                }                }
+                }                
             };
         }
         $game_processes = game_process::where('user_id',$user_id)->get();
+        $achievement = achievement_event::all();
         return view('monthlyevent',[
             'game_processes' => $game_processes,
             'accomplish_achievements' => $accomplish_achievements,
+            'achievement' =>$achievement,
         ]);
     }
     public function finish(){
