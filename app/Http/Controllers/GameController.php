@@ -12,6 +12,7 @@ use App\Models\talent;
 use App\Models\achievement_event;
 use App\Models\achievement_fins;
 use App\Models\dead_event;
+use App\Models\game_endings;
 use App\Models\User;
 
 class GameController extends Controller
@@ -20,22 +21,26 @@ class GameController extends Controller
     public function main(){
         return view('main');
     }
-    public function achievement(Request $request) {
-        // 檢索已解鎖的成就
-        $unlockedAchievements = achievement_fins::where('user_id', $request->user()->id)
-            ->with('achievement')
-            ->get();
     
-        // 檢索尚未解鎖的成就
-        $lockedAchievements = achievement::whereNotIn('id', $unlockedAchievements->pluck('achievement_id'))
-            ->get();
+    public function achievement(Request $request)
+    {
+    // 檢索已解鎖的成就
+    $unlockedAchievements = achievement_fins::where('user_id', $request->user()->id)
+        ->with('achievement')
+        ->get();
+
+    // 檢索尚未解鎖的成就
+    $lockedAchievements = achievement::whereNotIn('id', $unlockedAchievements->pluck('achievement_id'))
+        ->get();
     
-        // 將已解鎖的成就和尚未解鎖的成就合併，使已解鎖的成就顯示在最上面
-        $achievements = $unlockedAchievements->merge($lockedAchievements);
     
-        // 傳遞成就數據給視圖
-        return view('achievement', ['achievements' => $achievements]);
-    }
+    // 傳遞成就數據給視圖
+    return view('achievement', [
+        'unlockedAchievements' => $unlockedAchievements,
+        'lockedAchievements' => $lockedAchievements
+    ]);
+    
+}
 
     public function post(){
         return view('post');
@@ -43,7 +48,6 @@ class GameController extends Controller
     public function start(Request $request){
         return view('start');
     }
-    
     public function addPoints(){
         return view('addPoints');
     }
@@ -51,13 +55,23 @@ class GameController extends Controller
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
-        $intelligence = $request->intelligence;
-        $wealth = $request->wealth;
-        $appearance = $request->appearance;
-        $luck = $request->luck;
-        $morality = $request->morality;
-        $happiness = $request->happiness;
-        $talent = talent::find($request->talent_id);
+        $intelligence = intval($request->intelligence);
+        $wealth = intval($request->wealth);
+        $appearance = intval($request->appearance);
+        $luck = intval($request->luck);
+        $morality = intval($request->morality);
+        $talent_name = intval($request->talent);
+        $happiness = 0;
+        // Process the data
+        /*
+        $intelligence = $data['intelligence'];
+        $wealth = $data['wealth'];
+        $luck = $data['luck'];
+        $morality = $data['morality'];
+        $appearance = $data['appearance'];
+        $talent_name = $data['talent'];
+        */
+        $talent = talent::where('name',$talent_name)->first();     
         $month = 1;
         $alive = true;
         $accomplish_achievements = [];
@@ -71,7 +85,7 @@ class GameController extends Controller
 
         //先確定清空資料 有問題不能正確清空資料 已解決
         $game_delete = game_process::where('user_id',$user_id)->delete();
-
+        $end_delete = game_ending::where('user_id',$user_id)->delete();
         //跑每個月
         while($month<=48 && $alive==true){
             //死亡的部分
@@ -94,8 +108,9 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
+                        'achievement_id'=>-1,
                     ]);
-                    
+
                     break;
                 }
                 /*timlin:
@@ -133,7 +148,7 @@ class GameController extends Controller
                 ]);
                     $month+=1;
                     continue;
-                    
+
                 }
 
             }
@@ -156,7 +171,7 @@ class GameController extends Controller
                         'content'=>$randomDie->content,
                         'achievement_id'=>-1
                     ]);
-                    
+
                     break;
                 }
                 else if(rand(1,10)<=5){
@@ -182,7 +197,7 @@ class GameController extends Controller
                     'achievement_id'=>-1
                 ]);
                     $month+=1;
-                    
+
                     continue;
                 }
             }
@@ -205,12 +220,12 @@ class GameController extends Controller
                         'content'=>$randomDie->content,
                         'achievement_id'=>-1
                     ]);
-                    
+
                     break;
                 }
                 else if(rand(1,10)<=5){
 
-                    $special_event = special_event::where('name',"intelligence")->get(); //把加分事件的名字用屬性做區分 
+                    $special_event = special_event::where('name',"intelligence")->get(); //把加分事件的名字用屬性做區分
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
                     $appearance = $appearance + $event->appearance;
@@ -231,7 +246,7 @@ class GameController extends Controller
                     'achievement_id'=>-1
                 ]);
                     $month+=1;
-                    
+
                     continue;
                 }
             }
@@ -254,7 +269,7 @@ class GameController extends Controller
                         'content'=>$randomDie->content,
                         'achievement_id'=>-1
                     ]);
-                    
+
                     break;
                 }
                 else if(rand(1,10)<=5){
@@ -280,7 +295,7 @@ class GameController extends Controller
                     'achievement_id'=>-1,
                 ]);
                     $month+=1;
-                    
+
                     continue;
                 }
             }
@@ -303,7 +318,7 @@ class GameController extends Controller
                         'content'=>$randomDie->content,
                         'achievement_id'=>-1
                     ]);
-                    
+
                     break;
                 }
                 else if(rand(1,10)<=5){
@@ -329,7 +344,7 @@ class GameController extends Controller
                     'achievement_id'=>-1,
                 ]);
                     $month+=1;
-                    
+
                     continue;
                 }
             }
@@ -352,12 +367,12 @@ class GameController extends Controller
                         'content'=>$randomDie->content,
                         'achievement_id'=>-1,
                     ]);
-                    
+
                     break;
                 }
                 else if(rand(1,10)<=5){
 
-                    $special_event = special_event::where('name',"luck")->get(); //把加分事件的名字用屬性做區分 
+                    $special_event = special_event::where('name',"luck")->get(); //把加分事件的名字用屬性做區分
                     $event = $special_event->random();
                     $intelligence = $intelligence + $event->intelligence;
                     $appearance = $appearance + $event->appearance;
@@ -378,7 +393,7 @@ class GameController extends Controller
                     'achievement_id'=>-1,
                 ]);
                     $month+=1;
-                    
+
                     continue;
                 }
             }
@@ -399,7 +414,7 @@ class GameController extends Controller
                     'content'=>$randomDie->content,
                     'achievement_id'=>-1,
                 ]);
-                
+
                 break;
             }
             //事件
@@ -442,7 +457,7 @@ class GameController extends Controller
                     'content'=>$event->content,
                     'achievement_id'=>-1,//timlin新增
                 ]);
-                
+
             }else if($event_kind>60 && $event_kind<=90){
                 //大一下~大四上
                 if(($month>=7 && $month<=11) || ($month>=13 && $month<=17) || ($month>=19 && $month<=23) || ($month>=25 && $month<=29) || ($month>=31 && $month<=35) || ($month>=37 && $month<=41)){
@@ -488,7 +503,7 @@ class GameController extends Controller
                     'content'=>$event->content,
                     'achievement_id'=>-1,
                 ]);
-                
+
             }else{
                 $rand_range = achievement_event::all()->count();
                 $event_id = rand(1,$rand_range);
@@ -506,33 +521,54 @@ class GameController extends Controller
                     'achievement_id'=>$event->achievement_id,//timlin新增
                 ]);
                 array_push($accomplish_achievements ,$event->achievement_id);
+                
             }
+            $month+=1;
         };
         //這個foreach有問題要修 已解決
         if(!empty($accomplish_achievements)){
             for($i=0;$i<count($accomplish_achievements);$i++){
-                
+                // 检查是否存在相同的记录
+                $existing_record = achievement_fins::where('user_id', $user_id)
+                ->where('achievement_id', $accomplish_achievements[$i])
+                ->first();
+                if(!$existing_record){
                     achievement_fins::create([
                         'user_id'=> $user_id,
                         'achievement_id'=> $accomplish_achievements[$i],
                     ]);
-                
+                }                
             };
         }
         $game_processes = game_process::where('user_id',$user_id)->get();
+        $achievement = achievement_event::all();
+        game_ending::create([
+            'user_id'=>$user_id,
+            'intelligence'=>$intelligence,
+            'wealth'=>$wealth,
+            'appearance'=>$appearance,
+            'luck'=>$luck,
+            'morality'=>$morality,
+            'happiness'=>$happiness,
+        ]);
         return view('monthlyevent',[
             'game_processes' => $game_processes,
             'accomplish_achievements' => $accomplish_achievements,
+            'achievement' =>$achievement,
         ]);
     }
     public function finish(){
         //清process和ending資料
         $user_id = auth()->user()->id;
-        $last_month = game_process::where('user_id',$user_id)->latest('created_at')->value('month');
-        $make_end = game_process::where('user_id',$user_id)->where('month',$last_month)->get();
-        $game_delete = game_process::where('user_id',$user_id)->delete();
-        $end_delete = game_ending::where('user_id',$user_id)->delete();
+        $end = game_ending::where('user_id',$user_id)->delete();
+
+        //$last_month = game_process::where('user_id',$user_id)->max('month');
+        $make_end = game_process::where('user_id', $user_id)
+        ->orderBy('month', 'desc')
+        ->first();
+
         //準備ending
+        //dd($make_end);
         $intelligence = $make_end->intelligence;
         $wealth = $make_end->wealth;
         $appearance = $make_end->appearance;
@@ -550,7 +586,8 @@ class GameController extends Controller
             'morality'=>$morality,
             'achievements_id'=>$accomplish_achievements,
         ]);
-        $end = game_ending::where('user_id',$user_id)->get();
+        $end = game_ending::where('user_id',$user_id)->first();
+        // dd($end);
         return view('finish',[
             'end'=> $end,
         ]);
