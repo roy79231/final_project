@@ -96,9 +96,21 @@
         $ethical[$count_number] = $attribute->morality;
         $happiness[$count_number] = $attribute->happiness;
         $event[$count_number] = $attribute->content;
-        $achievement[$count_number] = $attribute->achievement_id;
+        $achievement_id[$count_number] = $attribute->achievement_id;
         $count_number+=1;
-        
+    }
+    $achievement_content=[];
+    for($i=0;$i<$count_number;$i++){
+        foreach($achievement as $detail){
+            if($detail->achievement_id == $achievement_id[$i]){
+                $achievement_content[$i]=$detail->content;
+                break;
+            }
+            else{
+                $achievement_content[$i] = "雞雞"; 
+                break;
+            }
+        }
     }
     
 ?>
@@ -113,7 +125,8 @@
     var monthethical=@json($ethical);
     var monthhappy=@json($happiness);
     var monthcontent=@json($event);
-    var achievement = @json($achievement);
+    var achievement_content = @json($achievement_content);
+    var achievement_id = @json($achievement_id);
 </script>
 
 <div class="container">
@@ -172,7 +185,7 @@
             </div>
             
             <div class="month_move_skip">
-                <form action="{{ route("finish") }}" method="POST">
+                <form action="{{ route("finish") }}" method="GET">
                     @csrf
                     <button id="month_skip">跳過?</button>
                 </form>
@@ -185,8 +198,8 @@
         monthnumber+=1;
         count+=1;
         if(monthnumber<=totalmonth){
-            if(achievement[count]!=-1){
-                alert("觸發成就:"+achievement[count]);
+            if(achievement_id[count]!=-1){
+                alert("觸發成就:"+achievement_content[count]);
             }
             document.getElementById("months").innerHTML = "第 "+monthnumber+" 個月";
             document.getElementById("intelligence").innerHTML = "智力:     "+monthintelligence[count];

@@ -37,9 +37,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/',[GameController::class,'main'])->name('main');
 
 Route::get('/addPoints',[TalentController::class,'showForm'])->middleware('auth')->name('addPoints');
-Route::get('/add-points', 'TalentController@showForm');
-
-
 
 Route::get('/achievement',[GameController::class,'achievement'])->middleware('auth')->name('achievement');
 
@@ -49,7 +46,7 @@ Route::get('/start',[GameController::class,'start'])->middleware('auth')->name('
 
 Route::post('/run',[GameController::class,'run'])->middleware('auth')->name('run');   //timlin:我在這裡把run 牽到monthlyevent的balde
 
-Route::post('/finish',[GameController::class,'finish'])->name('finish');
+Route::get('/finish',[GameController::class,'finish'])->name('finish');
 
 // 更新成 ROLE_ADMIN---------------------------------------------------------------------------------------------------------------------------------------
 Route::get('/roleControl', [RoleController::class,'index'])->name('index');
