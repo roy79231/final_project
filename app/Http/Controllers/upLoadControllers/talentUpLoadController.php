@@ -18,7 +18,7 @@ class talentUpLoadController extends Controller
         }
         
         $postAchievement = talent::all();
-        return view('upLoader/talentUpLoad', compact('postAchievement'));
+        return view('upLoader/talentUpLoad', compact('postAchievement')); //compact函式用於將變數轉換為關聯陣列，以在視圖中使用
     }
 
     public function talentUpLoadStore(Request $request){

@@ -46,7 +46,7 @@
             <div class="col-md-8 mb-3">
                 <div class="card "style="background-color: #ebcd96">
                     <div class="card-header">
-                        <strong>{{$post->inputer}}</strong>
+                        <strong>{{$post->inputer}} - {{$post->updated_at->format('Y-m-d')}}</strong>
                     </div>
                     <div class="card-body">
                         <div id="edit_field_{{$post->id}}" style="display: none;">
