@@ -21,7 +21,7 @@
                             @csrf
                     
                             <div class="col-md-8 mb-3">
-                                <textarea name='content' rows='2' class="form-control" style="resize: none;" placeholder="跟大家分享你的想法"></textarea>
+                                <textarea name='content' rows='1' class="form-control" style="resize: none;" placeholder="跟大家分享你的想法"></textarea>
                             </div>
                     
                             <div class="col-md-8 mb-3 d-flex justify-content-center">
