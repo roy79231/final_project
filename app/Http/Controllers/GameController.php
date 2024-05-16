@@ -12,6 +12,7 @@ use App\Models\talent;
 use App\Models\achievement_event;
 use App\Models\achievement_fins;
 use App\Models\dead_event;
+use App\Models\game_endings;
 use App\Models\User;
 
 class GameController extends Controller
@@ -517,6 +518,7 @@ class GameController extends Controller
                 ]);
                 array_push($accomplish_achievements ,$event->achievement_id);
             }
+            $month+=1;
         };
         //這個foreach有問題要修 已解決
         if(!empty($accomplish_achievements)){
@@ -525,19 +527,24 @@ class GameController extends Controller
                 $existing_record = achievement_fins::where('user_id', $user_id)
                 ->where('achievement_id', $accomplish_achievements[$i])
                 ->first();
-                if(!$existing_record){                // 检查是否存在相同的记录
-                $existing_record = achievement_fins::where('user_id', $user_id)
-                ->where('achievement_id', $accomplish_achievements[$i])
-                ->first();
                 if(!$existing_record){
                     achievement_fins::create([
                         'user_id'=> $user_id,
                         'achievement_id'=> $accomplish_achievements[$i],
                     ]);
-                }                }
+                };
             };
         }
         $game_processes = game_process::where('user_id',$user_id)->get();
+        game_ending::create([
+            'user_id'=>$user_id,
+            'intelligence'=>$intelligence,
+            'wealth'=>$wealth,
+            'appearance'=>$appearance,
+            'luck'=>$luck,
+            'morality'=>$morality,
+            'happiness'=>$happiness,
+        ]);
         return view('monthlyevent',[
             'game_processes' => $game_processes,
             'accomplish_achievements' => $accomplish_achievements,
@@ -554,7 +561,7 @@ class GameController extends Controller
         ->first();
 
         //準備ending
-        // dd($make_end);
+        //dd($make_end);
         $intelligence = $make_end->intelligence;
         $wealth = $make_end->wealth;
         $appearance = $make_end->appearance;
@@ -572,7 +579,7 @@ class GameController extends Controller
             'morality'=>$morality,
             'achievements_id'=>$accomplish_achievements,
         ]);
-        $end = game_ending::where('user_id',$user_id)->get();
+        $end = game_ending::where('user_id',$user_id)->first();
         // dd($end);
         return view('finish',[
             'end'=> $end,
