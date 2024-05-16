@@ -537,6 +537,7 @@ class GameController extends Controller
             };
         }
         $game_processes = game_process::where('user_id',$user_id)->get();
+        $achievement = achievement_event::all();
         game_ending::create([
             'user_id'=>$user_id,
             'intelligence'=>$intelligence,
