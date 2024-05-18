@@ -156,24 +156,53 @@
         <div class="col-auto">
             <div class="separator"></div>
         </div>
+        <?php
+            $rand_nums = [];
+            for($i=0;$i<4;$i++){
+                while(true){
+                    $num = rand(1,$talents_len);
+                    if(!in_array($num,$rand_nums)){
+                        array_push($rand_nums,$num);
+                        break;
+                    }
+                }
+            }
+            if(isset($_POST['change_btn'])){
+                echo '1';
+                $rand_nums = [];
+                print('嗨');
+                for($i=0;$i<4;$i++){
+                    while(true){
+                        $num = rand(1,$talents_len) ;
+                        if(!in_array($num,$rand_nums)){
+                            array_push($rand_nums,$num);
+                            break;
+                        }
+                    }
+                }
+            }
+        ?>
         <div class="col talent-choice">
             <div class="col">
                 <!-- Right Content -->
                 <div class="p-3">
                     <h2>選擇天賦: </h2>
                     <form id="talent-form">
-                        @foreach ($talents as $talent)
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="talent" id="talent{{ $loop->index }}" value="{{ $talent }}">
-                            <label class="form-check-label" for="talent{{ $loop->index }}">{{ $talent }}</label>
-                        </div>
-                        @endforeach
+                        <div id="talent-options">
+                            @foreach ($talents as $talent)
+                                @if(in_array($talent->id,$rand_nums))
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="talent" value="{{$talent->id}}">
+                                        <label class="form-check-label" >{{ $talent->name }}</label>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </form>
                 </div>
             </div>
             <div class="action-buttons">
-                <button class="bet-btn">我是賭狗</button> <br>
+                <button class="bet-btn" name="change_btn" type="button">我是賭狗</button> <br>
                 <!-- style="display: none"-->
                 <form action="{{ route('run') }}" method="POST">
                     @csrf
@@ -182,7 +211,7 @@
                     <input type="number" id='appearance2' name="appearance" placeholder="appearance" required style="display: none"><br>
                     <input type="number" id='luck2' name="luck" placeholder="luck" required style="display: none"><br>
                     <input type="number" id='morality2' name="morality" placeholder="morality" required style="display: none"><br>
-                    <input type="hidden" id='talent2' name="talent" placeholder="name" required style="display: none"></textarea> <br>
+                    <input type="number" id='talent2' name="talent" placeholder="name" required style="display: none"></textarea> <br>
                     <button  class="start-btn" type="submit">開始大學</button>
                 </form>
             </div>
@@ -309,15 +338,42 @@
         });
 
         betBtn.addEventListener('click', function () {
-            // Uncheck all checkboxes
-            talentForm.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
-                checkbox.checked = false;
-            });
+             // 抓$talents的資料
+            const talents = @json($talents);
 
-            // Select a random index based on the number of checkboxes
-            const randomIndex = Math.floor(Math.random() * talentForm.elements.length);
-            // Select the random checkbox
-            talentForm.elements[randomIndex].checked = true;
+            // 建造隨機4個
+            let rand_nums = [];
+            while (rand_nums.length < 4) {
+                let rand_num = Math.floor(Math.random() * talents.length);
+                if (!rand_nums.includes(rand_num)) {
+                    rand_nums.push(rand_num);
+                }
+            }
+
+            // 直接抓對應塊html並清空
+            const talentOptions = document.getElementById('talent-options');
+            talentOptions.innerHTML = '';
+
+            // 幫那塊html替換為新的內容
+            rand_nums.forEach(index => {
+                const talent = talents[index];
+                const talentDiv = document.createElement('div');
+                talentDiv.className = 'form-check';
+                talentDiv.innerHTML = `
+                    <input class="form-check-input" type="radio" name="talent" value="${talent.id}">
+                    <label class="form-check-label">${talent.name}</label>
+                `;
+                talentOptions.appendChild(talentDiv);
+            });
+            // 由於事件監測器沒了 所以這邊幫她新增回去
+            const radioButtons = document.querySelectorAll('input[name="talent"]');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const selectedTalentId = this.value;
+                    console.log(selectedTalentId);
+                    document.querySelector('#talent2').value = selectedTalentId;
+                });
+            });
         });
     });
 </script>

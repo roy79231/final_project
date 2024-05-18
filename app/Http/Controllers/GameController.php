@@ -60,7 +60,7 @@ class GameController extends Controller
         $appearance = intval($request->appearance);
         $luck = intval($request->luck);
         $morality = intval($request->morality);
-        $talent_name = intval($request->talent);
+        $talent_id = intval($request->talent);
         $happiness = 0;
         // Process the data
         /*
@@ -71,7 +71,7 @@ class GameController extends Controller
         $appearance = $data['appearance'];
         $talent_name = $data['talent'];
         */
-        $talent = talent::where('name',$talent_name)->first();     
+        $talent = talent::where('id',$talent_id)->first();     
         $month = 1;
         $alive = true;
         $accomplish_achievements = [];
