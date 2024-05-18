@@ -26,9 +26,9 @@ use App\Models\User;
     <!--箭頭-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <style>
-        .py-4{
+        /* .py-4{
             background-color:rgb(248, 202, 149);
-        }
+        } */
     </style>
 </head>
 <body>

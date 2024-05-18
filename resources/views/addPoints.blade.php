@@ -169,7 +169,6 @@
                         </div>
                         @endforeach
                     </form>
-
                 </div>
             </div>
             <div class="action-buttons">
