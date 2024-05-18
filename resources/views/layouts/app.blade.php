@@ -51,11 +51,11 @@ use App\Models\User;
                     討論區
                 </a>
                 <?php $user = Auth::user()?>
-                {{-- @if(($user && $user->role == User::ROLE_ADMIN))
+                @if(($user && $user->role == User::ROLE_ADMIN))
                     <a class="navbar-brand" href="{{ route('talentUpLoader') }}">
                         資料庫
                     </a>
-                @endif --}}
+                @endif
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -71,7 +71,7 @@ use App\Models\User;
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                        {{-- @guest
+                        @guest
                             @if (Route::has('login'))
                                 <li class="nav-item me-2">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('登入') }}</a>
@@ -108,7 +108,7 @@ use App\Models\User;
                                     </form>
                                 </div>
                             </li>
-                        @endguest --}}
+                        @endguest
                     </ul>
                 </div>
             </div>
