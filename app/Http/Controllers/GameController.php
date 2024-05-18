@@ -91,6 +91,313 @@ class GameController extends Controller
             //死亡的部分
             $survive_rate = 100;
             $death_way = '';
+            $trigger = 2; //死亡機率
+            $extend_event = [];
+
+            if($wealth<8){
+                $trigger += 3;
+                $extend_event[] = "wealth";
+            }
+            if($appearance<8){
+                $trigger += 3;
+                $extend_event[] = "appearance";
+            } 
+            if($intelligence<8){
+                $trigger += 3;
+                $extend_event[] = "intelligence";
+            }
+            if($morality<8){
+                $trigger += 3;
+                $extend_event[] = "morality";
+            }
+            if($happiness<8){
+                $trigger += 3;
+                $extend_event[] = "happiness";
+            }
+            if($luck<8){
+                $trigger += 3;
+                $extend_event[] = "luck";
+            }
+            $survive_rate = rand(1,100);
+
+            //死亡機率大於存活機率 就會往下跑switch case *我把accident砍掉了
+            if($survive_rate < $trigger){
+                $alive = false;
+                $wayToDie = rand(1,7);
+                switch($wayToDie){
+                    case 1:
+                        $death_way = dead_event::DIE_WEALTH;
+                        $dieEvent = dead_event::where('way',$death_way)->get();
+                        $randomDie = $dieEvent->random();
+                        game_process::create([
+                            'user_id'=>$user_id,
+                            'month'=>$month,
+                            'intelligence'=>$intelligence,
+                            'appearance'=> $appearance,
+                            'wealth'=> $wealth,
+                            'luck'=>$luck,
+                            'happiness'=>$happiness,
+                            'morality'=>$morality,
+                            'content'=>$randomDie->content,
+                            'achievement_id'=>-1,
+                        ]);
+                        break;
+                    case 2:
+                        $death_way = dead_event::DIE_APPEARANCE;
+                        $dieEvent = dead_event::where('way',$death_way)->get();
+                        $randomDie = $dieEvent->random();
+                        game_process::create([
+                            'user_id'=>$user_id,
+                            'month'=>$month,
+                            'intelligence'=>$intelligence,
+                            'appearance'=> $appearance,
+                            'wealth'=> $wealth,
+                            'luck'=>$luck,
+                            'happiness'=>$happiness,
+                            'morality'=>$morality,
+                            'content'=>$randomDie->content,
+                            'achievement_id'=>-1
+                        ]);
+                        break;
+                    case 3:
+                        $death_way = 'intelligence';
+                        $dieEvent = dead_event::where('way',$death_way)->get();
+                        $randomDie = $dieEvent->random();
+                        game_process::create([
+                            'user_id'=>$user_id,
+                            'month'=>$month,
+                            'intelligence'=>$intelligence,
+                            'appearance'=> $appearance,
+                            'wealth'=> $wealth,
+                            'luck'=>$luck,
+                            'happiness'=>$happiness,
+                            'morality'=>$morality,
+                            'content'=>$randomDie->content,
+                            'achievement_id'=>-1
+                        ]);
+                        break;
+                    case 4:
+                        $death_way = dead_event::DIE_MORALITY;
+                        $dieEvent = dead_event::where('way',$death_way)->get();
+                        $randomDie = $dieEvent->random();
+                        game_process::create([
+                            'user_id'=>$user_id,
+                            'month'=>$month,
+                            'intelligence'=>$intelligence,
+                            'appearance'=> $appearance,
+                            'wealth'=> $wealth,
+                            'luck'=>$luck,
+                            'happiness'=>$happiness,
+                            'morality'=>$morality,
+                            'content'=>$randomDie->content,
+                            'achievement_id'=>-1
+                        ]);
+                        break;
+                    case 5:
+                        $death_way = dead_event::DIE_HAPPINESS;
+                        $dieEvent = dead_event::where('way',$death_way)->get();
+                        $randomDie = $dieEvent->random();
+                        game_process::create([
+                            'user_id'=>$user_id,
+                            'month'=>$month,
+                            'intelligence'=>$intelligence,
+                            'appearance'=> $appearance,
+                            'wealth'=> $wealth,
+                            'luck'=>$luck,
+                            'happiness'=>$happiness,
+                            'morality'=>$morality,
+                            'content'=>$randomDie->content,
+                            'achievement_id'=>-1
+                        ]);
+                        break;
+                    case 6:
+                        $death_way = dead_event::DIE_LUCK;
+                        $dieEvent = dead_event::where('way',$death_way)->get();
+                        $randomDie = $dieEvent->random();
+                        game_process::create([
+                            'user_id'=>$user_id,
+                            'month'=>$month,
+                            'intelligence'=>$intelligence,
+                            'appearance'=> $appearance,
+                            'wealth'=> $wealth,
+                            'luck'=>$luck,
+                            'happiness'=>$happiness,
+                            'morality'=>$morality,
+                            'content'=>$randomDie->content,
+                            'achievement_id'=>-1,
+                        ]);
+                        break;
+                    case 7:
+                        $death_way = dead_event::DIE_ACCIDENT;
+                        $dieEvent = dead_event::where('way',$death_way)->get();
+                        $randomDie = $dieEvent->random();
+                        game_process::create([
+                            'user_id'=>$user_id,
+                            'month'=>$month,
+                            'intelligence'=>$intelligence,
+                            'appearance'=> $appearance,
+                            'wealth'=> $wealth,
+                            'luck'=>$luck,
+                            'happiness'=>$happiness,
+                            'morality'=>$morality,
+                            'content'=>$randomDie->content,
+                            'achievement_id'=>-1,
+                        ]);
+                        break;
+                }
+                break;
+            }
+
+            //因為某種屬性過低 雖然沒有死 卻有相應的事件發生
+            $cnt = count($extend_event);
+            $extend_event_rate = (1-1/2**$cnt)*0.75*100;      //相應事件發生的機率 : (所有屬性過低的事件中至少發生一個相應事件的機率)*0.75
+            if(rand(1,100) < $extend_event_rate){
+                $extend_event_way = rand(0,$cnt-1);
+                switch($extend_event_way){
+                    case 0:
+                        $special_event = special_event::where('name', $extend_event[0])->get(); //把加分事件的名字用屬性做區分 還沒想出更好的分類方式
+                        $event = $special_event->random();
+                        $intelligence = $intelligence + $event->intelligence;
+                        $appearance = $appearance + $event->appearance;
+                        $wealth = $wealth + $event->wealth;
+                        $luck = $luck + $event->luck;
+                        $happiness = $happiness + $event->happiness;
+                        $morality = $morality + $event->morality;
+                        game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intelligence'=>$intelligence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$event->content,
+                        'achievement_id'=>-1//timlin新增
+                        ]);
+                        $month+=1;
+                        break;
+                    case 1:
+                        $special_event = special_event::where('name', $extend_event[1])->get();
+                        $event = $special_event->random();
+                        $intelligence = $intelligence + $event->intelligence;
+                        $appearance = $appearance + $event->appearance;
+                        $wealth = $wealth + $event->wealth;
+                        $luck = $luck + $event->luck;
+                        $happiness = $happiness + $event->happiness;
+                        $morality = $morality + $event->morality;
+                        game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intelligence'=>$intelligence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$event->content,
+                        'achievement_id'=>-1
+                        ]);
+                        $month+=1;
+                        break;
+                    case 2:
+                        $special_event = special_event::where('name', $extend_event[2])->get(); 
+                        $event = $special_event->random();
+                        $intelligence = $intelligence + $event->intelligence;
+                        $appearance = $appearance + $event->appearance;
+                        $wealth = $wealth + $event->wealth;
+                        $luck = $luck + $event->luck;
+                        $happiness = $happiness + $event->happiness;
+                        $morality = $morality + $event->morality;
+                        game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intelligence'=>$intelligence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$event->content,
+                        'achievement_id'=>-1//timlin新增
+                        ]);
+                        $month+=1;
+                        break;
+                    case 3:
+                        $special_event = special_event::where('name', $extend_event[3])->get(); 
+                        $event = $special_event->random();
+                        $intelligence = $intelligence + $event->intelligence;
+                        $appearance = $appearance + $event->appearance;
+                        $wealth = $wealth + $event->wealth;
+                        $luck = $luck + $event->luck;
+                        $happiness = $happiness + $event->happiness;
+                        $morality = $morality + $event->morality;
+                        game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intelligence'=>$intelligence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$event->content,
+                        'achievement_id'=>-1
+                        ]);
+                        $month+=1;
+                        break;
+                    case 4:
+                        $special_event = special_event::where('name', $extend_event[4])->get(); 
+                        $event = $special_event->random();
+                        $intelligence = $intelligence + $event->intelligence;
+                        $appearance = $appearance + $event->appearance;
+                        $wealth = $wealth + $event->wealth;
+                        $luck = $luck + $event->luck;
+                        $happiness = $happiness + $event->happiness;
+                        $morality = $morality + $event->morality;
+                        game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intelligence'=>$intelligence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$event->content,
+                        'achievement_id'=>-1
+                        ]);
+                        $month+=1;
+                        break;
+                    case 5:
+                        $special_event = special_event::where('name', $extend_event[5])->get();
+                        $event = $special_event->random();
+                        $intelligence = $intelligence + $event->intelligence;
+                        $appearance = $appearance + $event->appearance;
+                        $wealth = $wealth + $event->wealth;
+                        $luck = $luck + $event->luck;
+                        $happiness = $happiness + $event->happiness;
+                        $morality = $morality + $event->morality;
+                        game_process::create([
+                        'user_id'=>$user_id,
+                        'month'=>$month,
+                        'intelligence'=>$intelligence,
+                        'appearance'=> $appearance,
+                        'wealth'=> $wealth,
+                        'luck'=>$luck,
+                        'happiness'=>$happiness,
+                        'morality'=>$morality,
+                        'content'=>$event->content,
+                        'achievement_id'=>-1
+                        ]);
+                        $month+=1;
+                        break;
+                }
+                continue;
+            }
+
+
+            /*
             if($wealth<10){ //財富  低於10觸發 有3%因這個死亡
                 $survive_rate = rand(1,100);
                 if($survive_rate<=3){
@@ -113,7 +420,7 @@ class GameController extends Controller
 
                     break;
                 }
-                /*timlin:
+                timlin:
                 我在這邊可以多寫一個else用來寫特定屬性的加分事件
                 就是如果他沒有死掉，就50%會繼續做扣該屬性的事件 有個問題是:如果他的屬性都很平均，就必須用原本的隨機特殊事件做分數的變動
 
@@ -122,7 +429,7 @@ class GameController extends Controller
                 加分事件可以大致分成兩大項
                 1.因為某項屬性過低而執行的"特定數性加分事件"
                 2.內容相較於前者更加隨機的"隨機加分事件"
-                */
+                
 
                 else if(rand(1,10)<=5){
                     //timlin:注意!! 我在這邊的name是加分事件的name對應到特定屬性 (像是intelligence)
@@ -417,6 +724,8 @@ class GameController extends Controller
 
                 break;
             }
+            */
+
             //事件
             $event_kind = rand(1,100);
             if($event_kind<=60){

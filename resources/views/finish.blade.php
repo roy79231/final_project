@@ -53,7 +53,7 @@
         display: flex;
         flex-direction: column;
         width: 49%;
-        background-color: #ccc;
+        background-color: #d8c49f;
         padding: 20px;
         justify-content: space-between; /* 將子元素分佈在容器中，保持相等間距 */
         font-size: 20px;  /* 文字大小 */
@@ -63,8 +63,8 @@
         display: flex;
         flex-direction: column;
         width: 49%;
-        background-color: #ccc;
+        background-color: #d8c49f;
         padding: 20px;
-        font-size: 20px;  /* 文字大小 操*/ 
+        font-size: 20px;  /* 文字大小*/ 
     }
   </style>
