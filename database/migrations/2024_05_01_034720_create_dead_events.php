@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('content');
-            $table->string('wayOne')->default('');
-            $table->string('wayTwo')->default('');
+            $table->string('way');
             $table->timestamps();
 
         });

@@ -112,8 +112,7 @@
         text-align: center; /* Center the text horizontally */
     }
 </style>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
 @section('content')
 <div class="container">
     <div class="row">
@@ -124,27 +123,27 @@
                 <ul>
                     <li id="intelligence">智力:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">{{$user->intelligence}}</span>
+                        <span class="quantity">0</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                     <li id="wealth">財富:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">{{$user->wealth}}</span>
+                        <span class="quantity">0</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                     <li id="luck">運氣:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">{{$user->luck}}</span>
+                        <span class="quantity">0</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                     <li id="morality">道德:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">{{$user->morality}}</span>
+                        <span class="quantity">0</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                     <li id="appearance">顏值:
                         <button class="btn btn-danger decrement-btn">-</button>
-                        <span class="quantity">{{$user->appearance}}</span>
+                        <span class="quantity">0</span>
                         <button class="btn btn-success increment-btn">+</button>
                     </li>
                 </ul>
@@ -161,7 +160,7 @@
                 <!-- Right Content -->
                 <div class="p-3">
                     <h2>選擇天賦: </h2>
-                    <form action="{{ route('run', ['user' => $user->talent])}}" id="talent-form" method="POST">
+                    <form id="talent-form">
                         @foreach ($talents as $talent)
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="talent" id="talent{{ $loop->index }}" value="{{ $talent }}">
@@ -173,7 +172,17 @@
             </div>
             <div class="action-buttons">
                 <button class="bet-btn">我是賭狗</button> <br>
-                <button class="start-btn">開啟大學</button>
+                <!-- style="display: none"-->
+                <form action="{{ route('run') }}" method="POST">
+                    @csrf
+                    <input type="number" id='intelligence2' name="intelligence" placeholder="intelligence" required style="display: none"><br>
+                    <input type="number" id='wealth2' name="wealth" placeholder="wealth" required style="display: none"><br>
+                    <input type="number" id='appearance2' name="appearance" placeholder="appearance" required style="display: none"><br>
+                    <input type="number" id='luck2' name="luck" placeholder="luck" required style="display: none"><br>
+                    <input type="number" id='morality2' name="morality" placeholder="morality" required style="display: none"><br>
+                    <input type="hidden" id='talent2' name="talent" placeholder="name" required style="display: none"></textarea> <br>
+                    <button  class="start-btn" type="submit">開始大學</button>
+                </form>
             </div>
         </div>
 
@@ -226,6 +235,16 @@
                 span.innerText = currentValue - 1;
                 updateRemainingPoints();
             }
+            const intelligence = document.querySelector('#intelligence .quantity').innerText;
+            const wealth = document.querySelector('#wealth .quantity').innerText;
+            const luck = document.querySelector('#luck .quantity').innerText;
+            const morality = document.querySelector('#morality .quantity').innerText;
+            const appearance = document.querySelector('#appearance .quantity').innerText;
+            document.querySelector('#intelligence2').value = parseInt(intelligence);
+            document.querySelector('#wealth2').value = parseInt(wealth);
+            document.querySelector('#luck2').value = parseInt(luck);
+            document.querySelector('#morality2').value = parseInt(morality);
+            document.querySelector('#appearance2').value = parseInt(appearance);
         });
     });
 
@@ -237,6 +256,16 @@
                 span.innerText = currentValue + 1;
                 updateRemainingPoints();
             }
+            const intelligence = document.querySelector('#intelligence .quantity').innerText;
+            const wealth = document.querySelector('#wealth .quantity').innerText;
+            const luck = document.querySelector('#luck .quantity').innerText;
+            const morality = document.querySelector('#morality .quantity').innerText;
+            const appearance = document.querySelector('#appearance .quantity').innerText;
+            document.querySelector('#intelligence2').value = parseInt(intelligence);
+            document.querySelector('#wealth2').value = parseInt(wealth);
+            document.querySelector('#luck2').value = parseInt(luck);
+            document.querySelector('#morality2').value = parseInt(morality);
+            document.querySelector('#appearance2').value = parseInt(appearance);
         });
     });
 
@@ -267,6 +296,15 @@
     document.addEventListener('DOMContentLoaded', function () {
         const betBtn = document.querySelector('.bet-btn');
         const talentForm = document.getElementById('talent-form');
+        const talentRadios = talentForm.querySelectorAll('input[type="radio"]');
+        talentRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                // 獲取所選天賦的值
+                const selectedTalent = this.value;
+                console.log(selectedTalent);
+                document.querySelector('#talent2').value = selectedTalent;
+            });
+        });
 
         betBtn.addEventListener('click', function () {
             // Uncheck all checkboxes
@@ -280,7 +318,6 @@
             talentForm.elements[randomIndex].checked = true;
         });
     });
-
 </script>
 @endsection
 

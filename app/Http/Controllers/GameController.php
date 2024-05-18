@@ -12,6 +12,7 @@ use App\Models\talent;
 use App\Models\achievement_event;
 use App\Models\achievement_fins;
 use App\Models\dead_event;
+use App\Models\game_endings;
 use App\Models\User;
 
 class GameController extends Controller
@@ -20,8 +21,9 @@ class GameController extends Controller
     public function main(){
         return view('main');
     }
+    
     public function achievement(Request $request)
-{
+    {
     // 檢索已解鎖的成就
     $unlockedAchievements = achievement_fins::where('user_id', $request->user()->id)
         ->with('achievement')
@@ -30,22 +32,22 @@ class GameController extends Controller
     // 檢索尚未解鎖的成就
     $lockedAchievements = achievement::whereNotIn('id', $unlockedAchievements->pluck('achievement_id'))
         ->get();
-
-    // 將已解鎖的成就和尚未解鎖的成就合併，使已解鎖的成就顯示在最上面
-    $achievements = $unlockedAchievements->merge($lockedAchievements);
-
+    
+    
     // 傳遞成就數據給視圖
-    return view('achievement', ['achievements' => $achievements]);
+    return view('achievement', [
+        'unlockedAchievements' => $unlockedAchievements,
+        'lockedAchievements' => $lockedAchievements
+    ]);
+    
 }
+
     public function post(){
         return view('post');
     }
     public function start(Request $request){
         return view('start');
     }
-    /*public function finish(){
-        return view('finish');
-    }*/
     public function addPoints(){
         return view('addPoints');
     }
@@ -53,14 +55,23 @@ class GameController extends Controller
     public function run(Request $request){
         //基本資料
         $user_id = auth()->user()->id;
-        $intelligence = $request->intelligence;
-        $wealth = $request->wealth;
-        $appearance = $request->appearance;
-        $luck = $request->luck;
-        $morality = $request->morality;
-        $happiness = $request->happiness;
-        $talent = talent::find($request->talent_id);
-
+        $intelligence = intval($request->intelligence);
+        $wealth = intval($request->wealth);
+        $appearance = intval($request->appearance);
+        $luck = intval($request->luck);
+        $morality = intval($request->morality);
+        $talent_name = intval($request->talent);
+        $happiness = 0;
+        // Process the data
+        /*
+        $intelligence = $data['intelligence'];
+        $wealth = $data['wealth'];
+        $luck = $data['luck'];
+        $morality = $data['morality'];
+        $appearance = $data['appearance'];
+        $talent_name = $data['talent'];
+        */
+        $talent = talent::where('name',$talent_name)->first();     
         $month = 1;
         $alive = true;
         $accomplish_achievements = [];
@@ -97,6 +108,7 @@ class GameController extends Controller
                         'happiness'=>$happiness,
                         'morality'=>$morality,
                         'content'=>$randomDie->content,
+                        'achievement_id'=>-1,
                     ]);
 
                     break;
@@ -509,7 +521,9 @@ class GameController extends Controller
                     'achievement_id'=>$event->achievement_id,//timlin新增
                 ]);
                 array_push($accomplish_achievements ,$event->achievement_id);
+                
             }
+            $month+=1;
         };
         //這個foreach有問題要修 已解決
         if(!empty($accomplish_achievements)){
@@ -523,13 +537,24 @@ class GameController extends Controller
                         'user_id'=> $user_id,
                         'achievement_id'=> $accomplish_achievements[$i],
                     ]);
-                }
+                }                
             };
         }
         $game_processes = game_process::where('user_id',$user_id)->get();
+        $achievement = achievement_event::all();
+        game_ending::create([
+            'user_id'=>$user_id,
+            'intelligence'=>$intelligence,
+            'wealth'=>$wealth,
+            'appearance'=>$appearance,
+            'luck'=>$luck,
+            'morality'=>$morality,
+            'happiness'=>$happiness,
+        ]);
         return view('monthlyevent',[
             'game_processes' => $game_processes,
             'accomplish_achievements' => $accomplish_achievements,
+            'achievement' =>$achievement,
         ]);
     }
     public function finish(){
@@ -543,7 +568,7 @@ class GameController extends Controller
         ->first();
 
         //準備ending
-        // dd($make_end);
+        //dd($make_end);
         $intelligence = $make_end->intelligence;
         $wealth = $make_end->wealth;
         $appearance = $make_end->appearance;
@@ -561,7 +586,7 @@ class GameController extends Controller
             'morality'=>$morality,
             'achievements_id'=>$accomplish_achievements,
         ]);
-        $end = game_ending::where('user_id',$user_id)->get();
+        $end = game_ending::where('user_id',$user_id)->first();
         // dd($end);
         return view('finish',[
             'end'=> $end,
