@@ -78,11 +78,12 @@
         right: 0;
     }
 
-    .action-buttons .bet-btn, .action-buttons .start-btn{
+    .reset-btn, .action-buttons .bet-btn, .action-buttons .start-btn{
         border: 5px dashed;
         background-color: transparent;
         margin-left: 5px;
         margin-bottom: 5px;
+        font-size: 1.8rem;
     }
 
     .bet-btn {
@@ -91,14 +92,6 @@
 
     .start-btn {
         color: rgba(5, 110, 50, 0.863); /* Set text color */
-    }
-
-
-    .reset-btn {
-        border: 5px dashed;
-        background-color: transparent;
-        margin-left: 5px;
-        margin-bottom: 5px;
     }
 
     .btn-lighter {
@@ -110,6 +103,14 @@
         display: inline-block;
         width: 2em; /* Fixed width for alignment */
         text-align: center; /* Center the text horizontally */
+    }
+
+    .form-check-input {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+    }
+    .form-check-label {
+        font-size: 1.5rem;
     }
 </style>
 <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
@@ -167,6 +168,7 @@
                             <label class="form-check-label" for="talent{{ $loop->index }}">{{ $talent }}</label>
                         </div>
                         @endforeach
+                        </div>
                     </form>
                 </div>
             </div>
