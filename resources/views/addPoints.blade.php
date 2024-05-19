@@ -20,21 +20,12 @@
         border-radius: 2px;
     }
 
-    .nav-item {
-        border: 2px solid black;
-        border-radius: 2px;
-    }
-
     .justify-content-end .nav-link {
         color: black !important;
     }
 
     .navbar-light .navbar-nav .nav-link {
         color: rgba(0, 0, 0);
-    }
-
-    .nav-link {
-        background-color: rgba(168, 81, 6, 0.675) !important;
     }
 
     .centered-container, .mt-5 {

@@ -21,6 +21,10 @@ class GameController extends Controller
     public function main(){
         return view('main');
     }
+
+    public function finish() {
+        return view('finish');
+    }
     
     public function achievement(Request $request)
     {
@@ -866,7 +870,7 @@ class GameController extends Controller
             'achievement' =>$achievement,
         ]);
     }
-    public function finish(){
+    public function ggfinish(){
         //清process和ending資料
         $user_id = auth()->user()->id;
         $end = game_ending::where('user_id',$user_id)->delete();
