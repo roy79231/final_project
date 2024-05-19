@@ -21,11 +21,6 @@ class GameController extends Controller
     public function main(){
         return view('main');
     }
-
-    public function finish() {
-        return view('finish');
-    }
-    
     public function achievement(Request $request)
     {
     // 檢索已解鎖的成就
@@ -86,7 +81,7 @@ class GameController extends Controller
             //死亡的部分
             $survive_rate = 100;
             $death_way = '';
-            $dead_event = ["accident"];
+            $dead_event = [];
             $extend_event = [];
 
             if($month==1){
@@ -501,7 +496,7 @@ class GameController extends Controller
             }else{
                 $rand_range = achievement_event::all()->count();
                 $event_id = rand(1,$rand_range);
-                $event = achievement::find($event_id);
+                $event = achievement_event::find($event_id);
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
@@ -683,7 +678,7 @@ class GameController extends Controller
             'achievement' =>$achievement,
         ]);
     }
-    public function ggfinish(){
+    public function finish(){
         //清process和ending資料
         $user_id = auth()->user()->id;
         $end = game_ending::where('user_id',$user_id)->delete();
@@ -714,7 +709,7 @@ class GameController extends Controller
         ]);
         $end = game_ending::where('user_id',$user_id)->first();
         // dd($end);
-        return view('finish',[
+        return view('finish2',[
             'end'=> $end,
         ]);
     }
