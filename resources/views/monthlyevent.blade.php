@@ -101,15 +101,16 @@
     }
     $achievement_content=[];
     for($i=0;$i<$count_number;$i++){
+        $flag = 0;
         foreach($achievement as $detail){
             if($detail->achievement_id == $achievement_id[$i]){
-                $achievement_content[$i]=$detail->content;
+                $achievement_content[$i]=$detail->name;
+                $flag = 1;
                 break;
             }
-            else{
-                $achievement_content[$i] = "雞雞"; 
-                break;
-            }
+        }
+        if($flag==0){
+            $achievement_content[$i]="雞雞";
         }
     }
     
@@ -198,9 +199,6 @@
         monthnumber+=1;
         count+=1;
         if(monthnumber<=totalmonth){
-            if(achievement_id[count]!=-1){
-                alert("觸發成就:"+achievement_content[count]);
-            }
             document.getElementById("months").innerHTML = "第 "+monthnumber+" 個月";
             document.getElementById("intelligence").innerHTML = "智力:     "+monthintelligence[count];
             document.getElementById("wealthy").innerHTML = "財富:     "+monthweathly[count];
@@ -256,6 +254,9 @@
             else{
                 document.getElementById('happychange').innerHTML = "   "+(monthhappy[count]-monthhappy[count-1]);
                 document.getElementById('happychange').style.color = 'red';
+            }
+            if(achievement_id[count]!=-1){
+                alert("觸發成就:"+achievement_content[count]);
             }
         }
         else if(monthnumber>totalmonth){
