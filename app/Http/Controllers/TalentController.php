@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\talent;
 use Illuminate\Support\Facades\DB;
-use App\Models\talent;
 
 class TalentController extends Controller
 {
