@@ -2,15 +2,15 @@
 @section('content')
 <style>
     @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
-    body {
+    /* body {
         font-family: Arial, sans-serif;
         background-color: #f8f9fa;
         color: #333;
         margin: 0;
         padding: 0;
        
-    }
-    .container {
+    }  */
+    .timlincontainer {
         font-family: ‘cwTeXYen’, sans-serif;
         max-width: 1400px;
         margin: 20px auto;
@@ -39,9 +39,9 @@
     }
     .month_attribute{
         font-size: 30px;
-        font-family:;
-        text-align: center;
+        text-align:left ;
         width: 400px;
+        margin-left: 200px;
     }
     .month_content{
         text-align: center;
@@ -83,6 +83,7 @@
     .new{
         width: 200px;
     }
+    
 </style>
 <?php 
     $count_number=0;
@@ -130,7 +131,7 @@
     var achievement_id = @json($achievement_id);
 </script>
 
-<div class="container">
+<div class="timlincontainer">
             <div class="month_number" id="months">
                 <p>第 1 個月</p>
             </div>
