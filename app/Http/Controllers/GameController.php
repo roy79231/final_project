@@ -91,34 +91,8 @@ class GameController extends Controller
             //死亡的部分
             $survive_rate = 100;
             $death_way = '';
-            $trigger = 2; //死亡機率
+            $dead_event = [];
             $extend_event = [];
-
-            if($wealth<8){
-                $trigger += 3;
-                $extend_event[] = "wealth";
-            }
-            if($appearance<8){
-                $trigger += 3;
-                $extend_event[] = "appearance";
-            } 
-            if($intelligence<8){
-                $trigger += 3;
-                $extend_event[] = "intelligence";
-            }
-            if($morality<8){
-                $trigger += 3;
-                $extend_event[] = "morality";
-            }
-            if($happiness<8){
-                $trigger += 3;
-                $extend_event[] = "happiness";
-            }
-            if($luck<8){
-                $trigger += 3;
-                $extend_event[] = "luck";
-            }
-            $survive_rate = rand(1,100);
 
             if($month==1){
                 game_process::create([
@@ -139,13 +113,41 @@ class GameController extends Controller
                 continue;
             }
 
+            if($wealth<8){
+                $dead_event[] = "wealth";
+                $extend_event[] = "wealth";
+            }
+            if($appearance<8){
+                $dead_event[] = "appearance";
+                $extend_event[] = "appearance";
+            } 
+            if($intelligence<8){
+                $dead_event[] = "intelligence";
+                $extend_event[] = "intelligence";
+            }
+            if($morality<8){
+                $dead_event[] = "morality";
+                $extend_event[] = "morality";
+            }
+            if($happiness<8){
+                $dead_event[] = "happiness";
+                $extend_event[] = "happiness";
+            }
+            if($luck<8){
+                $dead_event[] = "luck";
+                $extend_event[] = "luck";
+            }
+            $survive_rate = rand(1,100);
+            $dead_cnt = count($dead_event);
+            $dead_rate = $dead_cnt*3;
+
             //死亡機率大於存活機率 就會往下跑switch case
-            if($survive_rate < $trigger){
+            if($survive_rate < $dead_rate){
                 $alive = false;
-                $wayToDie = rand(1,7);
+                $wayToDie = rand(0,$dead_cnt-1);
                 switch($wayToDie){
-                    case 1:
-                        $death_way = dead_event::DIE_WEALTH;
+                    case 0:
+                        $death_way = $dead_event[0];
                         $dieEvent = dead_event::where('way',$death_way)->get();
                         $randomDie = $dieEvent->random();
                         game_process::create([
@@ -161,8 +163,25 @@ class GameController extends Controller
                             'achievement_id'=>-1,
                         ]);
                         break;
+                    case 1:
+                        $death_way = $dead_event[1];
+                        $dieEvent = dead_event::where('way',$death_way)->get();
+                        $randomDie = $dieEvent->random();
+                        game_process::create([
+                            'user_id'=>$user_id,
+                            'month'=>$month,
+                            'intelligence'=>$intelligence,
+                            'appearance'=> $appearance,
+                            'wealth'=> $wealth,
+                            'luck'=>$luck,
+                            'happiness'=>$happiness,
+                            'morality'=>$morality,
+                            'content'=>$randomDie->content,
+                            'achievement_id'=>-1
+                        ]);
+                        break;
                     case 2:
-                        $death_way = dead_event::DIE_APPEARANCE;
+                        $death_way = $dead_event[2];
                         $dieEvent = dead_event::where('way',$death_way)->get();
                         $randomDie = $dieEvent->random();
                         game_process::create([
@@ -179,7 +198,7 @@ class GameController extends Controller
                         ]);
                         break;
                     case 3:
-                        $death_way = 'intelligence';
+                        $death_way = $dead_event[3];
                         $dieEvent = dead_event::where('way',$death_way)->get();
                         $randomDie = $dieEvent->random();
                         game_process::create([
@@ -196,7 +215,7 @@ class GameController extends Controller
                         ]);
                         break;
                     case 4:
-                        $death_way = dead_event::DIE_MORALITY;
+                        $death_way = $dead_event[4];
                         $dieEvent = dead_event::where('way',$death_way)->get();
                         $randomDie = $dieEvent->random();
                         game_process::create([
@@ -213,24 +232,7 @@ class GameController extends Controller
                         ]);
                         break;
                     case 5:
-                        $death_way = dead_event::DIE_HAPPINESS;
-                        $dieEvent = dead_event::where('way',$death_way)->get();
-                        $randomDie = $dieEvent->random();
-                        game_process::create([
-                            'user_id'=>$user_id,
-                            'month'=>$month,
-                            'intelligence'=>$intelligence,
-                            'appearance'=> $appearance,
-                            'wealth'=> $wealth,
-                            'luck'=>$luck,
-                            'happiness'=>$happiness,
-                            'morality'=>$morality,
-                            'content'=>$randomDie->content,
-                            'achievement_id'=>-1
-                        ]);
-                        break;
-                    case 6:
-                        $death_way = dead_event::DIE_LUCK;
+                        $death_way = $dead_event[5];
                         $dieEvent = dead_event::where('way',$death_way)->get();
                         $randomDie = $dieEvent->random();
                         game_process::create([
@@ -246,8 +248,8 @@ class GameController extends Controller
                             'achievement_id'=>-1,
                         ]);
                         break;
-                    case 7:
-                        $death_way = dead_event::DIE_ACCIDENT;
+                    case 6:
+                        $death_way = $dead_event[6];
                         $dieEvent = dead_event::where('way',$death_way)->get();
                         $randomDie = $dieEvent->random();
                         game_process::create([
