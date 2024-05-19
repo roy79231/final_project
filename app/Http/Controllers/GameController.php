@@ -816,7 +816,7 @@ class GameController extends Controller
             }else{
                 $rand_range = achievement_event::all()->count();
                 $event_id = rand(1,$rand_range);
-                $event = achievement_event::find($event_id);
+                $event = achievement::find($event_id);
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
