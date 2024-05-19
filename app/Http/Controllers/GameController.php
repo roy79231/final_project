@@ -91,7 +91,7 @@ class GameController extends Controller
             //死亡的部分
             $survive_rate = 100;
             $death_way = '';
-            $dead_event = [];
+            $dead_event = ["accident"];
             $extend_event = [];
 
             if($month==1){
