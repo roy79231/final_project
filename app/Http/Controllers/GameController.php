@@ -120,7 +120,26 @@ class GameController extends Controller
             }
             $survive_rate = rand(1,100);
 
-            //死亡機率大於存活機率 就會往下跑switch case *我把accident砍掉了
+            if($month==1){
+                game_process::create([
+                    'user_id'=>$user_id,
+                    'month'=>$month,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
+                    'content'=>"恭喜你!
+                    在經歷了殘酷的學測和分科後，你成功進到中央大學了(你很棒棒!)
+                    你決定在這開始璀璨的大學生活(自我評語:我的未來是一片光明阿哈哈哈哈)。",
+                    'achievement_id'=>-1,
+                ]);
+                $month += 1;
+                continue;
+            }
+
+            //死亡機率大於存活機率 就會往下跑switch case
             if($survive_rate < $trigger){
                 $alive = false;
                 $wayToDie = rand(1,7);
