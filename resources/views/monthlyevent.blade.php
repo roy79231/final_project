@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 <style>
-    @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
     /* body {
         font-family: Arial, sans-serif;
         background-color: #f8f9fa;
@@ -10,8 +9,12 @@
         padding: 0;
        
     }  */
+    @font-face{
+        font-family: 't1';
+        src:url(https://fonts.googleapis.com/earlyaccess/cwtexkai.css);
+    }
     .timlincontainer {
-        font-family: ‘cwTeXYen’, sans-serif;
+        font-family:'t1';
         max-width: 1400px;
         margin: 20px auto;
         padding: 20px;
@@ -40,20 +43,21 @@
     .month_attribute{
         font-size: 30px;
         text-align:left ;
-        width: 400px;
-        margin-left: 200px;
-    }
-    .month_content{
-        text-align: center;
-        font-size: 20px;
-        width:600px;
-        font:bold;
+        width: 350px;
+        padding-left: 150px;
     }
     .attribute_change{
         font-size: 30px;
-        font-family: 'Courier New', Courier, monospace;
         text-align: center;
         width: 150px;
+        padding-right: 20px;
+    }
+    .month_content{
+        text-align: left;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        width:550px;
+        padding-right:20px: 
     }
     .triangle-button-left {
         border-color: transparent #0b0b0b transparent transparent;
@@ -100,11 +104,12 @@
         $achievement_id[$count_number] = $attribute->achievement_id;
         $count_number+=1;
     }
+    //dd($achievement);
     $achievement_content=[];
     for($i=0;$i<$count_number;$i++){
         $flag = 0;
         foreach($achievement as $detail){
-            if($detail->achievement_id == $achievement_id[$i]){
+            if($detail->id == $achievement_id[$i] ){
                 $achievement_content[$i]=$detail->name;
                 $flag = 1;
                 break;
@@ -114,7 +119,7 @@
             $achievement_content[$i]="雞雞";
         }
     }
-    
+    //dd($achievement_content);
 ?>
 <script type="text/javascript">
     var count=0;
@@ -129,6 +134,7 @@
     var monthcontent=@json($event);
     var achievement_content = @json($achievement_content);
     var achievement_id = @json($achievement_id);
+    
 </script>
 
 <div class="timlincontainer">
@@ -256,7 +262,8 @@
                 document.getElementById('happychange').innerHTML = "   "+(monthhappy[count]-monthhappy[count-1]);
                 document.getElementById('happychange').style.color = 'red';
             }
-            if(achievement_id[count]!=-1){
+            if(achievement_content[count]!="雞雞"){
+                setTimeout(3000);
                 alert("觸發成就:"+achievement_content[count]);
             }
         }
