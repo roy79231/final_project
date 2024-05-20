@@ -1,8 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+<p style="text-align: center;"></p>
+<p style="text-align: center;"></p>
+<p style="text-align: center;"></p>
+<p style="text-align: center;"></p>
+<p style="text-align: center;"></p>
+
 <body style="background-color: #f5deb3;">
-<div class="container mt-5">
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             
@@ -41,6 +47,6 @@
             </div>
         </div>
     </div>
-</div>
+
 </body>
 @endsection
