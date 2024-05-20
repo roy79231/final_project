@@ -3,25 +3,26 @@
 @section('content')
 
 <body style="background-color: #d8c49f;">
-    <div class="container" style="background-color: #F8CA95;">
+    <div class="jamescontainer" style="background-color: #F8CA95;">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <p style="text-align: center;"></p>
                 <h1 style="text-align: center;">討論區</h1> 
                 <div class="card" style="background-color: #ebcd96;">
                 
-                    <form action="{{ route('forumcreate') }}" method='POST' class="row justify-content-center" style="background-color: #ebcd96;">
+                    <form action="{{ route('forumcreate') }}" method='POST' class="row justify-content-center" >
                             @csrf
                     
-                            <div class="col-md-8 mb-3">
+                            <div class="col-md-8 mb-1">
                                 <textarea name='content' rows='1' class="form-control" style="resize: none;" placeholder="跟大家分享你的想法"></textarea>
                             </div>
                     
-                            <div class="col-md-8 mb-3 d-flex justify-content-center">
+                            <div class="col-md-8   mb-3 d-flex justify-content-center">
                                 <button type="submit" name="submit" class="btn btn-primary px-5" style="background-color: #d8c49f; border-color: #8d8a83; color: black;">
                                     <i class="bi bi-check-circle"></i> 送出
                                 </button>
                             </div>
-                        </form>
+                    </form>
                 </div>
             </div>
         </div>
@@ -38,7 +39,7 @@
                             <form action="{{ route('forumchange', $post->id) }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <textarea name='content' rows='3' class="form-control">{{ $post->content }}</textarea>
+                                    <textarea name='content' rows='3' class="form-control" >{{ $post->content }}</textarea>
                                 </div>
                                 <input type="submit" name='change' value="完成" class="btn btn-primary btn-sm">
                             </form>
@@ -46,7 +47,7 @@
                         <div id="content_field_{{$post->id}}" class="d-flex justify-content-between align-items-center">
                             <div>
                                 <div id="content_{{$post->id}}">
-                                    <p style="text-align: center;">{{$post->content}}</p>
+                                    <p style="text-align: center; font-size: 35px;">{{$post->content}}</p>
                                 </div>
                             </div>
                             <div id="buttons_{{$post->id}}">

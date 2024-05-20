@@ -483,12 +483,12 @@ class GameController extends Controller
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intelligence'=>$intelligence + $event->intelligence,
-                    'appearance'=> $appearance + $event->appearance,
-                    'wealth'=> $wealth + $event->wealth,
-                    'luck'=>$luck + $event->luck,
-                    'happiness'=>$happiness + $event->happiness,
-                    'morality'=>$morality + $event->morality,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
                     'content'=>$event->content,
                     'achievement_id'=>-1,
                 ]);
@@ -497,15 +497,21 @@ class GameController extends Controller
                 $rand_range = achievement_event::all()->count();
                 $event_id = rand(1,$rand_range);
                 $event = achievement_event::find($event_id);
+                $intelligence = $intelligence + $event->intelligence;
+                $appearance = $appearance + $event->appearance;
+                $wealth = $wealth + $event->wealth;
+                $luck = $luck + $event->luck;
+                $happiness = $happiness + $event->happiness;
+                $morality = $morality + $event->morality;
                 game_process::create([
                     'user_id'=>$user_id,
                     'month'=>$month,
-                    'intelligence'=>$intelligence + $event->intelligence,
-                    'appearance'=> $appearance + $event->appearance,
-                    'wealth'=> $wealth + $event->wealth,
-                    'luck'=>$luck + $event->luck,
-                    'happiness'=>$happiness + $event->happiness,
-                    'morality'=>$morality + $event->morality,
+                    'intelligence'=>$intelligence,
+                    'appearance'=> $appearance,
+                    'wealth'=> $wealth,
+                    'luck'=>$luck,
+                    'happiness'=>$happiness,
+                    'morality'=>$morality,
                     'content'=>$event->content,
                     'achievement_id'=>$event->achievement_id,//timlin新增
                 ]);
