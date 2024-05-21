@@ -49,31 +49,44 @@
         padding-right: 20px;
     }
     .month_content{
-        text-align: left;
+        text-align: center;
         font-size: 20px;
         font-family: Arial, Helvetica, sans-serif;
         width:550px;
         padding-right:20px: 
     }
     .triangle-button-left {
-        border-color: transparent #0b0b0b transparent transparent;
+        border-color: transparent #e1b33f transparent transparent;
         border-style: solid solid solid solid;
-        border-width: 40px;
-        background-color: transparent;
-        /* 設定 width、height 可更好理解原理 */
-        height: 0px;
-        width: 0px;
-    }
-    .triangle-button-right {
-        border-color: transparent transparent transparent #0b0b0b;
-        border-style: solid solid solid solid;
-        border-width: 40px;
+        border-width: 50px;
         background-color: transparent;
         /* 設定 width、height 可更好理解原理 */
         height: 0px;
         width: 0px;
 
     }
+    .triangle-button-left:hover{
+        border-color: transparent #f4b311 transparent transparent;
+        border-style: solid solid solid solid;
+        border-width: 50px;
+        background-color: transparent;
+    }
+    .triangle-button-right {
+        border-color: transparent transparent transparent  #e1b33f;
+        border-style: solid solid solid solid;
+        border-width: 50px;
+        background-color: transparent;
+        /* 設定 width、height 可更好理解原理 */
+        height: 0px;
+        width: 0px;
+
+    }
+    .triangle-button-right:hover{
+        border-color: transparent transparent transparent  #f4b311 ;
+        border-style: solid solid solid solid;
+        border-width: 50px;
+        background-color: transparent;
+    } 
     .footer{
         display: flex;
     }
@@ -196,7 +209,7 @@
                     </p>
                 </div>
                 <div class="month_move_next">
-                    <button style="font-size:24px" class="triangle-button-right" id="month_next"></button>
+                    <button style="font-size:30px" class="triangle-button-right" id="month_next"></button>
                 </div>
                 
             </div>
