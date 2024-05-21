@@ -27,16 +27,34 @@ use App\Models\User;
 
     <!--箭頭-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!--User按鈕-->
     <style>
-        .py-4{
-            background-color:rgb(248, 202, 149);
+        .nav-item {
+            border: 2px solid black;
+            border-radius: 2px;
+        }
+        .nav-link {
+            background-color: rgba(168, 81, 6, 0.675) !important;
+        }
+        .container {
+            background-color: #f6f4e8;
+        }
+        .navColor {
+            background-color: #f6f4e8;
+        }
+        .appFix {
+            position: fixed;
+            width: 100%;
+            height: 60px;
+        }
+        .mainType {
+            padding-top: 60px;
         }
     </style>
 </head>
 <body>
-
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light navColor shadow-sm appFix">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     主頁
@@ -114,10 +132,9 @@ use App\Models\User;
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="mainType">
             @yield('content')
         </main>
     </div>
-
 </body>
 </html>

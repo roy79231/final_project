@@ -10,8 +10,36 @@
         list-style-type: none;
     }
 
-    .remaining-points {
-        border-right: 1px solid #000;
+    .nav-pills .nav-link {
+        border-radius: 2px;
+    }
+
+    .justify-content-end .nav-link {
+        color: black !important;
+    }
+
+    .navbar-light .navbar-nav .nav-link {
+        color: rgba(0, 0, 0);
+    }
+
+    .centered-container, .mt-5 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .mt-5 h2, .text-center{
+        text-align: center;
+    }
+
+    a {
+        color: blue;
+        text-decoration: none;
+    }
+
+    .separator {
+        border-left: 1px solid #ccc;
         height: 100%;
     }
 
@@ -118,12 +146,15 @@
                 <div class="p-3">
                     <h2>選擇天賦: </h2>
                     <form id="talent-form">
-                        @foreach ($talents as $talent)
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="talent" id="talent{{ $loop->index }}" value="{{ $talent }}">
-                            <label class="form-check-label" for="talent{{ $loop->index }}">{{ $talent }}</label>
-                        </div>
-                        @endforeach
+                        <div id="talent-options">
+                            @foreach ($talents as $talent)
+                                @if(in_array($talent->id,$rand_nums))
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="talent" value="{{$talent->id}}">
+                                        <label class="form-check-label" >{{ $talent->name }}</label>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </form>
                 </div>
@@ -142,7 +173,6 @@
                     </form>
                 </div>
             </div>
-
         </div>
 
     </div>
@@ -266,15 +296,42 @@
         });
 
         betBtn.addEventListener('click', function () {
-            // Uncheck all checkboxes
-            talentForm.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
-                checkbox.checked = false;
-            });
+             // 抓$talents的資料
+            const talents = @json($talents);
 
-            // Select a random index based on the number of checkboxes
-            const randomIndex = Math.floor(Math.random() * talentForm.elements.length);
-            // Select the random checkbox
-            talentForm.elements[randomIndex].checked = true;
+            // 建造隨機4個
+            let rand_nums = [];
+            while (rand_nums.length < 4) {
+                let rand_num = Math.floor(Math.random() * talents.length);
+                if (!rand_nums.includes(rand_num)) {
+                    rand_nums.push(rand_num);
+                }
+            }
+
+            // 直接抓對應塊html並清空
+            const talentOptions = document.getElementById('talent-options');
+            talentOptions.innerHTML = '';
+
+            // 幫那塊html替換為新的內容
+            rand_nums.forEach(index => {
+                const talent = talents[index];
+                const talentDiv = document.createElement('div');
+                talentDiv.className = 'form-check';
+                talentDiv.innerHTML = `
+                    <input class="form-check-input" type="radio" name="talent" value="${talent.id}">
+                    <label class="form-check-label">${talent.name}</label>
+                `;
+                talentOptions.appendChild(talentDiv);
+            });
+            // 由於事件監測器沒了 所以這邊幫她新增回去
+            const radioButtons = document.querySelectorAll('input[name="talent"]');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const selectedTalentId = this.value;
+                    console.log(selectedTalentId);
+                    document.querySelector('#talent2').value = selectedTalentId;
+                });
+            });
         });
     });
 </script>

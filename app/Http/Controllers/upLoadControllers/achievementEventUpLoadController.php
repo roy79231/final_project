@@ -12,10 +12,10 @@ class achievementEventUpLoadController extends Controller
 {
     public function achievementEventUpLoader(){
         $users = User::all();
-        if(Auth::user()->role !== User::ROLE_ADMIN){
-            abort(403, '你是user 請你離開');
-            return view('/');
-        }
+        // if(Auth::user()->role !== User::ROLE_ADMIN){
+        //     abort(403, '你是user 請你離開');
+        //     return view('/');
+        // }
         
         $postAchievement = achievement_event::all();
         return view('upLoader/achievementEventUpLoad', compact('postAchievement'));

@@ -1,17 +1,16 @@
 @extends('layouts.app')
 @section('content')
 <style>
-    @import url(https://fonts.googleapis.com/earlyaccess/cwtexyen.css);
-    body {
+    /* body {
         font-family: Arial, sans-serif;
         background-color: #f8f9fa;
         color: #333;
         margin: 0;
         padding: 0;
        
-    }
-    .container {
-        font-family: ‘cwTeXYen’, sans-serif;
+    }  */
+    .timlincontainer {
+        font-family:;
         max-width: 1400px;
         margin: 20px auto;
         padding: 20px;
@@ -39,50 +38,78 @@
     }
     .month_attribute{
         font-size: 30px;
-        font-family:;
+        text-align:left ;
+        width: 350px;
+        padding-left: 150px;
+    }
+    .attribute_change{
+        font-size: 30px;
         text-align: center;
-        width: 400px;
+        width: 150px;
+        padding-right: 20px;
     }
     .month_content{
         text-align: center;
         font-size: 20px;
-        width:600px;
-        font:bold;
-    }
-    .attribute_change{
-        font-size: 30px;
-        font-family: 'Courier New', Courier, monospace;
-        text-align: center;
-        width: 150px;
+        font-family: Arial, Helvetica, sans-serif;
+        width:550px;
+        padding-right:20px: 
     }
     .triangle-button-left {
-        border-color: transparent #0b0b0b transparent transparent;
+        border-color: transparent #e1b33f transparent transparent;
         border-style: solid solid solid solid;
-        border-width: 40px;
-        background-color: transparent;
-        /* 設定 width、height 可更好理解原理 */
-        height: 0px;
-        width: 0px;
-    }
-    .triangle-button-right {
-        border-color: transparent transparent transparent #0b0b0b;
-        border-style: solid solid solid solid;
-        border-width: 40px;
+        border-width: 50px;
         background-color: transparent;
         /* 設定 width、height 可更好理解原理 */
         height: 0px;
         width: 0px;
 
     }
+    .triangle-button-left:hover{
+        border-color: transparent #f4b311 transparent transparent;
+        border-style: solid solid solid solid;
+        border-width: 50px;
+        background-color: transparent;
+    }
+    .triangle-button-right {
+        border-color: transparent transparent transparent  #e1b33f;
+        border-style: solid solid solid solid;
+        border-width: 50px;
+        background-color: transparent;
+        /* 設定 width、height 可更好理解原理 */
+        height: 0px;
+        width: 0px;
+
+    }
+    .triangle-button-right:hover{
+        border-color: transparent transparent transparent  #f4b311 ;
+        border-style: solid solid solid solid;
+        border-width: 50px;
+        background-color: transparent;
+    } 
     .footer{
         display: flex;
     }
     .month_move_skip{
         text-align: end;
+        padding-right:20px; 
+        height:30px;
     }
-    .new{
-        width: 200px;
+    input{
+        text-align: center;
+        font-size:25px;
+        border:0;
+        background-color:#ddb143;
+        color: #fff;
+        border-radius: 40px;
+        cursor: pointer;
     }
+    input:hover{
+        color:#ddb143;
+        background-color:#fff;
+        border:2px solid;
+    }
+    
 </style>
 <?php 
     $count_number=0;
@@ -99,20 +126,22 @@
         $achievement_id[$count_number] = $attribute->achievement_id;
         $count_number+=1;
     }
+    //dd($achievement);
     $achievement_content=[];
     for($i=0;$i<$count_number;$i++){
+        $flag = 0;
         foreach($achievement as $detail){
-            if($detail->achievement_id == $achievement_id[$i]){
-                $achievement_content[$i]=$detail->content;
-                break;
-            }
-            else{
-                $achievement_content[$i] = "雞雞"; 
+            if($detail->id == $achievement_id[$i] ){
+                $achievement_content[$i]=$detail->name;
+                $flag = 1;
                 break;
             }
         }
+        if($flag==0){
+            $achievement_content[$i]="雞雞";
+        }
     }
-    
+    //dd($achievement_content);
 ?>
 <script type="text/javascript">
     var count=0;
@@ -127,9 +156,10 @@
     var monthcontent=@json($event);
     var achievement_content = @json($achievement_content);
     var achievement_id = @json($achievement_id);
+    
 </script>
 
-<div class="container">
+<div class="timlincontainer">
             <div class="month_number" id="months">
                 <p>第 1 個月</p>
             </div>
@@ -179,7 +209,7 @@
                     </p>
                 </div>
                 <div class="month_move_next">
-                    <button style="font-size:24px" class="triangle-button-right" id="month_next"></button>
+                    <button style="font-size:30px" class="triangle-button-right" id="month_next"></button>
                 </div>
                 
             </div>
@@ -187,7 +217,7 @@
             <div class="month_move_skip">
                 <form action="{{ route("finish") }}" method="GET">
                     @csrf
-                    <button id="month_skip">跳過?</button>
+                    <input type="submit" value="跳過嗎?" name="month_skip">
                 </form>
             </div>
             
@@ -198,9 +228,6 @@
         monthnumber+=1;
         count+=1;
         if(monthnumber<=totalmonth){
-            if(achievement_id[count]!=-1){
-                alert("觸發成就:"+achievement_content[count]);
-            }
             document.getElementById("months").innerHTML = "第 "+monthnumber+" 個月";
             document.getElementById("intelligence").innerHTML = "智力:     "+monthintelligence[count];
             document.getElementById("wealthy").innerHTML = "財富:     "+monthweathly[count];
@@ -256,6 +283,10 @@
             else{
                 document.getElementById('happychange').innerHTML = "   "+(monthhappy[count]-monthhappy[count-1]);
                 document.getElementById('happychange').style.color = 'red';
+            }
+            if(achievement_content[count]!="雞雞"){
+                setTimeout(3000);
+                alert("觸發成就:"+achievement_content[count]);
             }
         }
         else if(monthnumber>totalmonth){

@@ -8,7 +8,11 @@
         height: 100%;
     }
 
-    .full-page-container {
+    ul {
+        list-style-type: none; /* Remove the default bullet */
+        padding-left: 0; /* Remove any default padding */
+    }
+    .justify-content-center {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -127,10 +131,10 @@
 
 @section('content')
 <div class="full-page-container">
-    <div class="play-btn-container">
+    <div class="justify-content-center">
         <img class="cauliflower" src="{{ asset('cauliflower.png') }}" alt="cauliflower">
         <img class="crown" src="{{ asset('crown.png') }}" alt="crown">
-        <div>
+        <div class="text-center">
             <p>這中央我是一秒也不想待了</p>
             <a href="{{ route('addPoints') }}">
                 <button class="play-btn" id="play-btn">PLAY</button>

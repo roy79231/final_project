@@ -12,13 +12,13 @@ class talentUpLoadController extends Controller
 {
     public function talentUpLoader(){
         $users = User::all();
-        if(Auth::user()->role !== User::ROLE_ADMIN){
-            abort(403, '你是user 請你離開');
-            return view('/');
-        }
+        // if(Auth::user()->role !== User::ROLE_ADMIN){
+        //     abort(403, '你是user 請你離開');
+        //     return view('/');
+        // }
         
         $postAchievement = talent::all();
-        return view('upLoader/talentUpLoad', compact('postAchievement'));
+        return view('upLoader/talentUpLoad', compact('postAchievement')); //compact函式用於將變數轉換為關聯陣列，以在視圖中使用
     }
 
     public function talentUpLoadStore(Request $request){
