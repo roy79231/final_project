@@ -103,27 +103,27 @@ class GameController extends Controller
                 continue;
             }
 
-            if($wealth<8){
+            if($wealth<5){
                 $dead_event[] = "wealth";
                 $extend_event[] = "wealth";
             }
-            if($appearance<8){
+            if($appearance<5){
                 $dead_event[] = "appearance";
                 $extend_event[] = "appearance";
             } 
-            if($intelligence<8){
+            if($intelligence<5){
                 $dead_event[] = "intelligence";
                 $extend_event[] = "intelligence";
             }
-            if($morality<8){
+            if($morality<5){
                 $dead_event[] = "morality";
                 $extend_event[] = "morality";
             }
-            if($happiness<8){
+            if($happiness<5){
                 $dead_event[] = "happiness";
                 $extend_event[] = "happiness";
             }
-            if($luck<8){
+            if($luck<5){
                 $dead_event[] = "luck";
                 $extend_event[] = "luck";
             }

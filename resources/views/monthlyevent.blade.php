@@ -9,12 +9,8 @@
         padding: 0;
        
     }  */
-    @font-face{
-        font-family: 't1';
-        src:url(https://fonts.googleapis.com/earlyaccess/cwtexkai.css);
-    }
     .timlincontainer {
-        font-family:'t1';
+        font-family:;
         max-width: 1400px;
         margin: 20px auto;
         padding: 20px;
@@ -83,9 +79,22 @@
     }
     .month_move_skip{
         text-align: end;
+        padding-right:20px; 
+        height:30px;
     }
-    .new{
-        width: 200px;
+    input{
+        text-align: center;
+        font-size:25px;
+        border:0;
+        background-color:#ddb143;
+        color: #fff;
+        border-radius: 40px;
+        cursor: pointer;
+    }
+    input:hover{
+        color:#ddb143;
+        background-color:#fff;
+        border:2px solid;
     }
     
 </style>
@@ -195,7 +204,7 @@
             <div class="month_move_skip">
                 <form action="{{ route("finish") }}" method="GET">
                     @csrf
-                    <button id="month_skip">跳過?</button>
+                    <input type="submit" value="跳過嗎?" name="month_skip">
                 </form>
             </div>
             
