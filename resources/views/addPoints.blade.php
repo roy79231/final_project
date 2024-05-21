@@ -2,80 +2,40 @@
 
 <style>
     p {
-    font-family: Arial, sans-serif;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-    .navbar {
-        border-bottom: 1px solid #ddd;
+        font-family: Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: bold;
     }
-
     ul {
-        list-style-type: none; /* Remove the default bullet */
-        padding-left: 0; /* Remove any default padding */
+        list-style-type: none;
     }
 
-    .nav-pills .nav-link {
-        border-radius: 2px;
-    }
-
-    .nav-item {
-        border: 2px solid black;
-        border-radius: 2px;
-    }
-
-    .justify-content-end .nav-link {
-        color: black !important;
-    }
-
-    .navbar-light .navbar-nav .nav-link {
-        color: rgba(0, 0, 0);
-    }
-
-    .nav-link {
-        background-color: rgba(168, 81, 6, 0.675) !important;
-    }
-
-    .centered-container, .mt-5 {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .mt-5 h2, .text-center{
-        text-align: center;
-    }
-
-    a {
-        color: blue;
-        text-decoration: none;
-    }
-
-    .separator {
-        border-left: 1px solid #ccc;
+    .remaining-points {
+        border-right: 1px solid #000;
         height: 100%;
-        /* margin: auto 0; */
     }
 
+    @media (max-width: 767.98px) {
+        .remaining-points {
+            border-right: none;
+            border-bottom: 1px solid #000;
+        }
+    }
     .container li {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
-
-    /* .talent-choice li, .remaining-points li {
-        font-size: 24px;
-    }  */
 
     .talent-choice {
         position: relative;
-        min-height: 100px; /* Adjust the height as needed */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .action-buttons {
-        position: absolute;
-        bottom: 0;
-        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
     }
 
     .reset-btn, .action-buttons .bet-btn, .action-buttons .start-btn{
@@ -87,22 +47,21 @@
     }
 
     .bet-btn {
-        color: rgba(208, 22, 9, 0.774); /* Set text color */
+        color: rgba(208, 22, 9, 0.774);
     }
 
     .start-btn {
-        color: rgba(5, 110, 50, 0.863); /* Set text color */
+        color: rgba(5, 110, 50, 0.863);
     }
 
     .btn-lighter {
         background-color: rgba(255, 0, 0, 0.5);
         color: #fff;
     }
-
     .quantity {
         display: inline-block;
-        width: 2em; /* Fixed width for alignment */
-        text-align: center; /* Center the text horizontally */
+        width: 2em;
+        text-align: center;
     }
 
     .form-check-input {
@@ -113,11 +72,11 @@
         font-size: 1.5rem;
     }
 </style>
-<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col remaining-points">
+<div class="container min-vh-100 d-flex flex-column">
+    <div class="row d-flex align-items-stretch">
+        <div class="col-12 col-md-6 remaining-points">
             <!-- Left Content -->
             <div class="p-3">
                 <h2>剩餘屬性點數: </h2>
@@ -153,11 +112,8 @@
                 <button class="reset-btn btn-lg" id="reset-btn">歸零</button>
             </div>
         </div>
-        <div class="col-auto">
-            <div class="separator"></div>
-        </div>
-        <div class="col talent-choice">
-            <div class="col">
+        <div class="col talent-choice d-flex flex-column">
+            <div class="col-12 col-md-6">
                 <!-- Right Content -->
                 <div class="p-3">
                     <h2>選擇天賦: </h2>
@@ -171,21 +127,22 @@
                         </div>
                     </form>
                 </div>
+                <div class="action-buttons">
+                    <button class="bet-btn">我是賭狗</button> <br>
+                    <!-- style="display: none"-->
+                    <form action="{{ route('run') }}" method="POST">
+                        @csrf
+                        <input type="number" id='intelligence2' name="intelligence" placeholder="intelligence" required style="display: none"><br>
+                        <input type="number" id='wealth2' name="wealth" placeholder="wealth" required style="display: none"><br>
+                        <input type="number" id='appearance2' name="appearance" placeholder="appearance" required style="display: none"><br>
+                        <input type="number" id='luck2' name="luck" placeholder="luck" required style="display: none"><br>
+                        <input type="number" id='morality2' name="morality" placeholder="morality" required style="display: none"><br>
+                        <input type="hidden" id='talent2' name="talent" placeholder="name" required style="display: none"></textarea> <br>
+                        <button  class="start-btn" type="submit">開始大學</button>
+                    </form>
+                </div>
             </div>
-            <div class="action-buttons">
-                <button class="bet-btn">我是賭狗</button> <br>
-                <!-- style="display: none"-->
-                <form action="{{ route('run') }}" method="POST">
-                    @csrf
-                    <input type="number" id='intelligence2' name="intelligence" placeholder="intelligence" required style="display: none"><br>
-                    <input type="number" id='wealth2' name="wealth" placeholder="wealth" required style="display: none"><br>
-                    <input type="number" id='appearance2' name="appearance" placeholder="appearance" required style="display: none"><br>
-                    <input type="number" id='luck2' name="luck" placeholder="luck" required style="display: none"><br>
-                    <input type="number" id='morality2' name="morality" placeholder="morality" required style="display: none"><br>
-                    <input type="hidden" id='talent2' name="talent" placeholder="name" required style="display: none"></textarea> <br>
-                    <button  class="start-btn" type="submit">開始大學</button>
-                </form>
-            </div>
+
         </div>
 
     </div>
