@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .custom-card {
+        background-color: #ebcd96;
+        border: 2px solid rgb(123, 119, 119);
+        padding: 15px;
+        border-radius: 5px;
+    }
+</style>
 <p style="text-align: center; font-size: 20px;"></p>
 
 
@@ -9,10 +17,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             
-            <div class="card" >
-                <div class="card-header text-center" style="background-color: #ecbd97; color: #070707; font-weight: bold; font-size: 40px;">解鎖成就</div>
-
-                <div class="card-body" style="background-color: #ecbd97; font-size: 20px; min-height: 600px;">
+            
+                <div  style=" color: #070707; font-weight: bold; font-size: 60px;text-align: center;">解鎖成就</div>
+                
+                <div class="custom-card" style="background-color: #ecbd97; font-size: 20px; min-height: 600px;">
                     @if($unlockedAchievements->isEmpty() && $lockedAchievements->isEmpty())
                         <div class="text-center" style="color: #fff; font-size: 30px;">你還沒有達成任何成就</div>
                     @else
@@ -27,7 +35,7 @@
                                         </div>
                                     </li>
                                 @endforeach
-                                <p style="text-align: center; font-size: 30px;">-------------------------尚未完成成就------------------------</p>
+                                <p style="text-align: center; font-size: 30px;">------------------------尚未解鎖的成就------------------------</p>
                                 {{-- 遍歷尚未解鎖的成就 --}}
                                 @foreach($lockedAchievements as $achievement)
                                     <li class="mb-3" style="font-size: 33px;">
@@ -41,7 +49,7 @@
                         </div>
                     @endif
                 </div>
-            </div>
+            
         </div>
     </div>
 

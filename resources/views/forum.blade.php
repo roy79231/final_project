@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .custom-card {
+        background-color: #ebcd96;
+        border: 2px solid rgb(123, 119, 119);
+        padding: 15px;
+        border-radius: 5px;
+    }
+</style>
 
 <body style="background-color: #d8c49f;">
     <div class="jamescontainer" style="background-color: #F8CA95;">
@@ -8,7 +16,7 @@
             <div class="col-md-8">
                 <p style="text-align: center;"></p>
                 <h1 style="text-align: center;">討論區</h1> 
-                <div class="card" style="background-color: #ebcd96;">
+                <div class="custom-card">
                 
                     <form action="{{ route('forumcreate') }}" method='POST' class="row justify-content-center" >
                             @csrf
@@ -17,7 +25,7 @@
                                 <textarea name='content' rows='1' class="form-control" style="resize: none;" placeholder="跟大家分享你的想法"></textarea>
                             </div>
                     
-                            <div class="col-md-8   mb-3 d-flex justify-content-center">
+                            <div class="col-md-8 mb-3 d-flex justify-content-center">
                                 <button type="submit" name="submit" class="btn btn-primary px-5" style="background-color: #d8c49f; border-color: #8d8a83; color: black;">
                                     <i class="bi bi-check-circle"></i> 送出
                                 </button>
@@ -30,7 +38,7 @@
         <div class="row justify-content-center">
             @foreach($posts->reverse() as $post)
             <div class="col-md-8 mb-3">
-                <div class="card" style="background-color: #ebcd96;">
+                <div class="custom-card">
                     <div class="card-header">
                         <strong>{{$post->inputer}} - {{$post->updated_at->format('Y-m-d')}}</strong>
                     </div>
