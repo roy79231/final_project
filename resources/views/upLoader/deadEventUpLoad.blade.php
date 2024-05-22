@@ -1,67 +1,72 @@
 @extends('layouts.upload')
 
-@section('name')
+@section('uploader')
 <!--內容-->
-<div class="content">
-    <h1>死亡事件</h1>
-    <form action="{{ route('deadUpLoader.store') }}" method="POST">
-        @csrf
-        <input type="String" name="name" placeholder="name" required></textarea> <br>
-        <input type="String" name="content" placeholder="content" required></textarea> <br>
-        <select name="way" id="way" required>
-            <option value="morality">Way: morality</option>
-            <option value="intelligence">Way: intelligence</option>
-            <option value="appearance">Way: appearance</option>
-            <option value="wealth">Way: wealth</option>
-            <option value="luck">Way: luck</option>
-            <option value="happiness">Way: happiness</option>
-            <option value="random">Way: random</option>
-            <option value="accident">Way: accident</option>
-        </select>
-        <button type="submit">新增</button>
-    </form>
-
-    <br>
-
-    @foreach ($postAchievement as $post)
-        <div class=box>
-            <form id="form{{ $post->id }}" action="{{ route('deadUpLoader.edit',$post) }}" method="POST">
+<div>
+    <div class="uploadBox1">
+        <div class="uploadCenter">
+            <h1>死亡事件</h1>
+            <form action="{{ route('deadUpLoader.store') }}" method="POST">
                 @csrf
-                @method('patch')
-                <div>
-                    <p id="name{{ $post->id }}" style="display: inline;">Name: {{ $post->name }}</p>
-                    <input id="nameInput{{ $post->id }}" type="text" name="name" placeholder="name" value="{{ $post->name }}" style="display: none;" required>
-                </div>
-                <div>
-                    <p id="content{{ $post->id }}" style="display: inline;">Content: {{ $post->content }}</p>
-                    <input id="contentInput{{ $post->id }}" type="text" name="content" placeholder="content" value="{{ $post->content }}" style="display: none;" required>
-                </div>
-                <div>
-                    <p id="way{{ $post->id }}" style="display: inline;">Way: {{ $post->way }}</p>
-                    <select id="wayInput{{ $post->id }}" name="way" style="display: none;" required>
-                        <option value="morality">Way: morality</option>
-                        <option value="intelligence">Way: intelligence</option>
-                        <option value="appearance">Way: appearance</option>
-                        <option value="wealth">Way: wealth</option>
-                        <option value="luck">Way: luck</option>
-                        <option value="happiness">Way: happiness</option>
-                        <option value="random">Way: random</option>
-                        <option value="accident">Way: accident</option>
-                    </select>
-                </div>
-                <div>
-                    <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>
-                    <button id="confirmButton{{ $post->id }}" type="submit" style="display: none;">確認</button>
-                </div>
-            </form>
-
-            <form action="{{route('deadUpLoader.destroy',$post)}}" method="POST">
-                @csrf
-                @method('delete')
-                <button type="submit">刪除</button>
+                <input type="String" name="name" placeholder="name" required></textarea> <br>
+                <input type="String" name="content" placeholder="content" required></textarea> <br>
+                <select name="way" id="way" required>
+                    <option value="morality">Way: morality</option>
+                    <option value="intelligence">Way: intelligence</option>
+                    <option value="appearance">Way: appearance</option>
+                    <option value="wealth">Way: wealth</option>
+                    <option value="luck">Way: luck</option>
+                    <option value="happiness">Way: happiness</option>
+                    <option value="random">Way: random</option>
+                    <option value="accident">Way: accident</option>
+                </select>
+                <button type="submit">新增</button>
             </form>
         </div>
-    @endforeach
+    </div>
+    <br>
+
+    <div class="uploadBox2">
+        @foreach ($postAchievement as $post)
+            <div class="uploadInnerBox">
+                <form id="form{{ $post->id }}" action="{{ route('deadUpLoader.edit',$post) }}" method="POST">
+                    @csrf
+                    @method('patch')
+                    <div>
+                        <p id="name{{ $post->id }}" style="display: inline;">Name: {{ $post->name }}</p>
+                        <input id="nameInput{{ $post->id }}" type="text" name="name" placeholder="name" value="{{ $post->name }}" style="display: none;" required>
+                    </div>
+                    <div>
+                        <p id="content{{ $post->id }}" style="display: inline;">Content: {{ $post->content }}</p>
+                        <input id="contentInput{{ $post->id }}" type="text" name="content" placeholder="content" value="{{ $post->content }}" style="display: none;" required>
+                    </div>
+                    <div>
+                        <p id="way{{ $post->id }}" style="display: inline;">Way: {{ $post->way }}</p>
+                        <select id="wayInput{{ $post->id }}" name="way" style="display: none;" required>
+                            <option value="morality">Way: morality</option>
+                            <option value="intelligence">Way: intelligence</option>
+                            <option value="appearance">Way: appearance</option>
+                            <option value="wealth">Way: wealth</option>
+                            <option value="luck">Way: luck</option>
+                            <option value="happiness">Way: happiness</option>
+                            <option value="random">Way: random</option>
+                            <option value="accident">Way: accident</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>
+                        <button id="confirmButton{{ $post->id }}" type="submit" style="display: none;">確認</button>
+                    </div>
+                </form>
+
+                <form action="{{route('deadUpLoader.destroy',$post)}}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button type="submit">刪除</button>
+                </form>
+            </div>
+        @endforeach
+    </div>
 
     <script>
         function toggleEdit(id) {

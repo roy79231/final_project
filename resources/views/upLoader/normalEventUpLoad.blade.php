@@ -1,63 +1,69 @@
 @extends('layouts.upload')
 
-@section('name')
+@section('uploader')
 <!--內容-->
-<div class="content">
-    <h1>一般事件</h1>
-    <form action="{{ route('normalEventUpLoader.store') }}" method="POST">
-        @csrf
-        <input type="String" name="name" placeholder="name" required> <br>
-        <input type="String" name="content" placeholder="content" required> <br>
-        <select name="time_type" id="time_type" required>
-            <option value="0">Time type: 0</option>
-            <option value="1">Time type: 1</option>
-            <option value="2">Time type: 2</option>
-            <option value="3">Time type: 3</option>
-            <option value="4">Time type: 4</option>
-            <option value="5">Time type: 5</option>
-        </select>
-        <button type="submit">新增</button>
-    </form>
+<div>
+    <div class="uploadBox1">
+        <div class="uploadCenter">
+            <h1>一般事件</h1>
+            <form action="{{ route('normalEventUpLoader.store') }}" method="POST">
+                @csrf
+                <input type="String" name="name" placeholder="name" required> <br>
+                <input type="String" name="content" placeholder="content" required> <br>
+                <select name="time_type" id="time_type" required>
+                    <option value="0">Time type: 0</option>
+                    <option value="1">Time type: 1</option>
+                    <option value="2">Time type: 2</option>
+                    <option value="3">Time type: 3</option>
+                    <option value="4">Time type: 4</option>
+                    <option value="5">Time type: 5</option>
+                </select>
+                <button type="submit">新增</button>
+            </form>
+        </div>
+    </div>
 
     <br>
 
-    @foreach ($postAchievement as $post)
-        <div class=box>
-            <form id="form{{ $post->id }}" action="{{ route('normalEventUpLoader.edit',$post) }}" method="POST">
-                @csrf
-                @method('patch')
-                <div>
-                    <p id="name{{ $post->id }}" style="display: inline;">Name: {{ $post->name }}</p>
-                    <input id="nameInput{{ $post->id }}" type="text" name="name" placeholder="name" value="{{ $post->name }}" style="display: none;" required>
-                </div>
-                <div>
-                    <p id="content{{ $post->id }}" style="display: inline;">Content: {{ $post->content }}</p>
-                    <input id="contentInput{{ $post->id }}" type="text" name="content" placeholder="content" value="{{ $post->content }}" style="display: none;" required>
-                </div>
-                <div>
-                    <p id="time_type{{ $post->id }}" style="display: inline;">Time Type: {{ $post->time_type }}</p>
-                    <select id="time_typeInput{{ $post->id }}" name="time_type" style="display: none;" required>
-                        <option value="0">Time type: 0</option>
-                        <option value="1">Time type: 1</option>
-                        <option value="2">Time type: 2</option>
-                        <option value="3">Time type: 3</option>
-                        <option value="4">Time type: 4</option>
-                        <option value="5">Time type: 5</option>
-                    </select>
-                </div>
-                <div>
-                    <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>
-                    <button id="confirmButton{{ $post->id }}" type="submit" style="display: none;">確認</button>
-                </div>
-            </form>
+    <div class="uploadBox2">
+        @foreach ($postAchievement as $post)
+            <div class=uploadInnerBox>
+                <form id="form{{ $post->id }}" action="{{ route('normalEventUpLoader.edit',$post) }}" method="POST">
+                    @csrf
+                    @method('patch')
+                    <div>
+                        <p id="name{{ $post->id }}" style="display: inline;">Name: {{ $post->name }}</p>
+                        <input id="nameInput{{ $post->id }}" type="text" name="name" placeholder="name" value="{{ $post->name }}" style="display: none;" required>
+                    </div>
+                    <div>
+                        <p id="content{{ $post->id }}" style="display: inline;">Content: {{ $post->content }}</p>
+                        <input id="contentInput{{ $post->id }}" type="text" name="content" placeholder="content" value="{{ $post->content }}" style="display: none;" required>
+                    </div>
+                    <div>
+                        <p id="time_type{{ $post->id }}" style="display: inline;">Time Type: {{ $post->time_type }}</p>
+                        <select id="time_typeInput{{ $post->id }}" name="time_type" style="display: none;" required>
+                            <option value="0">Time type: 0</option>
+                            <option value="1">Time type: 1</option>
+                            <option value="2">Time type: 2</option>
+                            <option value="3">Time type: 3</option>
+                            <option value="4">Time type: 4</option>
+                            <option value="5">Time type: 5</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>
+                        <button id="confirmButton{{ $post->id }}" type="submit" style="display: none;">確認</button>
+                    </div>
+                </form>
 
-            <form action="{{route('normalEventUpLoader.destroy',$post)}}" method="POST">
-                @csrf
-                @method('delete')
-                <button type="submit">刪除</button>
-            </form>
-        </div>
-    @endforeach
+                <form action="{{route('normalEventUpLoader.destroy',$post)}}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button type="submit">刪除</button>
+                </form>
+            </div>
+        @endforeach
+    </div>        
 
     <script>
         function toggleEdit(id) {

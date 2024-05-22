@@ -23,7 +23,7 @@ class GameController extends Controller
     }
 
     public function finish() {
-        return view('finish');
+        return view('finish3');
     }
     
     public function achievement(Request $request)
