@@ -6,7 +6,11 @@
             <div class="finishInnerBox1">
                 <div class="finishCenterBox">
                     <div class="finishTxtDie">
-                        畢業 or 死亡
+                        @if($graduate)
+                            畢業 
+                        @else
+                            沒畢業
+                        @endif
                     </div>
                 </div>
             </div>

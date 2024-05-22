@@ -21,11 +21,6 @@ class GameController extends Controller
     public function main(){
         return view('main');
     }
-
-    public function finish() {
-        return view('finish3');
-    }
-    
     public function achievement(Request $request)
     {
     // 檢索已解鎖的成就
@@ -689,7 +684,7 @@ class GameController extends Controller
             'achievement' =>$achievement,
         ]);
     }
-    public function ggfinish(){
+    public function finish(){
         //清process和ending資料
         $user_id = auth()->user()->id;
         $end = game_ending::where('user_id',$user_id)->delete();
@@ -720,8 +715,9 @@ class GameController extends Controller
         ]);
         $end = game_ending::where('user_id',$user_id)->first();
         // dd($end);
-        return view('finish2',[
+        return view('finish3',[
             'end'=> $end,
+            'graduate'=>$make_end->month==48,
         ]);
     }
 }

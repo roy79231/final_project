@@ -6,6 +6,7 @@
         padding: 0;
         width: 100%;
         height: 100%;
+        overflow: hidden; /* 禁止滚动 */    
     }
 
     ul {
@@ -19,7 +20,6 @@
         width: 100%;
         height: 100%;
         background: radial-gradient(circle at center, rgb(248, 202, 149), rgb(245, 187, 120), rgb(247, 174, 89));
-        position: relative;
         text-align: center;
     }
 
@@ -40,9 +40,10 @@
     }
 
     .play-btn {
-        width: 70px;
-        height: 70px;
-        font-size: 1.5rem;
+        color:white;
+        width: 100px;
+        height: 100px;
+        font-size: 2em;
         border-radius: 50%;
         background-color: #0d6efd;
         border: none;
@@ -71,11 +72,11 @@
     /* Image styling */
     .cauliflower {
         height: auto;
-        max-height: 120px; /* Adjust the maximum height as needed */
+        max-height: 150px; /* Adjust the maximum height as needed */
         display: block;
         margin: 0 auto; /* Center the image */
         position: absolute;
-        top: 10%; /* Adjust this value to position the image as needed */;
+        top: 15%; /* Adjust this value to position the image as needed */;
         right: 80%;;
         transform: translate(-50%, -10%); /* Center the image horizontally and adjust vertically */
         animation: pulse2 2s linear infinite;
@@ -99,7 +100,7 @@
         display: block;
         margin: 0 auto; /* Center the image */
         position: absolute;
-        top: 58%;
+        top: 70%;
         left: 53%;
         transform: translate(-50%, -10%); /* Center the image horizontally and adjust vertically */
         animation: moveCursor 2s linear infinite;
@@ -116,18 +117,17 @@
 
     .crown {
         height: auto;
-        max-height: 100px; /* Adjust the maximum height as needed */
+        max-height: 150; /* Adjust the maximum height as needed */
         display: block;
         margin: 0 auto; /* Center the image */
         position: absolute;
-        top: 10%;
+        top: 15%;
         left: 80%;
         transform: translate(-50%, -10%); /* Center the image horizontally and adjust vertically */
         animation: pulse2 2s linear infinite;
     }
 
 </style>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
 @section('content')
 <div class="full-page-container">
@@ -135,7 +135,7 @@
         <img class="cauliflower" src="{{ asset('cauliflower.png') }}" alt="cauliflower">
         <img class="crown" src="{{ asset('crown.png') }}" alt="crown">
         <div class="text-center">
-            <p>這中央我是一秒也不想待了</p>
+            <p style="font-size: 5em">這中央我是一秒也不想待了</p>
             <a href="{{ route('addPoints') }}">
                 <button class="play-btn" id="play-btn">PLAY</button>
             </a>

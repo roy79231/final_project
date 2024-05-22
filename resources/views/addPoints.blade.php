@@ -92,7 +92,6 @@
         font-size: 2.5rem;
     }
 </style>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 @section('content')
 <div class="addPoints-container min-vh-100 d-flex flex-column">
     <div class="row d-flex align-items-stretch">
@@ -331,10 +330,11 @@
             rand_nums.forEach(index => {
                 const talent = talents[index];
                 const talentDiv = document.createElement('div');
-                talentDiv.className = 'form-check';
+                talentDiv.className = 'talent-form-check';
                 talentDiv.innerHTML = `
-                    <input class="form-check-input" type="radio" name="talent" value="${talent.id}">
-                    <label class="form-check-label">${talent.name}</label>
+                    <label class="talent-form-check-label">
+                    <input class="talent-form-check-input" type="radio" name="talent" value="${talent.id}">${talent.name}
+                    </label>
                 `;
                 talentOptions.appendChild(talentDiv);
             });
@@ -351,5 +351,3 @@
     });
 </script>
 @endsection
-
-

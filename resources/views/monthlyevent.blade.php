@@ -161,7 +161,7 @@
 
 <div class="timlincontainer">
             <div class="month_number" id="months">
-                <p>第 1 個月</p>
+                第 1 個月
             </div>
             <div class="link-buttom"></div>
 
