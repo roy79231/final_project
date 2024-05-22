@@ -2,71 +2,59 @@
 
 <style>
     p {
-    font-family: Arial, sans-serif;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
+        font-family: Arial, sans-serif;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    ul {
+        list-style-type: none;
+    }
+
+    .remaining-points {
+        border-right: #000 solid 1px;
+    }
+
+    @media (max-width: 767.98px) {
+        .remaining-points {
+            border-right: none;
+            border-bottom: 1px solid #000;
+        }
+    }
+
+    .addPoints-container {
+        background-color: rgb(237, 218, 191);
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .addPoints-container h2 {
+        font-size: 3rem;
+    }
+
+    .addPoints-container li {
+        font-size: 2.5rem;
+        margin: 20px;
+    }
 
     .navbar {
-        border-bottom: 1px solid #ddd;
+        z-index: 100;
     }
-
-    ul {
-        list-style-type: none; /* Remove the default bullet */
-        padding-left: 0; /* Remove any default padding */
-    }
-
-    .nav-pills .nav-link {
-        border-radius: 2px;
-    }
-
-    .justify-content-end .nav-link {
-        color: black !important;
-    }
-
-    .navbar-light .navbar-nav .nav-link {
-        color: rgba(0, 0, 0);
-    }
-
-    .centered-container, .mt-5 {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .mt-5 h2, .text-center{
-        text-align: center;
-    }
-
-    a {
-        color: blue;
-        text-decoration: none;
-    }
-
-    .separator {
-        border-left: 1px solid #ccc;
-        height: 100%;
-        /* margin: auto 0; */
-    }
-
-    .container li {
-        font-size: 24px;
-    }
-
-    /* .talent-choice li, .remaining-points li {
-        font-size: 24px;
-    }  */
 
     .talent-choice {
         position: relative;
-        min-height: 100px; /* Adjust the height as needed */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        z-index: 1;
     }
 
     .action-buttons {
-        position: absolute;
-        bottom: 0;
-        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-top: auto;
+        margin-right: 70px;
     }
 
     .reset-btn, .action-buttons .bet-btn, .action-buttons .start-btn{
@@ -74,41 +62,41 @@
         background-color: transparent;
         margin-left: 5px;
         margin-bottom: 5px;
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     .bet-btn {
-        color: rgba(208, 22, 9, 0.774); /* Set text color */
+        color: rgba(208, 22, 9, 0.774);
     }
 
     .start-btn {
-        color: rgba(5, 110, 50, 0.863); /* Set text color */
+        color: rgba(5, 110, 50, 0.863);
     }
 
     .btn-lighter {
         background-color: rgba(255, 0, 0, 0.5);
         color: #fff;
     }
-
     .quantity {
         display: inline-block;
-        width: 2em; /* Fixed width for alignment */
-        text-align: center; /* Center the text horizontally */
+        width: 2em;
+        text-align: center;
+        font-size: 2.5rem;
     }
 
-    .form-check-input {
-        width: 1.5rem !important;
-        height: 1.5rem !important;
+    .talent-form-check-input {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
     }
-    .form-check-label {
-        font-size: 1.5rem;
+    .talent-form-check-label {
+        font-size: 2.5rem;
     }
 </style>
-<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col remaining-points">
+<div class="addPoints-container min-vh-100 d-flex flex-column">
+    <div class="row d-flex align-items-stretch">
+        <div class="col-12 col-md-6 remaining-points">
             <!-- Left Content -->
             <div class="p-3">
                 <h2>剩餘屬性點數: </h2>
@@ -144,11 +132,8 @@
                 <button class="reset-btn btn-lg" id="reset-btn">歸零</button>
             </div>
         </div>
-        <div class="col-auto">
-            <div class="separator"></div>
-        </div>
         <?php
-            $rand_nums = [];
+        $rand_nums = [];
             for($i=0;$i<4;$i++){
                 while(true){
                     $num = rand(1,$talents_len);
@@ -173,28 +158,25 @@
                 }
             }
         ?>
-        <div class="col talent-choice">
-            <div class="col">
-                <!-- Right Content -->
-                <div class="p-3">
-                    <h2>選擇天賦: </h2>
-                    <form id="talent-form">
-                        <div id="talent-options">
-                            @foreach ($talents as $talent)
-                                @if(in_array($talent->id,$rand_nums))
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="talent" value="{{$talent->id}}">
-                                        <label class="form-check-label" >{{ $talent->name }}</label>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                    </form>
-                </div>
+        <div class="col-12 col-md-6 d-flex flex-column">
+            <div class="p-3">
+                <h2>選擇天賦: </h2>
+                <form id="talent-form">
+                    <div id="talent-options">
+                        @foreach ($talents as $talent)
+                            @if(in_array($talent->id,$rand_nums))
+                                <div class="talent-form-check">
+                                    <label class="talent-form-check-label" >
+                                        <input class="talent-form-check-input" type="radio" name="talent" value="{{$talent->id}}">{{ $talent->name }}
+                                    </label>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </form>
             </div>
-            <div class="action-buttons">
-                <button class="bet-btn" name="change_btn" type="button">我是賭狗</button> <br>
-                <!-- style="display: none"-->
+            <div class="action-buttons mt-auto align-self-end">
+                <button class="bet-btn">我是賭狗</button> <br>
                 <form action="{{ route('run') }}" method="POST">
                     @csrf
                     <input type="number" id='intelligence2' name="intelligence" placeholder="intelligence" required style="display: none"><br>
@@ -202,7 +184,7 @@
                     <input type="number" id='appearance2' name="appearance" placeholder="appearance" required style="display: none"><br>
                     <input type="number" id='luck2' name="luck" placeholder="luck" required style="display: none"><br>
                     <input type="number" id='morality2' name="morality" placeholder="morality" required style="display: none"><br>
-                    <input type="number" id='talent2' name="talent" placeholder="name" required style="display: none"></textarea> <br>
+                    <input type="hidden" id='talent2' name="talent" placeholder="name" required style="display: none"></textarea> <br>
                     <button  class="start-btn" type="submit">開始大學</button>
                 </form>
             </div>
