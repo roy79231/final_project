@@ -12,10 +12,10 @@ class specialEventUpLoadController extends Controller
 {
     public function specialEventUpLoader(){
         $users = User::all();
-        if(Auth::user()->role !== User::ROLE_ADMIN){
-            abort(403, '你是user 請你離開');
-            return view('/');
-        }
+        // if(Auth::user()->role !== User::ROLE_ADMIN){
+        //     abort(403, '你是user 請你離開');
+        //     return view('/');
+        // }
         
         $postAchievement = special_event::all();
         return view('upLoader/specialEventUpLoad', compact('postAchievement'));
