@@ -69,6 +69,9 @@ use App\Models\User;
         .mainType {
             padding-top: 80px;
         }
+        li.nav-item.dropdown::marker {
+            content: '';
+        }
     </style>
 </head>
 <body>
@@ -101,6 +104,7 @@ use App\Models\User;
                 </a>
                 <?php $user = Auth::user()?>
                 @if(($user && $user->role == User::ROLE_ADMIN))
+                <li class="nav-item dropdown">
                 <a class="navTitle dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     <div class="appNavBox">
                         <div class="appNavCenterBox">
@@ -128,6 +132,7 @@ use App\Models\User;
                         </a>
                     </div>
                 </a>
+                </li>
                 @endif
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
