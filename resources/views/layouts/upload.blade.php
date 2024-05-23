@@ -29,13 +29,15 @@
             flex-wrap: wrap;
             width: 100%;
             padding: 0px 20px;
+            justify-content: center;
         }
         .uploadInnerBox {
             display: flex; /* 設置為彈性容器 */
             flex-direction: column;
-            width: 50%;
+            width: 40%;
             height: 40%;
             padding: 20px;
+            margin: 5px;
         }
     </style>
 
