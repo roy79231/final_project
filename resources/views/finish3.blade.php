@@ -38,13 +38,13 @@
                 <div class="finishCenterBox">
                     <div class="finishTxtScore2">
                         @if ($total <= 5)
-                            {{ finishScore[0] }}
+                            {{ $finishScore[0] }}
                         @elseif ($total <= 10)
-                            {{ finishScore[1] }}
+                            {{ $finishScore[1] }}
                         @elseif ($total <= 15)
-                            {{ finishScore[2] }}
+                            {{ $finishScore[2] }}
                         @else
-                            {{ finishScore[3] }}
+                            {{ $finishScore[3] }}
                         @endif
                     </div>
                 </div>
