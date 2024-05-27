@@ -10,7 +10,7 @@
         $finishHappiness = ["憂鬱青年", "普普通通", "你很快樂", "浪味仙~快樂似神仙~"];
         $finishScore = ["你揮一揮衣袖，輕輕的走了，沒有在中央大學留下任何痕跡也沒有帶走什麼", 
                         "你在這段時光留下了一抹屬於你的色彩，或許對其他人來說無足輕重，但這會成為你心中的一筆濃墨", 
-                        "你在中央劃下了重重的一刀，", 
+                        "你為你的人生烙下了重重的一痕，教授欣賞你，同學喜歡你，你的故事在學弟妹口中傳頌，至此，你是一段傳奇", 
                         "你是智慧的結晶，你是文明的瑰寶，你是人類的獨苗，你是上帝的遺珠，你是最後的希望，你是電你是光你是唯一的神話"
                         ];
     ?>
@@ -37,19 +37,11 @@
                 </div>
                 <div class="finishCenterBox">
                     <div class="finishTxtScore2">
-<<<<<<< HEAD
                         @if ($total <= 25)
                             {{ $finishScore[0] }}
                         @elseif ($total <= 35)
                             {{ $finishScore[1] }}
                         @elseif ($total <= 45)
-=======
-                        @if ($total <= 5)
-                            {{ $finishScore[0] }}
-                        @elseif ($total <= 10)
-                            {{ $finishScore[1] }}
-                        @elseif ($total <= 15)
->>>>>>> 6929c79200c520264fb4e12f3648dfd71c57dbc4
                             {{ $finishScore[2] }}
                         @else
                             {{ $finishScore[3] }}
