@@ -3,10 +3,10 @@
 @section('content')
 <style>
     .custom-card {
-        background-color: #ebcd96;
+        background-color: #ecbd97;
         border: 2px solid rgb(123, 119, 119);
         padding: 15px;
-        border-radius: 5px;
+        border-radius: 35px;
     }
 </style>
 
@@ -26,7 +26,7 @@
                             </div>
                     
                             <div class="col-md-8 mb-3 d-flex justify-content-center">
-                                <button type="submit" name="submit" class="btn btn-primary px-5" style="background-color: #d8c49f; border-color: #8d8a83; color: black;">
+                                <button type="submit" name="submit" class="btn btn-primary px-5" style="background-color: #d8c49f; border-color: #5e5a52; color: black;">
                                     <i class="bi bi-check-circle"></i> 送出
                                 </button>
                             </div>
@@ -40,7 +40,7 @@
             <div class="col-md-8 mb-3">
                 <div class="custom-card">
                     <div class="card-header">
-                        <strong>{{$post->inputer}} - {{$post->updated_at->format('Y-m-d')}}</strong>
+                        <i class="bi bi-person-circle"></i>     <strong>{{$post->inputer}}      {{$post->updated_at->format('Y-m-d')}}</strong>
                     </div>
                     <div class="card-body">
                         <div id="edit_field_{{$post->id}}" style="display: none;">
