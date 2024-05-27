@@ -3,10 +3,10 @@
 @section('content')
 <style>
     .custom-card {
-        background-color: #ebcd96;
+        background-color: #ecbd97;
         border: 2px solid rgb(123, 119, 119);
         padding: 15px;
-        border-radius: 5px;
+        border-radius: 35px;
     }
 </style>
 
@@ -40,7 +40,7 @@
             <div class="col-md-8 mb-3">
                 <div class="custom-card">
                     <div class="card-header">
-                        <strong>{{$post->inputer}} - {{$post->updated_at->format('Y-m-d')}}</strong>
+                        <i class="bi bi-person-circle"></i>     <strong>{{$post->inputer}}      {{$post->updated_at->format('Y-m-d')}}</strong>
                     </div>
                     <div class="card-body">
                         <div id="edit_field_{{$post->id}}" style="display: none;">

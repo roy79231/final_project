@@ -192,5 +192,35 @@ use App\Models\User;
             @yield('content')
         </main>
     </div>
+    <audio id="background-audio" style="display: none;" loop>
+        <source src="{{ asset('調皮可愛-Main-version.mp3') }}" type="audio/mpeg">
+       
+    </audio>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var audio = document.getElementById("background-audio");
+        
+        audio.volume = 0.15;
+        // Check if there's a saved position in localStorage
+        var savedTime = localStorage.getItem("audioCurrentTime");
+        if (savedTime !== null) {
+            audio.currentTime = savedTime;
+        }
+
+        // Play the audio
+        audio.play();
+
+        // Save the current time periodically
+        setInterval(function() {
+            localStorage.setItem("audioCurrentTime", audio.currentTime);
+        }, 1000);
+
+        // Save the current time before the page is unloaded
+        window.addEventListener("beforeunload", function() {
+            localStorage.setItem("audioCurrentTime", audio.currentTime);
+        });
+    });
+    </script>
 </body>
 </html>
