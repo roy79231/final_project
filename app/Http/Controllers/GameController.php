@@ -60,7 +60,7 @@ class GameController extends Controller
         $luck = intval($request->luck);
         $morality = intval($request->morality);
         $talent_id = intval($request->talent);
-        $happiness = 0;
+        $happiness = 5;
         $talent = talent::where('id',$talent_id)->first();     
         $month = 1;
         $alive = true;
