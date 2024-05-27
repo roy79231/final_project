@@ -37,11 +37,19 @@
                 </div>
                 <div class="finishCenterBox">
                     <div class="finishTxtScore2">
+<<<<<<< HEAD
                         @if ($total <= 25)
                             {{ $finishScore[0] }}
                         @elseif ($total <= 35)
                             {{ $finishScore[1] }}
                         @elseif ($total <= 45)
+=======
+                        @if ($total <= 5)
+                            {{ $finishScore[0] }}
+                        @elseif ($total <= 10)
+                            {{ $finishScore[1] }}
+                        @elseif ($total <= 15)
+>>>>>>> 6929c79200c520264fb4e12f3648dfd71c57dbc4
                             {{ $finishScore[2] }}
                         @else
                             {{ $finishScore[3] }}
