@@ -1,20 +1,24 @@
 @extends('layouts.upload')
 
-@section('name')
+@section('uploader')
 <!--內容-->
-<div class="content">
-    <h1>成就條件</h1>
-    <form action="{{ route('upLoader.store') }}" method="POST">
-        @csrf
-        <input type="String" name="name" placeholder="name" required></textarea> <br>
-        <input type="String" name="content" placeholder="content" required></textarea>
-        <button type="submit">新增</button>
-    </form>
-
+<div>
+    <div class="uploadBox1">
+        <div class="uploadCenter">
+            <h1>成就條件</h1>
+            <form action="{{ route('upLoader.store') }}" method="POST">
+                @csrf
+                <input type="String" name="name" placeholder="name" required></textarea> <br>
+                <input type="String" name="content" placeholder="content" required></textarea>
+                <button type="submit">新增</button>
+            </form>
+        </div>
+    </div>
     <br>
 
+    <div class="uploadBox2">
     @foreach ($postAchievement as $post)
-        <div class=box>
+        <div class="uploadInnerBox">
             <form id="form{{ $post->id }}" action="{{ route('upLoader.edit',$post) }}" method="POST">
                 @csrf
                 @method('patch')
@@ -39,6 +43,7 @@
             </form>
         </div>
     @endforeach
+    </div>
 
     <script>
         function toggleEdit(id) {

@@ -715,8 +715,9 @@ class GameController extends Controller
         ]);
         $end = game_ending::where('user_id',$user_id)->first();
         // dd($end);
-        return view('finish2',[
+        return view('finish3',[
             'end'=> $end,
+            'graduate'=>$make_end->month==48,
         ]);
     }
 }

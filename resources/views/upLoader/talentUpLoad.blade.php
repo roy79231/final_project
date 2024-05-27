@@ -1,70 +1,76 @@
 @extends('layouts.upload')
 
-@section('name')
+@section('uploader')
 
     <!--內容-->
-    <div class="content">
-        <h1>天賦羅</h1>
-        <form action="{{ route('talentUpLoader.store') }}" method="POST">
-            @csrf
-            <input type="String" name="name" placeholder="name" required></textarea> <br>
-            <input type="number" name="intelligence" placeholder="intelligence" required></textarea> <br>
-            <input type="number" name="wealth" placeholder="wealth" required></textarea> <br>
-            <input type="number" name="appearance" placeholder="appearance" required></textarea> <br>
-            <input type="number" name="luck" placeholder="luck" required></textarea> <br>
-            <input type="number" name="morality" placeholder="morality" required></textarea> <br>
-            <input type="number" name="happiness" placeholder="happiness" required></textarea>
-            <button type="submit">新增</button>
-        </form>
+    <div>
+        <div class="uploadBox1">
+            <div class="uploadCenter">
+                <h1>天賦羅</h1>
+                <form action="{{ route('talentUpLoader.store') }}" method="POST">
+                    @csrf
+                    <input type="String" name="name" placeholder="name" required></textarea> <br>
+                    <input type="number" name="intelligence" placeholder="intelligence" required></textarea> <br>
+                    <input type="number" name="wealth" placeholder="wealth" required></textarea> <br>
+                    <input type="number" name="appearance" placeholder="appearance" required></textarea> <br>
+                    <input type="number" name="luck" placeholder="luck" required></textarea> <br>
+                    <input type="number" name="morality" placeholder="morality" required></textarea> <br>
+                    <input type="number" name="happiness" placeholder="happiness" required></textarea>
+                    <button type="submit">新增</button>
+                </form>
+            </div>
+        </div>
 
         <br>
 
-        @foreach ($postAchievement as $post)
-            <div class=box>
-                <form id="form{{ $post->id }}" action="{{ route('talentUpLoader.edit',$post) }}" method="POST">
-                    @csrf
-                    @method('patch')
-                    <div>
-                        <p id="name{{ $post->id }}" style="display: inline;">Name: {{ $post->name }}</p>
-                        <input id="nameInput{{ $post->id }}" type="text" name="name" placeholder="name" value="{{ $post->name }}" style="display: none;" required>
-                    </div>
-                    <div>
-                        <p id="intelligence{{ $post->id }}" style="display: inline;">Intelligence: {{ $post->intelligence }}</p>
-                        <input id="intelligenceInput{{ $post->id }}" type="text" name="intelligence" placeholder="intelligence" value="{{ $post->intelligence }}" style="display: none;" required>
-                    </div>
-                    <div>
-                        <p id="wealth{{ $post->id }}" style="display: inline;">Wealth: {{ $post->wealth }}</p>
-                        <input id="wealthInput{{ $post->id }}" type="text" name="wealth" placeholder="wealth" value="{{ $post->wealth }}" style="display: none;" required>
-                    </div>
-                    <div>
-                        <p id="appearance{{ $post->id }}" style="display: inline;">Appearance: {{ $post->appearance }}</p>
-                        <input id="appearanceInput{{ $post->id }}" type="text" name="appearance" placeholder="appearance" value="{{ $post->appearance }}" style="display: none;" required>
-                    </div>
-                    <div>
-                        <p id="luck{{ $post->id }}" style="display: inline;">Luck: {{ $post->luck }}</p>
-                        <input id="luckInput{{ $post->id }}" type="text" name="luck" placeholder="luck" value="{{ $post->luck }}" style="display: none;" required>
-                    </div>
-                    <div>
-                        <p id="morality{{ $post->id }}" style="display: inline;">Morality: {{ $post->morality }}</p>
-                        <input id="moralityInput{{ $post->id }}" type="text" name="morality" placeholder="morality" value="{{ $post->morality }}" style="display: none;" required>
-                    </div>
-                    <div>
-                        <p id="happiness{{ $post->id }}" style="display: inline;">Happiness: {{ $post->happiness }}</p>
-                        <input id="happinessInput{{ $post->id }}" type="text" name="happiness" placeholder="happiness" value="{{ $post->happiness }}" style="display: none;" required>
-                    </div>
-                    <div>
-                        <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>
-                        <button id="confirmButton{{ $post->id }}" type="submit" style="display: none;">確認</button>
-                    </div>
-                </form>
+        <div class="uploadBox2">
+            @foreach ($postAchievement as $post)
+                <div class=uploadInnerBox>
+                    <form id="form{{ $post->id }}" action="{{ route('talentUpLoader.edit',$post) }}" method="POST">
+                        @csrf
+                        @method('patch')
+                        <div>
+                            <p id="name{{ $post->id }}" style="display: inline;">Name: {{ $post->name }}</p>
+                            <input id="nameInput{{ $post->id }}" type="text" name="name" placeholder="name" value="{{ $post->name }}" style="display: none;" required>
+                        </div>
+                        <div>
+                            <p id="intelligence{{ $post->id }}" style="display: inline;">Intelligence: {{ $post->intelligence }}</p>
+                            <input id="intelligenceInput{{ $post->id }}" type="text" name="intelligence" placeholder="intelligence" value="{{ $post->intelligence }}" style="display: none;" required>
+                        </div>
+                        <div>
+                            <p id="wealth{{ $post->id }}" style="display: inline;">Wealth: {{ $post->wealth }}</p>
+                            <input id="wealthInput{{ $post->id }}" type="text" name="wealth" placeholder="wealth" value="{{ $post->wealth }}" style="display: none;" required>
+                        </div>
+                        <div>
+                            <p id="appearance{{ $post->id }}" style="display: inline;">Appearance: {{ $post->appearance }}</p>
+                            <input id="appearanceInput{{ $post->id }}" type="text" name="appearance" placeholder="appearance" value="{{ $post->appearance }}" style="display: none;" required>
+                        </div>
+                        <div>
+                            <p id="luck{{ $post->id }}" style="display: inline;">Luck: {{ $post->luck }}</p>
+                            <input id="luckInput{{ $post->id }}" type="text" name="luck" placeholder="luck" value="{{ $post->luck }}" style="display: none;" required>
+                        </div>
+                        <div>
+                            <p id="morality{{ $post->id }}" style="display: inline;">Morality: {{ $post->morality }}</p>
+                            <input id="moralityInput{{ $post->id }}" type="text" name="morality" placeholder="morality" value="{{ $post->morality }}" style="display: none;" required>
+                        </div>
+                        <div>
+                            <p id="happiness{{ $post->id }}" style="display: inline;">Happiness: {{ $post->happiness }}</p>
+                            <input id="happinessInput{{ $post->id }}" type="text" name="happiness" placeholder="happiness" value="{{ $post->happiness }}" style="display: none;" required>
+                        </div>
+                        <div>
+                            <button id="editButton{{ $post->id }}" type="button" onclick="toggleEdit({{ $post->id }})">編輯</button>
+                            <button id="confirmButton{{ $post->id }}" type="submit" style="display: none;">確認</button>
+                        </div>
+                    </form>
 
-                <form action="{{route('talentUpLoader.destroy',$post)}}" method="POST">
-                    @csrf
-                    @method('delete')
-                    <button type="submit">刪除</button>
-                </form>
-            </div>
-        @endforeach
+                    <form action="{{route('talentUpLoader.destroy',$post)}}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit">刪除</button>
+                    </form>
+                </div>
+            @endforeach
+        </div>
 
         <script>
             function toggleEdit(id) {

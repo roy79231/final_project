@@ -1,51 +1,49 @@
-<?php use App\Models\User;
-?>
+<?php use App\Models\User; ?>
 
 @extends('layouts.app')
 
 @section('content')
 
-<div class="container">
-    <div class="d-flex">
+<style>
+    body{
+        background-color: rgb(237, 218, 191);;
+    }
+</style>
+
+<div class="container my-5">
+    <div class="d-flex mb-4">
         <h1 class="me-auto">管理頁</h1>
     </div>
     @foreach($users as $user)
-    <hr>
-    <div class="list-group-item list-group-item-action m-1">
-        <div>
-            <div class="list-group list-group-horizontal justify-content-between" style="margin-bottom: 20px ">
-                <div class="col-md-3">
-                    <p style="font-size: 15px" class="list-group-item">ID : {{$user->id}}</p>
-                </div >
-                <div class="col-md-3">
-                    <p style="font-size: 15px" class="list-group-item">Name : {{$user->name}}</p>
-                </div>
-                <div class="col-md-3">
-                    <p style="font-size: 15px" class="list-group-item">Email : {{$user->email}}</p>
-                </div>
-                <div class="col-md-3">
-                    <p style="font-size: 15px" class="list-group-item">Role : {{$user->role}}</p>
-                </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="col-md-3">
+                <p class="mb-0"><strong>ID:</strong> {{$user->id}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="mb-0"><strong>Name:</strong> {{$user->name}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="mb-0"><strong>Email:</strong> {{$user->email}}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="mb-0"><strong>Role:</strong> {{$user->role}}</p>
             </div>
         </div>
-        <div class="d-flex justify-content-between">
-            @if($user->role !==User::ROLE_ADMIN)
-            <div>
-                <form action="{{ route('setAdmin',  ['user' => $user->id]) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit">設為admin</button>
-                </form>
-            </div>
+        <div class="card-body d-flex justify-content-end">
+            @if($user->role !== User::ROLE_ADMIN)
+            <form action="{{ route('setAdmin', ['user' => $user->id]) }}" method="POST" class="me-2">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn btn-primary">設為 admin</button>
+            </form>
             @endif
-            @if($user->role !==User::ROLE_USER)
-            <div>
-                <form action="{{ route('setUser',  ['user' => $user->id]) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit">設為user</button>
-                </form>
-            </div>
+            @if($user->role !== User::ROLE_USER)
+            <form action="{{ route('setUser', ['user' => $user->id]) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <button type="submit" class="btn btn-secondary">設為 user</button>
+            </form>
             @endif            
         </div>
     </div>

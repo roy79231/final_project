@@ -25,8 +25,8 @@
                                 <textarea name='content' rows='1' class="form-control" style="resize: none;" placeholder="跟大家分享你的想法"></textarea>
                             </div>
                     
-                            <div class="col-md-8 mb-3 d-flex justify-content-center">
-                                <button type="submit" name="submit" class="btn btn-primary px-5" style="background-color: #d8c49f; border-color: #5e5a52; color: black;">
+                            <div class="col-md-8 mb-3 d-flex justify-content-center" style="padding-top:20px;padding-bottom:0px">
+                                <button type="submit" name="submit" class="btn btn-primary px-5" style="background-color: #d8c49f; border-color: #8d8a83; color: black;">
                                     <i class="bi bi-check-circle"></i> 送出
                                 </button>
                             </div>

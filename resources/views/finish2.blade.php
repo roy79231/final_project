@@ -85,8 +85,8 @@
         <div class="finishBoxContainerTwo3">
             <div class="finishBoxTwoCenter">
                 <a class="finishTitleTwo2 " href="{{ route('addPoints')}}">
-                重新入學
-                    <<i class="bi bi-book"></i>
+                    重新入學
+                    <i class="bi bi-book"></i>
                 </a>
             </div>
         </div>

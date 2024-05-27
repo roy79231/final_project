@@ -29,81 +29,138 @@ use App\Models\User;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!--User按鈕-->
     <style>
-        .nav-item {
-            border: 2px solid black;
-            border-radius: 2px;
-        }
-        .nav-link {
-            background-color: rgba(168, 81, 6, 0.675) !important;
-        }
-        .container {
-            background-color: #f6f4e8;
-        }
         .navColor {
-            background-color: #f6f4e8;
+            background-color: #e3dcd2;
         }
-        .appFix {
-            position: fixed;
+        .navbar {
             width: 100%;
-            height: 60px;
+            position: fixed;
+        }
+        .appNavCenterBox {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .appNavBox {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background-color: #013328;
+            border-radius: 20px;
+            height: 45px;
+            width: 100px;
+        }
+        .appNavBox:hover {
+            background-color: #a15c38;
+        }
+        .navTitle {
+            color: #e3dcd2;
+            font-size: 25px;
+            text-decoration: none;
+        }
+        .navTitle:hover {
+            color: #e3dcd2;
+            font-size: 28px;
+        }
+        .navTitle2 {
+            color: black;
+            font-size: 30px;
         }
         .mainType {
-            padding-top: 60px;
+            padding-top: 80px;
+        }
+        li.nav-item.dropdown::marker {
+            content: '';
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navColor shadow-sm appFix">
+        <nav class="navbar navbar-expand-md navbar-light navColor shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    主頁
+                <a class="navbar-brand navTitle" href="{{ url('/') }}">
+                    <div class="appNavBox">
+                        <div class="appNavCenterBox">
+                            主頁
+                        </div>
+                    </div>
                 </a>
                 <?php $user = Auth::user()?>
                 @if($user)
-                <a class="navbar-brand" href="{{ route('achievement',Auth::user()->id) }}">
-                    成就
+                <a class="navbar-brand navTitle" href="{{ route('achievement',Auth::user()->id) }}">
+                    <div class="appNavBox">
+                        <div class="appNavCenterBox">
+                            成就
+                        </div>
+                    </div>
                 </a>
                 @endif
-                <a class="navbar-brand" href="{{ route('forumindex') }}">
-                    討論區
+                <a class="navbar-brand navTitle" href="{{ route('forumindex') }}">
+                    <div class="appNavBox">
+                        <div class="appNavCenterBox">
+                            討論區
+                        </div>
+                    </div>
                 </a>
                 <?php $user = Auth::user()?>
                 @if(($user && $user->role == User::ROLE_ADMIN))
-                    <a class="navbar-brand" href="{{ route('talentUpLoader') }}">
-                        資料庫
-                    </a>
+                <li class="nav-item dropdown">
+                <a class="navTitle dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <div class="appNavBox">
+                        <div class="appNavCenterBox">
+                            資料庫
+                        </div>
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item me-2" href="{{ route('talentUpLoader') }}">
+                            天賦羅
+                        </a>
+                        <a class="dropdown-item me-2" href="{{ route('specialEventUpLoader') }}">
+                            加分事件
+                        </a>
+                        <a class="dropdown-item me-2" href="{{ route('normalEventUpLoader') }}">
+                            一般事件
+                        </a>
+                        <a class="dropdown-item me-2" href="{{ route('achievementEventUpLoader') }}">
+                            成就事件
+                        </a>
+                        <a class="dropdown-item me-2" href="{{ route('achievementUpLoader') }}">
+                            成就條件
+                        </a>
+                        <a class="dropdown-item me-2" href="{{ route('deadUpLoader') }}">
+                            死亡事件
+                        </a>
+                    </div>
+                </a>
+                </li>
                 @endif
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item me-2">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('登入') }}</a>
+                                    <a class="nav-link navTitle2" href="{{ route('login') }}">{{ __('登入') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item me-2">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('註冊') }}</a>
+                                    <a class="nav-link navTitle2" href="{{ route('register') }}">{{ __('註冊') }}</a>
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown nav-item">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link navTitle2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -120,7 +177,6 @@ use App\Models\User;
                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -136,5 +192,35 @@ use App\Models\User;
             @yield('content')
         </main>
     </div>
+    <audio id="background-audio" style="display: none;" loop>
+        <source src="{{ asset('調皮可愛-Main-version.mp3') }}" type="audio/mpeg">
+       
+    </audio>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var audio = document.getElementById("background-audio");
+        
+        audio.volume = 0.15;
+        // Check if there's a saved position in localStorage
+        var savedTime = localStorage.getItem("audioCurrentTime");
+        if (savedTime !== null) {
+            audio.currentTime = savedTime;
+        }
+
+        // Play the audio
+        audio.play();
+
+        // Save the current time periodically
+        setInterval(function() {
+            localStorage.setItem("audioCurrentTime", audio.currentTime);
+        }, 1000);
+
+        // Save the current time before the page is unloaded
+        window.addEventListener("beforeunload", function() {
+            localStorage.setItem("audioCurrentTime", audio.currentTime);
+        });
+    });
+    </script>
 </body>
 </html>
