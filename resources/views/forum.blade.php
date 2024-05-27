@@ -2,16 +2,38 @@
 
 @section('content')
 <style>
+    body {
+        position: relative;
+        font-size: 20px;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    .background-overlay {
+        position: fixed; /* Use fixed to cover the entire viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('{{ asset('_25d6b211-50e8-4220-8a01-9fed3ba11c67.jpg') }}') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.35; /* Adjust the opacity value as needed */
+        z-index: -2;
+    }
     .custom-card {
         background-color: #ecbd97;
-        border: 2px solid rgb(123, 119, 119);
+        border: 6px solid rgb(123, 119, 119);
         padding: 15px;
         border-radius: 35px;
     }
+    .jamescontainer {
+        position: relative;
+        z-index: -1;
+    }
 </style>
+<div class="background-overlay"></div>
 
-<body style="background-color: #d8c49f;">
-    <div class="jamescontainer" style="background-color: #F8CA95;">
+    
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <p style="text-align: center;"></p>
@@ -78,8 +100,8 @@
             </div>
             @endforeach
         </div>
-    </div>
-</body>
+    
+
 
 @endsection
 

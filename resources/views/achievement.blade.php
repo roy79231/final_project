@@ -19,7 +19,7 @@
         background: url('{{ asset('_25d6b211-50e8-4220-8a01-9fed3ba11c67.jpg') }}') no-repeat center center fixed;
         background-size: cover;
         opacity: 0.35; /* Adjust the opacity value as needed */
-        z-index: -1;
+        z-index: -2;
     }
 
     .custom-card {
@@ -31,7 +31,7 @@
 
     .content-container {
         position: relative;
-        z-index: 1;
+        z-index: -1;
     }
 </style>
 
@@ -49,6 +49,7 @@
                 @else
                     <div style="max-height: 600px; overflow-y: auto; font-size: 20px;">
                         <ul class="list-unstyled" style="font-size: 20px;">
+                            <p style="text-align: center; font-size: 30px;">-----------------------<i class="bi bi-unlock"></i>已解鎖的成就------------------------</p>
                             {{-- 遍歷已解鎖的成就 --}}
                             @foreach($unlockedAchievements as $achievement)
                                 <li class="mb-3" style="font-size: 30px;">
