@@ -109,7 +109,18 @@
         background-color:#fff;
         border:2px solid;
     }
-    
+    .background-overlay {
+        position: fixed; /* Use fixed to cover the entire viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('{{ asset('_25d6b211-50e8-4220-8a01-9fed3ba11c67.jpg') }}') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.35; /* Adjust the opacity value as needed */
+        z-index: -3;
+    }
+
 </style>
 <?php 
     $count_number=0;
@@ -158,7 +169,7 @@
     var achievement_id = @json($achievement_id);
     
 </script>
-
+<div class="background-overlay"></div>
 <div class="timlincontainer">
             <div class="month_number" id="months">
                 第 1 個月
@@ -224,7 +235,7 @@
 </div>
 <script>
     document.getElementById("month_next").addEventListener("click", nextmonth);
-    function nextmonth(){
+    function nextmonth(){//點擊下個月按鈕，頁面變成下個月的數據和文字
         monthnumber+=1;
         count+=1;
         if(monthnumber<=totalmonth){
@@ -236,7 +247,7 @@
             document.getElementById("ethical").innerHTML = "道德:     "+monthethical[count];
             document.getElementById("happy").innerHTML = "快樂:     "+monthhappy[count];
             document.getElementById('content').innerHTML = monthcontent[count];
-            if(monthintelligence[count]-monthintelligence[count-1]>=0){
+            if(monthintelligence[count]-monthintelligence[count-1]>=0){//數據改變多少
                 document.getElementById("intelligencechange").innerHTML="   +"+(monthintelligence[count]-monthintelligence[count-1]);
                 document.getElementById("intelligencechange").style.color='green';
             }
