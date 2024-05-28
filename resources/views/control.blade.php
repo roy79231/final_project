@@ -5,14 +5,46 @@
 @section('content')
 
 <style>
-    body{
-        background-color: rgb(237, 218, 191);;
+    body {
+        position: relative;
+        font-size: 20px;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+
+    .background-overlay {
+        position: fixed; /* Use fixed to cover the entire viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('{{ asset('_25d6b211-50e8-4220-8a01-9fed3ba11c67.jpg') }}') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.35; /* Adjust the opacity value as needed */
+        z-index: -3;
+    }
+
+    .navbar {
+        z-index: 1000; /* 確保導覽列位於最上層 */
+    }
+
+    .dropdown-menu {
+        z-index: 1001; /* 確保下拉選單位於最上層 */
+        background-color: #fff; /* 添加背景色 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+    }
+
+    .content-container {
+        position: relative;
+        z-index: 0;
     }
 </style>
-
+<div class="background-overlay"></div>
+<div class="content-container">
 <div class="container my-5">
     <div class="d-flex mb-4">
-        <h1 class="me-auto">管理頁</h1>
+        <h1 class="me-auto" >管理頁</h1>
     </div>
     @foreach($users as $user)
     <div class="card mb-4">
@@ -48,6 +80,7 @@
         </div>
     </div>
     @endforeach
+</div>
 </div>
 
 @endsection

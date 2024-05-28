@@ -19,7 +19,7 @@
         background: url('{{ asset('_25d6b211-50e8-4220-8a01-9fed3ba11c67.jpg') }}') no-repeat center center fixed;
         background-size: cover;
         opacity: 0.35; /* Adjust the opacity value as needed */
-        z-index: -2;
+        z-index: -3;
     }
 
     .custom-card {
@@ -28,11 +28,21 @@
         padding: 20px;
         border-radius: 50px;
     }
+    .navbar {
+        z-index: 1000; /* 確保導覽列位於最上層 */
+    }
+
+    .dropdown-menu {
+        z-index: 1001; /* 確保下拉選單位於最上層 */
+        background-color: #fff; /* 添加背景色 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+    }
 
     .content-container {
         position: relative;
         z-index: 0;
     }
+   
 </style>
 
 <div class="background-overlay"></div>

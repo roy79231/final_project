@@ -20,6 +20,11 @@
         opacity: 0.35; /* Adjust the opacity value as needed */
         z-index: -2;
     }
+    .dropdown-menu {
+        z-index: 1001; /* 確保下拉選單位於最上層 */
+        background-color: #fff; /* 添加背景色 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加陰影效果 */
+    }
     .custom-card {
         background-color: #ecbd97;
         border: 6px solid rgb(123, 119, 119);
