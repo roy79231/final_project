@@ -6,7 +6,7 @@
         padding: 0;
         width: 100%;
         height: 100%;
-        overflow: hidden; /* 禁止滚动 */    
+        overflow: hidden; /* 禁止滚动 */
     }
     .navbar {
         z-index: 1000; /* 確保導覽列位於最上層 */
@@ -22,8 +22,21 @@
         align-items: center;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at center, rgb(248, 202, 149), rgb(245, 187, 120), rgb(247, 174, 89));
+        position: relative;
         text-align: center;
+    }
+
+    .justify-content-center::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('{{ asset('_25d6b211-50e8-4220-8a01-9fed3ba11c67.jpg') }}') no-repeat center center fixed;
+        background-size: cover;
+        opacity: 0.35; /* Set the opacity for the background image */
+        z-index: -1; /* Ensure the background image stays behind the content */
     }
 
     p {
@@ -57,40 +70,15 @@
     .play-btn:hover {
         background-color: #0b5ed7;
         transform: scale(1.1);
-        animation: pulse1 1s infinite;
+        animation: pulse 1s infinite;
     }
 
-    @keyframes pulse1 {
+    @keyframes pulse {
         0% {
             transform: scale(1);
         }
         50% {
             transform: scale(1.1);
-        }
-        100% {
-            transform: scale(1);
-        }
-    }
-
-    /* Image styling */
-    .cauliflower {
-        height: auto;
-        max-height: 150px; /* Adjust the maximum height as needed */
-        display: block;
-        margin: 0 auto; /* Center the image */
-        position: absolute;
-        top: 15%; /* Adjust this value to position the image as needed */;
-        right: 80%;;
-        transform: translate(-50%, -10%); /* Center the image horizontally and adjust vertically */
-        animation: pulse2 2s linear infinite;
-    }
-
-    @keyframes pulse2 {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.5);
         }
         100% {
             transform: scale(1);
@@ -103,7 +91,7 @@
         display: block;
         margin: 0 auto; /* Center the image */
         position: absolute;
-        top: 70%;
+        top: 60%;
         left: 53%;
         transform: translate(-50%, -10%); /* Center the image horizontally and adjust vertically */
         animation: moveCursor 2s linear infinite;
@@ -118,25 +106,11 @@
         }
     }
 
-    .crown {
-        height: auto;
-        max-height: 150; /* Adjust the maximum height as needed */
-        display: block;
-        margin: 0 auto; /* Center the image */
-        position: absolute;
-        top: 15%;
-        left: 80%;
-        transform: translate(-50%, -10%); /* Center the image horizontally and adjust vertically */
-        animation: pulse2 2s linear infinite;
-    }
-
 </style>
 
 @section('content')
 <div class="full-page-container">
     <div class="justify-content-center">
-        <img class="cauliflower" src="{{ asset('cauliflower.png') }}" alt="cauliflower">
-        <img class="crown" src="{{ asset('crown.png') }}" alt="crown">
         <div class="text-center">
             <p style="font-size: 5em">這中央我是一秒也不想待了</p>
             <a href="{{ route('addPoints') }}">
