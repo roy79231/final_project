@@ -8,6 +8,9 @@
         height: 100%;
         overflow: hidden; /* 禁止滚动 */    
     }
+    .navbar {
+        z-index: 1000; /* 確保導覽列位於最上層 */
+    }
 
     ul {
         list-style-type: none; /* Remove the default bullet */
